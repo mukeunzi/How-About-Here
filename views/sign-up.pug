@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  header
+    h1 회원가입
+  section
+    form(id='signUpForm', action='/users', method='post')
+      div
+        input(type='text', name='user_id', id='user_id', placeholder='ID')
+      div
+        input(type='password', name='user_pwd', id='user_pwd', placeholder='PASSWORD')
+      div
+        input(type='submit', id='signUpButton', value='Create an account')
+block script
+  script(type='text/javascript', src='/javascripts/sign-up.js')
