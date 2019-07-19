@@ -27,4 +27,18 @@ const userSchema = new Schema({
 	}
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+const checkDuplicatedId = async user_id => {
+	try {
+		const user = await User.findOne({ user_id });
+		if (user) {
+			return true;
+		}
+		return false;
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+module.exports = { checkDuplicatedId };
