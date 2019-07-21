@@ -9,17 +9,15 @@ module.exports = () => {
 
 		mongoose.connect(
 			`mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${
-				process.env.DB_NAME
+				process.env.DB_ADMIN
 			}`,
 			{
 				useNewUrlParser: true,
-				dbName: process.env.DB_COLLECTION
+				dbName: process.env.DB_NAME
 			},
 			error => {
 				if (error) {
-					console.log('몽고디비 연결 오류', error);
-				} else {
-					console.log('몽고디비 연결 성공');
+					process.exit(1);
 				}
 			}
 		);
@@ -28,11 +26,10 @@ module.exports = () => {
 	connect();
 
 	mongoose.connection.on('error', error => {
-		console.error('몽고디비 연결 오류', error);
+		console.error('몽고디비 연결 오류!!', error);
 	});
 
-	mongoose.connection.on('disconnected', () => {
-		console.error('몽고디비 연결 끊겼습니다. 연결을 재시도합니다.');
-		connect();
+	mongoose.connection.on('open', () => {
+		console.log('몽고디비 연결 성공!!');
 	});
 };
