@@ -1,8 +1,8 @@
 const load = () => {
-	window.addEventListener('load', () => {
+	window.addEventListener('load', function() {
 		const signUpForm = document.querySelector('#signUpForm');
 
-		signUpForm.addEventListener('submit', event => {
+		signUpForm.addEventListener('submit', function(event) {
 			event.preventDefault();
 			isValidSignUpData();
 		});
