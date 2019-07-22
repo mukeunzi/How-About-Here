@@ -11,9 +11,10 @@ const load = () => {
 
 const isValidSignUpData = () => {
 	const user_id = document.querySelector('#user_id').value;
-	const user_pwd = document.querySelector('#user_pwd').value;
+	const user_password = document.querySelector('#user_password').value;
 
-	if (isValidId(user_id) && isValidPassword(user_pwd)) {
+	if (isValidId(user_id) && isValidPassword(user_password)) {
+		document.querySelector('#signUpForm').submit();
 	}
 };
 
@@ -24,9 +25,9 @@ const isValidId = user_id => {
 	return true;
 };
 
-const isValidPassword = user_pwd => {
-	if (!user_pwd) {
-		return document.querySelector('#user_pwd').focus();
+const isValidPassword = user_password => {
+	if (!user_password) {
+		return document.querySelector('#user_password').focus();
 	}
 	return true;
 };
