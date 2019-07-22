@@ -3,7 +3,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const flash = require('connect-flash');
+const session = require('express-session');
 const passport = require('passport');
+const passportConfig = require('./passport');
 const mongodb = require('./models/index');
 
 const indexRouter = require('./routes/index');
@@ -11,6 +14,7 @@ const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 
 mongodb();
+passportConfig(passport);
 
 const app = express();
 
@@ -18,10 +22,20 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+	session({
+		resave: false,
+		saveUninitialized: true,
+		secret: process.env.COOKIE_SECRET
+	})
+);
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
