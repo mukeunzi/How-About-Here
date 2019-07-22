@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  header
+    h1 로그인
+  section
+    form(id='loginForm', action='/auth', method='post')
+      div
+        input(type='text', name='user_id', id='user_id', placeholder='ID')
+      div
+        input(type='password', name='user_password', id='user_password', placeholder='PASSWORD')
+      div
+        input(type='submit', id='loginButton', value='LOGIN')
+block script
+  script(type='text/javascript', src='/javascripts/users-form.js')
