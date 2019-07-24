@@ -1,13 +1,14 @@
 const express = require('express');
 const User = require('../models/user');
+const { isLoggedOut } = require('../middlewares/login-auth');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', isLoggedOut, (req, res, next) => {
 	res.render('sign-up', { title: 'Sign Up' });
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', isLoggedOut, async (req, res, next) => {
 	const { user_id, user_password } = req.body;
 
 	try {
@@ -28,7 +29,7 @@ router.post('/', async (req, res, next) => {
 		const createUser = await user.save();
 
 		if (createUser) {
-			return res.redirect('/');
+			return res.redirect('/auth');
 		}
 		next(500);
 	} catch (error) {
