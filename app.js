@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
+const flash = require('connect-flash');
 const passport = require('passport');
 const passportConfig = require('./passport');
 const mongodb = require('./models/index');
@@ -32,6 +33,7 @@ app.use(
 		secret: process.env.COOKIE_SECRET
 	})
 );
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
