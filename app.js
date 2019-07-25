@@ -3,7 +3,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const passportConfig = require('./passport');
@@ -33,7 +32,6 @@ app.use(
 		secret: process.env.COOKIE_SECRET
 	})
 );
-app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 

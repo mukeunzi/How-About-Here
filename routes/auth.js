@@ -7,9 +7,7 @@ router.get('/', isLoggedOut, function(req, res, next) {
 	res.render('login', { title: 'LOGIN' });
 });
 
-router.post('/', isLoggedOut, (req, res, next) => {
-	passport.authenticate('local', { successRedirect: '/', failureRedirect: '/auth', failureFlash: true });
-});
+router.post('/', isLoggedOut, passport.authenticate('local', { successRedirect: '/', failureRedirect: '/auth' }));
 
 router.delete('/', isLoggedIn, (req, res) => {
 	req.logout();
