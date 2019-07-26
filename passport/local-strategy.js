@@ -1,5 +1,4 @@
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 
@@ -18,7 +17,7 @@ module.exports = passport => {
 						return done(null, false, { message: '아이디나 비밀번호가 올바르지 않습니다.' });
 					}
 
-					const isValidUser = await bcrypt.compare(user_password, userInfo.user_password);
+					const isValidUser = await User.isValidPassword(user_password, userInfo.user_password);
 
 					if (!isValidUser) {
 						return done(null, false, { message: '비밀번호가 올바르지 않습니다.' });

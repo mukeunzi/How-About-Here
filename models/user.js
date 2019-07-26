@@ -53,4 +53,9 @@ userSchema.statics.getUserInfo = async function(user_id) {
 	return user;
 };
 
+userSchema.methods.isValidPassword = async function(requestPassword, encryptedPassword) {
+	const isValid = await bcrypt.compare(requestPassword, encryptedPassword);
+	return isValid;
+};
+
 module.exports = mongoose.model('User', userSchema);
