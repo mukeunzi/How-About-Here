@@ -12,7 +12,7 @@ module.exports = passport => {
 			},
 			async (user_id, user_password, done) => {
 				try {
-					const userInfo = await User.findOne({ user_id });
+					const userInfo = await User.getUserInfo(user_id);
 
 					if (!userInfo) {
 						return done(null, false, { message: '아이디나 비밀번호가 올바르지 않습니다.' });

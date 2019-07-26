@@ -40,4 +40,9 @@ userSchema.statics.checkDuplicatedId = async function(user_id) {
 	}
 };
 
+userSchema.statics.getUserInfo = async function(user_id) {
+	const user = await this.findOne({ user_id });
+	return user;
+};
+
 module.exports = mongoose.model('User', userSchema);
