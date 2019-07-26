@@ -1,5 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1 Vote Your Choice!
+  if !user
+    button(type='button', id='loginButton') 로그인
+    button(type='button', id='signUpButton') 회원가입
+  else
+    div= user
+    button(type='button', id='logoutButton') 로그아웃
+block script
+  script(type='text/javascript', src='/javascripts/index.js')
