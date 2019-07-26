@@ -1,5 +1,4 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const { isLoggedOut } = require('../middlewares/login-auth');
 
@@ -19,23 +18,12 @@ router.post('/', isLoggedOut, async (req, res, next) => {
 			return res.redirect('/users');
 		}
 
-		const hashPassword = await bcrypt.hash(user_password, 12);
+		const signUpForm = { user_id, user_password };
+		await User.signUp(signUpForm);
 
-		const user = new User({
-			user_id,
-			user_password: hashPassword,
-			user_auth: 'user',
-			user_score: 0,
-			user_ranking: 0
-		});
-
-		const createUser = await user.save();
-
-		if (createUser) {
-			return res.redirect('/auth');
-		}
-		next(500);
+		return res.redirect('/auth');
 	} catch (error) {
+		console.error(error);
 		next(error);
 	}
 });

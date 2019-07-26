@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const { Schema } = mongoose;
 
@@ -26,6 +27,13 @@ const userSchema = new Schema({
 		type: Number
 	}
 });
+
+userSchema.statics.signUp = async function(signUpForm) {
+	const { user_id, user_password } = signUpForm;
+	const hashPassword = await bcrypt.hash(user_password, 12);
+
+	await this.create({ user_id, user_password: hashPassword, user_auth: 'user', user_score: 0, user_ranking: 0 });
+};
 
 userSchema.statics.checkDuplicatedId = async function(user_id) {
 	try {
