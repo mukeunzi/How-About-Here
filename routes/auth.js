@@ -22,7 +22,7 @@ router.post(
 router.delete('/', isLoggedIn, (req, res) => {
 	req.logout();
 	req.session.destroy();
-	res.redirect('/');
+	res.send('successLogout');
 });
 
 module.exports = router;

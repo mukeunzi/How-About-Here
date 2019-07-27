@@ -19,4 +19,15 @@ const load = () => {
 	});
 };
 
+const logout = async () => {
+	const response = await fetch('/auth', { method: 'DELETE' });
+
+	if (response.ok) {
+		const statusMessage = await response.text();
+		if (statusMessage === 'successLogout') {
+			location.href = '/';
+		}
+	}
+};
+
 load();
