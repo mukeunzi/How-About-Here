@@ -13,21 +13,29 @@ const isValidFormData = () => {
 	const user_id = document.querySelector('#user_id').value;
 	const user_password = document.querySelector('#user_password').value;
 
-	if (!isEmptyId(user_id) && !isEmptyPassword(user_password)) {
-		document.querySelector('form').submit();
+	if (isEmptyId(user_id)) {
+		alert('아이디를 입력하세요!');
+		return document.querySelector('#user_id').focus();
 	}
+
+	if (isEmptyPassword(user_password)) {
+		alert('비밀번호를 입력하세요!');
+		return document.querySelector('#user_password').focus();
+	}
+
+	return document.querySelector('form').submit();
 };
 
 const isEmptyId = user_id => {
 	if (!user_id) {
-		return document.querySelector('#user_id').focus();
+		return true;
 	}
 	return false;
 };
 
 const isEmptyPassword = user_password => {
 	if (!user_password) {
-		return document.querySelector('#user_password').focus();
+		return true;
 	}
 	return false;
 };
