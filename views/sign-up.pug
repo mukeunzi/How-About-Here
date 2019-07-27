@@ -4,6 +4,7 @@ block content
   header
     h1 회원가입
   section
+    div= message
     form(id='signUpForm', action='/users', method='post')
       div
         input(type='text', name='user_id', id='user_id', placeholder='ID')

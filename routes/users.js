@@ -5,7 +5,14 @@ const { isLoggedOut } = require('../middlewares/login-auth');
 const router = express.Router();
 
 router.get('/', isLoggedOut, (req, res, next) => {
-	res.render('sign-up', { title: 'Sign Up' });
+	const flashMessage = req.flash();
+	let message = '';
+
+	if (flashMessage.message) {
+		message = flashMessage.message[0];
+	}
+
+	res.render('sign-up', { title: 'Sign Up', message });
 });
 
 router.post('/', isLoggedOut, async (req, res, next) => {
@@ -15,6 +22,7 @@ router.post('/', isLoggedOut, async (req, res, next) => {
 		const duplicatedId = await User.checkDuplicatedId(user_id);
 
 		if (duplicatedId) {
+			req.flash('message', '이미 사용중인 아이디입니다.');
 			return res.redirect('/users');
 		}
 
