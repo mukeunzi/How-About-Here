@@ -4,6 +4,7 @@ block content
   header
     h1 로그인
   section
+    div= message
     form(id='loginForm', action='/auth', method='post')
       div
         input(type='text', name='user_id', id='user_id', placeholder='ID')
