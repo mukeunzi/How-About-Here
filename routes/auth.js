@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { isLoggedIn, isLoggedOut } = require('../middlewares/login-auth');
+const { isLoggedIn, isNotLoggedIn } = require('../middlewares/login-auth');
 
-router.get('/', isLoggedOut, function(req, res, next) {
+router.get('/', isNotLoggedIn, function(req, res, next) {
 	const flashMessage = req.flash();
 	let message = '';
 
@@ -15,7 +15,7 @@ router.get('/', isLoggedOut, function(req, res, next) {
 
 router.post(
 	'/',
-	isLoggedOut,
+	isNotLoggedIn,
 	passport.authenticate('local', { successRedirect: '/', failureRedirect: '/auth', failureFlash: true })
 );
 

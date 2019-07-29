@@ -1,10 +1,10 @@
 const express = require('express');
 const User = require('../models/user');
-const { isLoggedOut } = require('../middlewares/login-auth');
+const { isNotLoggedIn } = require('../middlewares/login-auth');
 
 const router = express.Router();
 
-router.get('/', isLoggedOut, (req, res, next) => {
+router.get('/', isNotLoggedIn, (req, res, next) => {
 	const flashMessage = req.flash();
 	let message = '';
 
@@ -15,7 +15,7 @@ router.get('/', isLoggedOut, (req, res, next) => {
 	res.render('sign-up', { title: 'Sign Up', message });
 });
 
-router.post('/', isLoggedOut, async (req, res, next) => {
+router.post('/', isNotLoggedIn, async (req, res, next) => {
 	const { user_id, user_password } = req.body;
 
 	try {
