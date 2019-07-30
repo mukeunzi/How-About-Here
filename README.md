@@ -68,9 +68,9 @@ Node.js 의 Express 프레임워크를 이용한 사이트입니다.
 
 **User Collection**
 
-| 고유값 | 아이디  |   비밀번호    |   권한    |    점수    |     등수     |
-| :----: | :-----: | :-----------: | :-------: | :--------: | :----------: |
-|  \_id  | user_id | user_password | user_auth | user_score | user_ranking |
+| 고유값 | 아이디  |   비밀번호    |   권한    |    점수    |     등수     |   인증 방법   |
+| :----: | :-----: | :-----------: | :-------: | :--------: | :----------: | :-----------: |
+|  \_id  | user_id | user_password | user_auth | user_score | user_ranking | auth_provider |
 
 **Post Collection**
 
