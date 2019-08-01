@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares/login-auth');
+const { url, googleLogin } = require('../public/javascripts/google-oauth');
 
 router.get('/', isNotLoggedIn, function(req, res, next) {
 	const flashMessage = req.flash();
@@ -23,6 +24,19 @@ router.delete('/', isLoggedIn, (req, res) => {
 	req.logout();
 	req.session.destroy();
 	res.send('successLogout');
+});
+
+router.get('/google-login', isNotLoggedIn, (req, res) => {
+	res.redirect(url);
+});
+
+router.get('/google-oauth2', async (req, res) => {
+	try {
+		const displayName = await googleLogin(req.query.code);
+		console.log(displayName);
+	} catch (error) {
+		console.error(error);
+	}
 });
 
 module.exports = router;
