@@ -26,7 +26,7 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
 			return res.redirect('/users');
 		}
 
-		const signUpForm = { user_id, user_password };
+		const signUpForm = { user_id, user_password, auth_provider: 'local' };
 		await User.signUp(signUpForm);
 
 		return res.redirect('/auth');
