@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares/login-auth');
-const { url, googleLogin } = require('../public/javascripts/google-oauth');
+const { url, googleLogin } = require('../config/google-oauth');
 
 router.get('/', isNotLoggedIn, function(req, res, next) {
 	const flashMessage = req.flash();
