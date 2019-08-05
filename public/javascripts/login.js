@@ -1,11 +1,11 @@
-const googleLogin = () => {
+const googleLogIn = () => {
 	window.addEventListener('load', function() {
-		const googleLoginButton = document.querySelector('#googleLoginButton');
+		const googleLogInButton = document.querySelector('#googleLogInButton');
 
-		googleLoginButton.addEventListener('click', function(event) {
+		googleLogInButton.addEventListener('click', function(event) {
 			location.href = '/auth/google-login';
 		});
 	});
 };
 
-googleLogin();
+googleLogIn();

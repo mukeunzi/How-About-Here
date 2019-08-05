@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const User = require('../models/user');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares/login-auth');
-const { url, googleLogin } = require('../config/google-oauth');
+const { url, googleLogIn } = require('../config/google-oauth');
+const authController = require('../controllers/auth-controller');
 
-router.get('/', isNotLoggedIn, function(req, res, next) {
+router.get('/', isNotLoggedIn, function(req, res) {
 	const flashMessage = req.flash();
 	let message = '';
 
@@ -23,7 +25,7 @@ router.post(
 router.delete('/', isLoggedIn, (req, res) => {
 	req.logout();
 	req.session.destroy();
-	res.send('successLogout');
+	res.send('successLogOut');
 });
 
 router.get('/google-login', isNotLoggedIn, (req, res) => {
@@ -32,7 +34,7 @@ router.get('/google-login', isNotLoggedIn, (req, res) => {
 
 router.get('/google-oauth2', async (req, res) => {
 	try {
-		const displayName = await googleLogin(req.query.code);
+		const displayName = await googleLogIn(req.query.code);
 		console.log(displayName);
 	} catch (error) {
 		console.error(error);

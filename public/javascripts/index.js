@@ -1,15 +1,15 @@
 const load = () => {
 	window.addEventListener('load', () => {
-		const loginButton = document.querySelector('#loginButton');
+		const logInButton = document.querySelector('#logInButton');
 		const signUpButton = document.querySelector('#signUpButton');
-		const logoutButton = document.querySelector('#logoutButton');
+		const logOutButton = document.querySelector('#logOutButton');
 
-		if (logoutButton) {
-			logoutButton.addEventListener('click', () => {
-				logout();
+		if (logOutButton) {
+			logOutButton.addEventListener('click', () => {
+				logOut();
 			});
 		} else {
-			loginButton.addEventListener('click', () => {
+			logInButton.addEventListener('click', () => {
 				location.href = '/auth';
 			});
 			signUpButton.addEventListener('click', () => {
@@ -19,12 +19,12 @@ const load = () => {
 	});
 };
 
-const logout = async () => {
+const logOut = async () => {
 	const response = await fetch('/auth', { method: 'DELETE' });
 
 	if (response.ok) {
 		const statusMessage = await response.text();
-		if (statusMessage === 'successLogout') {
+		if (statusMessage === 'successLogOut') {
 			location.href = '/';
 		}
 	}

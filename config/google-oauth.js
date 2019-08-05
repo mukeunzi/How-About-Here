@@ -17,7 +17,7 @@ const getGooglePlusAPI = auth => {
 	return google.plus({ version: 'v1', auth });
 };
 
-const googleLogin = async code => {
+const googleLogIn = async code => {
 	const { tokens } = await oauth2Client.getToken(code);
 	oauth2Client.setCredentials(tokens);
 
@@ -36,4 +36,4 @@ const googleLogin = async code => {
 	return response.data.displayName;
 };
 
-module.exports = { url, googleLogin };
+module.exports = { url, googleLogIn };

@@ -5,15 +5,15 @@ block content
     h1 로그인
   section
     div= message
-    form(id='loginForm', action='/auth', method='post')
+    form(id='logInForm', action='/auth', method='post')
       div
         input(type='text', name='user_id', id='user_id', placeholder='ID')
       div
         input(type='password', name='user_password', id='user_password', placeholder='PASSWORD')
       div
-        input(type='submit', id='loginButton', value='LOGIN')
+        input(type='submit', id='logInButton', value='LOGIN')
       div
-        input(type='button', id='googleLoginButton', value='구글로그인')
+        input(type='button', id='googleLogInButton', value='구글로그인')
 block script
   script(type='text/javascript', src='/javascripts/users-form.js')
   script(type='text/javascript', src='/javascripts/login.js')
