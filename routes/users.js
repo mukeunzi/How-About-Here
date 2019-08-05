@@ -19,7 +19,7 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
 	const { user_id, user_password } = req.body;
 
 	try {
-		const duplicatedId = await User.checkDuplicatedId(user_id);
+		const duplicatedId = await User.checkDuplicatedId(user_id, 'local');
 
 		if (duplicatedId) {
 			req.flash('message', '이미 사용중인 아이디입니다.');

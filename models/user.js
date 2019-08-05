@@ -46,9 +46,9 @@ userSchema.statics.signUp = async function(signUpForm) {
 	});
 };
 
-userSchema.statics.checkDuplicatedId = async function(user_id) {
+userSchema.statics.checkDuplicatedId = async function(user_id, auth_provider) {
 	try {
-		const user = await this.findOne({ user_id });
+		const user = await this.findOne({ user_id, auth_provider });
 
 		if (user) {
 			return true;
