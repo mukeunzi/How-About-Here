@@ -9,7 +9,7 @@ router.get('/', isNotLoggedIn, (req, res) => {
 });
 
 router.post('/', isNotLoggedIn, async (req, res, next) => {
-	userController.signUp(req, res, next);
+	await userController.signUp(req, res, next);
 });
 
 module.exports = router;
