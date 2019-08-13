@@ -4,12 +4,7 @@ const userController = require('../controllers/user-controller');
 
 const router = express.Router();
 
-router.get('/', isNotLoggedIn, (req, res) => {
-	userController.getSignUpPage(req, res);
-});
-
-router.post('/', isNotLoggedIn, async (req, res, next) => {
-	await userController.signUp(req, res, next);
-});
+router.get('/', isNotLoggedIn, userController.getSignUpPage);
+router.post('/', isNotLoggedIn, userController.localSignUp);
 
 module.exports = router;

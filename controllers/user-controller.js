@@ -1,11 +1,11 @@
 const User = require('../models/user');
 
 class UserController {
-	async signUp(req, res, next) {
-		const { user_id, user_password } = req.body;
-
+	async localSignUp(req, res, next) {
 		try {
-			const duplicatedId = this.checkDuplicatedId(user_id, 'local');
+			const { user_id, user_password } = req.body;
+
+			const duplicatedId = await User.checkDuplicatedId(user_id, 'local');
 
 			if (duplicatedId) {
 				req.flash('message', '이미 사용중인 아이디입니다.');
@@ -17,15 +17,8 @@ class UserController {
 
 			return res.redirect('/auth');
 		} catch (error) {
-			console.error(error);
 			next(error);
 		}
-	}
-
-	async checkDuplicatedId(user_id, auth_provider) {
-		const duplicatedId = await User.checkDuplicatedId(user_id, auth_provider);
-
-		return duplicatedId;
 	}
 
 	getSignUpPage(req, res) {
