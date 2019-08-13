@@ -7,6 +7,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const passportConfig = require('./config/index');
+require('dotenv').config();
 const mongodb = require('./models/index');
 
 const indexRouter = require('./routes/index');
