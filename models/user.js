@@ -47,16 +47,12 @@ userSchema.statics.signUp = async function(signUpForm) {
 };
 
 userSchema.statics.checkDuplicatedId = async function(user_id, auth_provider) {
-	try {
-		const user = await this.findOne({ user_id, auth_provider });
+	const user = await this.findOne({ user_id, auth_provider });
 
-		if (user) {
-			return true;
-		}
-		return false;
-	} catch (error) {
-		console.error(error);
+	if (user) {
+		return true;
 	}
+	return false;
 };
 
 userSchema.statics.getUserInfo = async function(user_id) {
