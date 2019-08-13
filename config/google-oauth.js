@@ -33,7 +33,14 @@ const googleLogIn = async code => {
 
 	const plus = getGooglePlusAPI(oauth2Client);
 	const response = await plus.people.get({ userId: 'me' });
-	return response.data.displayName;
+
+	const googleUserData = {
+		user_id: response.data.emails[0].value,
+		user_password: response.data.emails[0].value,
+		auth_provider: 'google'
+	};
+
+	return googleUserData;
 };
 
 module.exports = { url, googleLogIn };
