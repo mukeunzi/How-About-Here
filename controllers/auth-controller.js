@@ -6,7 +6,7 @@ class AuthController {
 	async googleLogIn(req, res, next) {
 		try {
 			const googleUserData = await googleLogIn(req.query.code);
-			const { user_id, auth_provider } = googleUserData;
+			const { user_id, auth_provider, user_auth } = googleUserData;
 
 			const duplicatedId = await User.checkDuplicatedId(user_id, auth_provider);
 
@@ -14,12 +14,10 @@ class AuthController {
 				await User.signUp(googleUserData);
 			}
 
-			const token = await jwt.sign({ user_id, auth_provider }, process.env.JWT_SECRET);
+			const token = await jwt.sign({ user_id, auth_provider, user_auth }, process.env.JWT_SECRET);
 			res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 });
 
-			req.user = user_id;
-
-			res.redirect('/');
+			return res.redirect('/');
 		} catch (error) {
 			next(error);
 		}
