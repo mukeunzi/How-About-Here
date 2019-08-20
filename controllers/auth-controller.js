@@ -6,7 +6,7 @@ class AuthController {
 	async localLogIn(req, res, next) {
 		try {
 			const token = await jwtUtil.makeToken(req.user);
-			res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 });
+			res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
 
 			return res.redirect('/');
 		} catch (error) {
@@ -26,7 +26,7 @@ class AuthController {
 			}
 
 			const token = await jwtUtil.makeToken(googleUserData);
-			res.cookie('token', token, { httpOnly: true, maxAge: 1000 * 60 * 60 });
+			res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
 
 			return res.redirect('/');
 		} catch (error) {
@@ -39,9 +39,8 @@ class AuthController {
 	}
 
 	logOut(req, res) {
-		req.logout();
-		req.session.destroy();
-		res.send('successLogOut');
+		res.clearCookie('token', { path: '/', httpOnly: true });
+		return res.redirect('/');
 	}
 
 	getLogInPage(req, res) {
