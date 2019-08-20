@@ -8,7 +8,8 @@ router.get('/', isNotLoggedIn, authController.getLogInPage);
 router.post(
 	'/',
 	isNotLoggedIn,
-	passport.authenticate('local', { successRedirect: '/', failureRedirect: '/auth', failureFlash: true })
+	passport.authenticate('local', { failureRedirect: '/auth', failureFlash: true }),
+	authController.localLogIn
 );
 router.delete('/', isLoggedIn, authController.logOut);
 router.get('/google-login', isNotLoggedIn, authController.redirectGoogleLogIn);
