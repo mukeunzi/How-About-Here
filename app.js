@@ -13,6 +13,7 @@ const mongodb = require('./models/index');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const { verifyToken } = require('./middlewares/verify-token');
 
 mongodb();
 passportConfig(passport);
@@ -38,6 +39,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(verifyToken);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
