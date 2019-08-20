@@ -20,14 +20,9 @@ const load = () => {
 };
 
 const logOut = async () => {
-	const response = await fetch('/auth', { method: 'DELETE' });
-
-	if (response.ok) {
-		const statusMessage = await response.text();
-		if (statusMessage === 'successLogOut') {
-			location.href = '/';
-		}
-	}
+	const response = await fetch('/auth/logout', { method: 'POST' });
+	console.log(await response.text());
+	location.href = '/';
 };
 
 load();
