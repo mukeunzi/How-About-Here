@@ -13,6 +13,7 @@ class AuthController {
 			next(error);
 		}
 	}
+
 	async googleLogIn(req, res, next) {
 		try {
 			const googleUserData = await googleLogIn(req.query.code);
