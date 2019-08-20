@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 const verifyToken = async (req, res, next) => {
 	if (!req.cookies.token) {
-		req.user = false;
+		req.user = null;
 		return next();
 	}
 
@@ -15,7 +15,7 @@ const verifyToken = async (req, res, next) => {
 		const user = await User.getUserInfo(user_id);
 
 		if (!user) {
-			req.user = false;
+			req.user = null;
 			return next();
 		}
 
