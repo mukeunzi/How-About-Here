@@ -11,7 +11,7 @@ router.post(
 	passport.authenticate('local', { failureRedirect: '/auth', failureFlash: true }),
 	authController.localLogIn
 );
-router.delete('/', isLoggedIn, authController.logOut);
+router.post('/logout', isLoggedIn, authController.logOut);
 router.get('/google-login', isNotLoggedIn, authController.redirectGoogleLogIn);
 router.get('/google-oauth2', authController.googleLogIn);
 
