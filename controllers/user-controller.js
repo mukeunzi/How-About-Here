@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const AuthController = require('./auth-controller');
 
 class UserController {
 	async localSignUp(req, res, next) {
@@ -15,7 +16,10 @@ class UserController {
 			const signUpForm = { user_id, user_password, auth_provider: 'local' };
 			await User.signUp(signUpForm);
 
-			return res.redirect('/auth');
+			const user = await User.getUserInfo(user_id);
+
+			req.user = user;
+			return AuthController.localLogIn(req, res, next);
 		} catch (error) {
 			next(error);
 		}
