@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const {
-	Type: { ObjectId }
+	Types: { ObjectId }
 } = Schema;
 
 const postSchema = new Schema({
@@ -41,7 +41,7 @@ const postSchema = new Schema({
 	create_date: {
 		type: Date,
 		required: true,
-		default: Date.now()
+		default: Date.now
 	},
 	update_id: {
 		type: ObjectId,
@@ -51,7 +51,7 @@ const postSchema = new Schema({
 	update_date: {
 		type: Date,
 		required: true,
-		default: Date.now()
+		default: Date.now
 	}
 });
 
