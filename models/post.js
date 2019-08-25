@@ -52,6 +52,11 @@ const postSchema = new Schema({
 		type: Date,
 		required: true,
 		default: Date.now
+	},
+	status_code: {
+		type: Number,
+		required: true,
+		default: 1
 	}
 });
 
@@ -66,4 +71,5 @@ postSchema.statics.createPost = async function(authorObjectId, postForm) {
 		update_id: authorObjectId
 	});
 };
+
 module.exports = mongoose.model('Post', postSchema);
