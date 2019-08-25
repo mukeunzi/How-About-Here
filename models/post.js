@@ -55,4 +55,15 @@ const postSchema = new Schema({
 	}
 });
 
+postSchema.statics.createPost = async function(authorObjectId, postForm) {
+	const { post_title, first_candidate, second_candidate } = postForm;
+
+	await this.create({
+		post_title,
+		first_candidate,
+		second_candidate,
+		create_id: authorObjectId,
+		update_id: authorObjectId
+	});
+};
 module.exports = mongoose.model('Post', postSchema);
