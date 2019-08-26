@@ -11,6 +11,17 @@ class PostController {
 			next(error);
 		}
 	}
+
+	async updatePost(req, res, next) {
+		try {
+			const authorObjectId = req.user._id;
+			await Post.updatePost(authorObjectId, req.body);
+
+			return res.redirect('/');
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 module.exports = new PostController();
