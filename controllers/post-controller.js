@@ -22,6 +22,17 @@ class PostController {
 			next(error);
 		}
 	}
+
+	async deletePost(req, res, next) {
+		try {
+			const authorObjectId = req.user._id;
+			await Post.deletePost(authorObjectId, req.body);
+
+			return res.redirect('/');
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 module.exports = new PostController();
