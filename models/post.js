@@ -72,6 +72,24 @@ postSchema.statics.createPost = async function(authorObjectId, postForm) {
 	});
 };
 
+postSchema.statics.updatePost = async function(authorObjectId, postForm) {
+	const { _id, post_title, first_candidate, second_candidate, status_code } = postForm;
+
+	await this.updateOne(
+		{ _id },
+		{
+			$set: {
+				post_title,
+				first_candidate,
+				second_candidate,
+				update_id: authorObjectId,
+				update_date: Date.now(),
+				status_code
+			}
+		}
+	);
+};
+
 postSchema.statics.deletePost = async function(authorObjectId, postForm) {
 	const { _id, status_code } = postForm;
 
