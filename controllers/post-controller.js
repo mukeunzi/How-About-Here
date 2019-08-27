@@ -1,6 +1,10 @@
 const Post = require('../models/post');
 
 class PostController {
+	async getPostPage(req, res, next) {
+		res.render('post', { title: '투표 포스팅' });
+	}
+
 	async createPost(req, res, next) {
 		try {
 			const authorObjectId = req.user._id;
