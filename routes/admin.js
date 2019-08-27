@@ -4,9 +4,9 @@ const { isLoggedIn } = require('../middlewares/login-auth');
 
 const router = express.Router();
 
-router.get('/', isLoggedIn, postController.getPostPage);
-router.post('/', postController.createPost);
-router.patch('/', postController.updatePost);
-router.delete('/', postController.deletePost);
+router.get('/post', isLoggedIn, postController.getPostPage);
+router.post('/post', postController.createPost);
+router.patch('/post', postController.updatePost);
+router.delete('/post', postController.deletePost);
 
 module.exports = router;

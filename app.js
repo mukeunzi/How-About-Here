@@ -13,7 +13,7 @@ const mongodb = require('./models/index');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
-const postRouter = require('./routes/post');
+const adminRouter = require('./routes/admin');
 const { verifyToken } = require('./middlewares/verify-token');
 
 mongodb();
@@ -44,7 +44,7 @@ app.use(verifyToken);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
-app.use('/post', postRouter);
+app.use('/admin', adminRouter);
 
 app.use(function(req, res, next) {
 	next(createError(404));
