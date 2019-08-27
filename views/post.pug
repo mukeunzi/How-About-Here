@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  header
+    h1= title
+  section
+    form(id='postForm', action='/post', method='post')
+      div
+        input(type='text', name='post_title', id='post_title', placeholder='제목')
+      div
+        input(type='text', name='first_candidate', id='first_candidate', placeholder='후보1')
+      div
+        input(type='text', name='second_candidate', id='second_candidate', placeholder='후보2')
+      div
+        input(type="radio" name="status_code" value="1", checked="checked")
+        | 활성
+        input(type="radio" name="status_code" value="0")
+        | 비활성
+      div
+        input(type='submit', id='postButton', value='게시')
+block script
+  script(type='text/javascript', src='/javascripts/post.js')
