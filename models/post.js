@@ -105,4 +105,8 @@ postSchema.statics.deletePost = async function(authorObjectId, postForm) {
 	);
 };
 
+postSchema.statics.getPostListAll = async function() {
+	return await this.find();
+};
+
 module.exports = mongoose.model('Post', postSchema);
