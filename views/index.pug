@@ -7,6 +7,9 @@ block content
     button(type='button', id='signUpButton') 회원가입
   else
     div= user.user_id
-    button(type='button', id='logOutButton') 로그아웃
+    div
+      button(type='button', id='logOutButton') 로그아웃
+    if user.user_auth == 'admin'
+      button(type='button', id='postButton') 포스팅
 block script
   script(type='text/javascript', src='/javascripts/index.js')

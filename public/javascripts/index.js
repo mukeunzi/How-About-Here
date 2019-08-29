@@ -3,10 +3,14 @@ const load = () => {
 		const logInButton = document.querySelector('#logInButton');
 		const signUpButton = document.querySelector('#signUpButton');
 		const logOutButton = document.querySelector('#logOutButton');
+		const postButton = document.querySelector('#postButton');
 
 		if (logOutButton) {
 			logOutButton.addEventListener('click', () => {
 				logOut();
+			});
+			postButton.addEventListener('click', () => {
+				location.href = '/admin/post';
 			});
 		} else {
 			logInButton.addEventListener('click', () => {
