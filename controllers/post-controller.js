@@ -37,6 +37,16 @@ class PostController {
 			next(error);
 		}
 	}
+
+	async getPostListAll(req, res, next) {
+		try {
+			const postListAll = await Post.getPostListAll();
+
+			res.render('post-list', { title: '투표', postList: postListAll });
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 module.exports = new PostController();
