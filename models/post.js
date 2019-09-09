@@ -106,7 +106,11 @@ postSchema.statics.deletePost = async function(authorObjectId, postForm) {
 };
 
 postSchema.statics.getPostListAll = async function() {
-	return await this.find();
+	const postList = await this.find()
+		.populate('create_id', 'user_id')
+		.populate('update_id', 'user_id');
+
+	return postList;
 };
 
 module.exports = mongoose.model('Post', postSchema);
