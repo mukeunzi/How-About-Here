@@ -47,6 +47,17 @@ class PostController {
 			next(error);
 		}
 	}
+
+	async getPostDetailPage(req, res, next) {
+		try {
+			const post_id = req.params.post_id;
+			const getPostDetailPage = await Post.getPostDetailPage(post_id);
+
+			res.json(getPostDetailPage);
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 module.exports = new PostController();

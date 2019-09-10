@@ -113,4 +113,10 @@ postSchema.statics.getPostListAll = async function() {
 	return postList;
 };
 
+postSchema.statics.getPostDetailPage = async function(post_id) {
+	const postDetailPage = await this.find({ _id: post_id });
+
+	return postDetailPage;
+};
+
 module.exports = mongoose.model('Post', postSchema);
