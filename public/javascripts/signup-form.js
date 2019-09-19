@@ -10,8 +10,14 @@ const load = () => {
 };
 
 const isValidFormData = () => {
+	const user_name = document.querySelector('#user_name').value;
 	const user_id = document.querySelector('#user_id').value;
 	const user_password = document.querySelector('#user_password').value;
+
+	if (isEmptyName(user_name)) {
+		alert('이름을 입력하세요!');
+		return document.querySelector('#user_name').focus();
+	}
 
 	if (isEmptyId(user_id)) {
 		alert('아이디를 입력하세요!');
@@ -24,6 +30,13 @@ const isValidFormData = () => {
 	}
 
 	return document.querySelector('form').submit();
+};
+
+const isEmptyName = user_name => {
+	if (!user_name) {
+		return true;
+	}
+	return false;
 };
 
 const isEmptyId = user_id => {

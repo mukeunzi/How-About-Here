@@ -7,10 +7,12 @@ block content
     div= message
     form(id='signUpForm', action='/users', method='post')
       div
+        input(type='text', name='user_name', id='user_name', placeholder='NAME')
+      div
         input(type='text', name='user_id', id='user_id', placeholder='ID')
       div
         input(type='password', name='user_password', id='user_password', placeholder='PASSWORD')
       div
         input(type='submit', id='signUpButton', value='Create an account')
 block script
-  script(type='text/javascript', src='/javascripts/users-form.js')
+  script(type='text/javascript', src='/javascripts/signup-form.js')
