@@ -1,4 +1,4 @@
-:woman-kiss-man:
+# :woman-kiss-man:
 
 > Node.js 의 Express 프레임워크, pug, mongoDB/mongoose 를 이용해 구현하는 `untitled`!
 
