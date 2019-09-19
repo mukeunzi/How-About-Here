@@ -1,4 +1,4 @@
-<h1 align="center">`untitled` :woman-kiss-man:</h1>
+:woman-kiss-man:
 
 > Node.js 의 Express 프레임워크, pug, mongoDB/mongoose 를 이용해 구현하는 `untitled`!
 
