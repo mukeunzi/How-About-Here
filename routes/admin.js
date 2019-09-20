@@ -10,5 +10,6 @@ router.get('/', isLoggedIn, adminController.getIndexPage);
 
 //관리자 - 지역 관리 페이지
 router.get('/region', isLoggedIn, regionController.getRegionPage);
+router.post('/region', isLoggedIn, regionController.createRegion);
 
 module.exports = router;
