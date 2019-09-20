@@ -4,21 +4,27 @@ const load = () => {
 		const signUpButton = document.querySelector('#signUpButton');
 		const logOutButton = document.querySelector('#logOutButton');
 		const postButton = document.querySelector('#postButton');
+		const adminButton = document.querySelector('#adminButton');
 
-		if (logOutButton) {
+		if (logOutButton && postButton) {
 			logOutButton.addEventListener('click', () => {
 				logOut();
 			});
 
-			if (postButton) {
-				postButton.addEventListener('click', () => {
-					location.href = '/admin/post';
+			postButton.addEventListener('click', () => {
+				location.href = '/post';
+			});
+
+			if (adminButton) {
+				adminButton.addEventListener('click', () => {
+					location.href = '/admin';
 				});
 			}
 		} else {
 			logInButton.addEventListener('click', () => {
 				location.href = '/auth';
 			});
+
 			signUpButton.addEventListener('click', () => {
 				location.href = '/users';
 			});

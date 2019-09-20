@@ -9,7 +9,8 @@ block content
     div= user.user_id
     div
       button(type='button', id='logOutButton') 로그아웃
-    if user.user_auth == 'admin'
       button(type='button', id='postButton') 포스팅
+    if user.user_auth == 'admin'
+      button(type='button', id='adminButton') ADMIN
 block script
   script(type='text/javascript', src='/javascripts/index.js')
