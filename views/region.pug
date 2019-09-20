@@ -1,4 +1,5 @@
 extends layout
+include region-element
 
 block content
   h1= title
@@ -15,6 +16,9 @@ block content
       th 작성일
       th 수정자
       th 수정일
+    if regionList
+      each region in regionList
+        +makeRegionElement(region) 
 
 block script
   script(type='text/javascript', src='/javascripts/region.js')
