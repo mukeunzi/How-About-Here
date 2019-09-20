@@ -9,9 +9,12 @@ const load = () => {
 			logOutButton.addEventListener('click', () => {
 				logOut();
 			});
-			postButton.addEventListener('click', () => {
-				location.href = '/admin/post';
-			});
+
+			if (postButton) {
+				postButton.addEventListener('click', () => {
+					location.href = '/admin/post';
+				});
+			}
 		} else {
 			logInButton.addEventListener('click', () => {
 				location.href = '/auth';
