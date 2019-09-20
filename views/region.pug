@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1= title
+
+  input(type='text', id='region_name')
+  button(type='button', id='addRegionButton') 추가하기
+
+  table(id='regionList')
+    tr
+      th 고유값
+      th 지역명
+      th 상태코드
+      th 작성자
+      th 작성일
+      th 수정자
+      th 수정일
+
+block script
+  script(type='text/javascript', src='/javascripts/region.js')
