@@ -24,6 +24,11 @@ const userSchema = new Schema({
 	auth_provider: {
 		type: String,
 		required: true
+	},
+	status_code: {
+		type: Number,
+		required: true,
+		default: 1
 	}
 });
 
