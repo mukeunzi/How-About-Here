@@ -14,12 +14,12 @@ class RegionController {
 
 			const newRegion = await Region.createRegion(authorObjectId, region_name);
 			const newRegionElement = `<tr>
-        <td>${newRegion._id}</td>
+        <td><input type='checkbox' class='_id' value=${newRegion._id}/></td>
         <td>${newRegion.region_name}</td>
         <td>${newRegion.status_code}</td>
-        <td>${newRegion.create_id}</td>
+        <td>${req.user.user_name}</td>
         <td>${newRegion.create_date}</td>
-        <td>${newRegion.update_id}</td>
+        <td>${req.user.user_name}</td>
         <td>${newRegion.update_date}</td>
       </tr>`;
 
