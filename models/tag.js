@@ -30,4 +30,14 @@ const tagSchema = new Schema(
 	{ timestamps: { createdAt: 'create_date', updatedAt: 'update_date' } }
 );
 
+tagSchema.statics.createTag = async function(authorObjectId, tagName) {
+	const newTag = await this.create({
+		tag_name: tagName,
+		create_id: authorObjectId,
+		update_id: authorObjectId
+	});
+
+	return newTag;
+};
+
 module.exports = mongoose.model('Tag', tagSchema);
