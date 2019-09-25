@@ -1,9 +1,9 @@
 mixin makeRegionElement(region)
   tr
     td
-      input(type='checkbox', class='_id', value=region._id)
+      input(type='checkbox', class='_id', id=region._id, value=region._id)
     td= region.region_name
-    td= region.status_code
+    td(class='status_code')= region.status_code
     td= region.create_id.user_name
     td= region.create_date
     td= region.update_id.user_name

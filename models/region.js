@@ -59,16 +59,13 @@ regionSchema.statics.updateRegion = async function(authorObjectId, regionForm) {
 	);
 };
 
-regionSchema.statics.deleteRegion = async function(authorObjectId, regionForm) {
-	const { _id, status_code } = regionForm;
-
+regionSchema.statics.deleteRegion = async function(authorObjectId, _id) {
 	await this.updateOne(
 		{ _id },
 		{
 			$set: {
 				update_id: authorObjectId,
-				update_date: Date.now(),
-				status_code
+				status_code: 0
 			}
 		}
 	);
