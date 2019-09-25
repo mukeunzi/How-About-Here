@@ -28,6 +28,21 @@ class TagController {
 			next(error);
 		}
 	}
+
+	async deleteTag(req, res, next) {
+		try {
+			const authorObjectId = req.user._id;
+			const checkedTags = req.query._id;
+
+			await checkedTags.map(async tag => {
+				await Tag.deleteTag(authorObjectId, tag);
+			});
+
+			return res.send(JSON.stringify(checkedTags));
+		} catch (error) {
+			next(error);
+		}
+	}
 }
 
 module.exports = new TagController();

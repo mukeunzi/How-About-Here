@@ -1,9 +1,14 @@
 const load = () => {
 	window.addEventListener('load', function() {
 		const addTagButton = document.querySelector('#addTagButton');
+		const deleteTagButton = document.querySelector('#deleteTagButton');
 
 		addTagButton.addEventListener('click', function(event) {
 			addTag();
+		});
+
+		deleteTagButton.addEventListener('click', function(event) {
+			deleteTags();
 		});
 	});
 };
@@ -45,6 +50,54 @@ const isNotEmptyTag = () => {
 	}
 
 	return tag_name;
+};
+
+const deleteTags = async () => {
+	const checkedTags = isNotCheckedTag();
+
+	if (!checkedTags) {
+		return false;
+	}
+
+	try {
+		let params = '';
+
+		checkedTags.forEach(tag => {
+			params += `_id[]=${tag.value}&`;
+		});
+
+		const response = await fetch(`/admin/tag?${params}`, {
+			method: 'DELETE'
+		});
+
+		if (response.ok) {
+			const deletedTags = JSON.parse(await response.text());
+
+			deletedTags.map(tag => {
+				const tagRow = document.querySelector(`[id='${tag}']`).parentNode.parentNode;
+
+				tagRow.querySelector('.status_code').innerHTML = '0';
+				document.querySelector(`[id='${tag}']`).checked = false;
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const isNotCheckedTag = () => {
+	const tags = document.querySelectorAll('._id');
+
+	const checkedTags = Array.prototype.filter.call(tags, tag => {
+		return tag.checked;
+	});
+
+	if (!checkedTags.length) {
+		alert('삭제할 태그를 선택하세요!');
+		return false;
+	}
+
+	return checkedTags;
 };
 
 load();

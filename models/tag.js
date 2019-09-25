@@ -48,4 +48,16 @@ tagSchema.statics.createTag = async function(authorObjectId, tagName) {
 	return newTag;
 };
 
+tagSchema.statics.deleteTag = async function(authorObjectId, _id) {
+	await this.updateOne(
+		{ _id },
+		{
+			$set: {
+				update_id: authorObjectId,
+				status_code: 0
+			}
+		}
+	);
+};
+
 module.exports = mongoose.model('Tag', tagSchema);

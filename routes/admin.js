@@ -17,5 +17,6 @@ router.delete('/region', isLoggedIn, regionController.deleteRegion);
 //관리자 - 태그 관리 페이지
 router.get('/tag', isLoggedIn, tagController.getTagPage);
 router.post('/tag', isLoggedIn, tagController.createTag);
+router.delete('/tag', isLoggedIn, tagController.deleteTag);
 
 module.exports = router;

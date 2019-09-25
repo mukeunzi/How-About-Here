@@ -1,14 +1,14 @@
 const load = () => {
 	window.addEventListener('load', function() {
 		const regionButton = document.querySelector('#regionButton');
-		const categoryButton = document.querySelector('#categoryButton');
+		const tagButton = document.querySelector('#tagButton');
 
 		regionButton.addEventListener('click', function(event) {
 			location.href = '/admin/region';
 		});
 
-		categoryButton.addEventListener('click', function(event) {
-			location.href = '/admin/category';
+		tagButton.addEventListener('click', function(event) {
+			location.href = '/admin/tag';
 		});
 	});
 };
