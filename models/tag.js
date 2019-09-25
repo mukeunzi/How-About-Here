@@ -30,6 +30,14 @@ const tagSchema = new Schema(
 	{ timestamps: { createdAt: 'create_date', updatedAt: 'update_date' } }
 );
 
+tagSchema.statics.getTagListAll = async function() {
+	const tagListAll = await this.find()
+		.populate({ path: 'create_id', select: 'user_name' })
+		.populate({ path: 'update_id', select: 'user_name' });
+
+	return tagListAll;
+};
+
 tagSchema.statics.createTag = async function(authorObjectId, tagName) {
 	const newTag = await this.create({
 		tag_name: tagName,

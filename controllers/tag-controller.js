@@ -1,6 +1,12 @@
 const Tag = require('../models/tag');
 
 class TagController {
+	async getTagPage(req, res, next) {
+		const tagList = await Tag.getTagListAll();
+
+		res.render('tag', { title: '태그관리', tagList });
+	}
+
 	async createTag(req, res, next) {
 		try {
 			const authorObjectId = req.user._id;
