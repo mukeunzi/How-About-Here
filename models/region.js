@@ -30,6 +30,12 @@ const regionSchema = new Schema(
 	{ timestamps: { createdAt: 'create_date', updatedAt: 'update_date' } }
 );
 
+regionSchema.statics.getRegionList = async function() {
+	const regionList = await this.find().select('region_name');
+
+	return regionList;
+};
+
 regionSchema.statics.getRegionListAll = async function() {
 	const regionListAll = await this.find()
 		.populate({ path: 'create_id', select: 'user_name' })

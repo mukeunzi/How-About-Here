@@ -1,0 +1,21 @@
+const Post = require('../models/post');
+const Region = require('../models/region');
+const Tag = require('../models/tag');
+
+class PostController {
+	async getPostFormPage(req, res, next) {
+		const regionList = await Region.getRegionList();
+		const tagList = await Tag.getTagList();
+
+		res.render('post', { title: '포스팅', regionList, tagList });
+	}
+
+	async createPost(req, res, next) {
+		const authorObjectId = req.user._id;
+
+		const post_id = await Post.createPost(authorObjectId, req.body);
+		res.redirect(`post/${post_id}`);
+	}
+}
+
+module.exports = new PostController();

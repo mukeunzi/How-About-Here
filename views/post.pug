@@ -1,21 +1,25 @@
 extends layout
-
 block content
   header
     h1= title
   section
-    form(id='postForm', action='/admin/post', method='post')
+    form(id='postForm', action='/post', method='post')
       div
-        input(type='text', name='post_title', id='post_title', placeholder='제목')
+        input(type='text', name='business_name', id='business_name', placeholder='상호명')
       div
-        input(type='text', name='first_candidate', id='first_candidate', placeholder='후보1')
+        select(name='region_name', id='region_name')
+          option(value='') 선택
+          each region in regionList
+            option(value=region._id)= region.region_name
+        input(type='text', name='detail_address', id='detail_address', placeholder='상세주소')
       div
-        input(type='text', name='second_candidate', id='second_candidate', placeholder='후보2')
+        each tag in tagList
+          input(type='checkbox', name='tag_list', class='tag_list', value=tag._id)
+          | #{tag.tag_name}
       div
-        input(type="radio" name="status_code" value="1", checked="checked")
-        | 활성
-        input(type="radio" name="status_code" value="0")
-        | 비활성
+        textarea(name='post_contents', id='post_contents', cols='30', rows='10')
+      div
+        input(type='text', name='star_rating', id='star_rating', placeholder='별점')
       div
         input(type='submit', id='postButton', value='게시')
 block script

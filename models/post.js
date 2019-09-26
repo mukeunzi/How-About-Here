@@ -17,8 +17,7 @@ const postSchema = new Schema(
 			ref: 'Region'
 		},
 		detail_address: {
-			type: String,
-			required: true
+			type: String
 		},
 		post_contents: {
 			type: String,
@@ -31,7 +30,6 @@ const postSchema = new Schema(
 		},
 		tag_list: {
 			type: [ObjectId],
-			required: true,
 			ref: 'Tag',
 			default: undefined
 		},
@@ -53,5 +51,22 @@ const postSchema = new Schema(
 	},
 	{ timestamps: { createdAt: 'create_date', updatedAt: 'update_date' } }
 );
+
+postSchema.statics.createPost = async function(authorObjectId, postForm) {
+	const { business_name, region_name, detail_address, tag_list, post_contents, star_rating } = postForm;
+
+	const newPost = await this.create({
+		business_name,
+		region_name,
+		detail_address,
+		post_contents,
+		star_rating,
+		tag_list,
+		create_id: authorObjectId,
+		update_id: authorObjectId
+	});
+
+	return newPost._id;
+};
 
 module.exports = mongoose.model('Post', postSchema);

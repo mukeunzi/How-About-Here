@@ -1,8 +1,8 @@
 const load = () => {
 	window.addEventListener('load', function() {
-		const userForm = document.querySelector('form');
+		const postForm = document.querySelector('form');
 
-		userForm.addEventListener('submit', function(event) {
+		postForm.addEventListener('submit', function(event) {
 			event.preventDefault();
 			isValidFormData();
 		});
@@ -10,44 +10,57 @@ const load = () => {
 };
 
 const isValidFormData = () => {
-	const post_title = document.querySelector('#post_title').value;
-	const first_candidate = document.querySelector('#first_candidate').value;
-	const second_candidate = document.querySelector('#second_candidate').value;
+	const region_name = document.querySelector('#region_name').value;
+	const business_name = document.querySelector('#business_name').value;
+	const post_contents = document.querySelector('#post_contents').value;
+	const star_rating = document.querySelector('#star_rating').value;
 
-	if (isEmptyTitle(post_title)) {
-		alert('제목을 입력하세요!');
-		return document.querySelector('#post_title').focus();
+	if (isEmptyTitle(business_name)) {
+		alert('상호명을 입력하세요!');
+		return document.querySelector('#business_name').focus();
 	}
 
-	if (isEmptyFirst(first_candidate)) {
-		alert('첫번째 후보를 입력하세요!');
-		return document.querySelector('#first_candidate').focus();
+	if (isEmptyRegion(region_name)) {
+		alert('지역을 선택하세요!');
+		return document.querySelector('#region_name').focus();
 	}
 
-	if (isEmptySecond(second_candidate)) {
-		alert('두번째 후보를 입력하세요!');
-		return document.querySelector('#second_candidate').focus();
+	if (isEmptyContents(post_contents)) {
+		alert('후기를 입력하세요!');
+		return document.querySelector('#post_contents').focus();
+	}
+
+	if (isEmptyScore(star_rating)) {
+		alert('별점을 매겨주세요!');
+		return document.querySelector('#star_rating').focus();
 	}
 
 	return document.querySelector('form').submit();
 };
 
-const isEmptyTitle = post_title => {
-	if (!post_title) {
+const isEmptyTitle = business_name => {
+	if (!business_name) {
 		return true;
 	}
 	return false;
 };
 
-const isEmptyFirst = first_candidate => {
-	if (!first_candidate) {
+const isEmptyContents = post_contents => {
+	if (!post_contents) {
 		return true;
 	}
 	return false;
 };
 
-const isEmptySecond = second_candidate => {
-	if (!second_candidate) {
+const isEmptyScore = star_rating => {
+	if (!star_rating) {
+		return true;
+	}
+	return false;
+};
+
+const isEmptyRegion = region_name => {
+	if (!region_name) {
 		return true;
 	}
 	return false;
