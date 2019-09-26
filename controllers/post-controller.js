@@ -10,10 +10,17 @@ class PostController {
 		res.render('post', { title: '포스팅', regionList, tagList });
 	}
 
+	async getPostDetailPage(req, res, next) {
+		const _id = req.params._id;
+		const postDetail = await Post.getPostDetail(_id);
+
+		res.render('post-detail', { title: '상세 페이지', postDetail });
+	}
+
 	async createPost(req, res, next) {
 		const authorObjectId = req.user._id;
-
 		const post_id = await Post.createPost(authorObjectId, req.body);
+
 		res.redirect(`post/${post_id}`);
 	}
 }

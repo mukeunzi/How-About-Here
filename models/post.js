@@ -28,11 +28,13 @@ const postSchema = new Schema(
 			required: true,
 			default: 0
 		},
-		tag_list: {
-			type: [ObjectId],
-			ref: 'Tag',
-			default: undefined
-		},
+		tag_list: [
+			{
+				type: ObjectId,
+				ref: 'Tag',
+				default: undefined
+			}
+		],
 		create_id: {
 			type: ObjectId,
 			required: true,
@@ -51,6 +53,15 @@ const postSchema = new Schema(
 	},
 	{ timestamps: { createdAt: 'create_date', updatedAt: 'update_date' } }
 );
+
+postSchema.statics.getPostDetail = async function(_id) {
+	const postDetail = await this.find({ _id })
+		.populate({ path: 'region_name', select: 'region_name' })
+		.populate({ path: 'tag_list', select: 'tag_name' })
+		.populate({ path: 'create_id', select: 'user_name' });
+
+	return postDetail[0];
+};
 
 postSchema.statics.createPost = async function(authorObjectId, postForm) {
 	const { business_name, region_name, detail_address, tag_list, post_contents, star_rating } = postForm;

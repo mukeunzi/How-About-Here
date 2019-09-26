@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  header
+    h1= title
+  section
+    div= postDetail.business_name
+    div= postDetail.region_name.region_name
+      | #{postDetail.detail_address}
+    div
+      each tag in postDetail.tag_list
+        span= tag.tag_name 
+    div= postDetail.post_contents
+    div= postDetail.star_rating
+    div= postDetail.create_id.user_name
+    div= postDetail.create_date
+    div
+      input(type='submit', id='postButton', value='게시')
