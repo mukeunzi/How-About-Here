@@ -33,8 +33,7 @@ const load = () => {
 };
 
 const logOut = async () => {
-	const response = await fetch('/auth/logout', { method: 'POST' });
-	console.log(await response.text());
+	await fetch('/auth/logout', { method: 'POST' });
 	location.href = '/';
 };
 
