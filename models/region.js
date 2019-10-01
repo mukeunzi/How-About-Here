@@ -31,7 +31,7 @@ const regionSchema = new Schema(
 );
 
 regionSchema.statics.getRegionList = async function() {
-	const regionList = await this.find().select('region_name');
+	const regionList = await this.find({ status_code: 1 }).select('region_name');
 
 	return regionList;
 };

@@ -31,7 +31,7 @@ const tagSchema = new Schema(
 );
 
 tagSchema.statics.getTagList = async function() {
-	const tagList = await this.find().select('tag_name');
+	const tagList = await this.find({ status_code: 1 }).select('tag_name');
 
 	return tagList;
 };

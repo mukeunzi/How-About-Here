@@ -55,7 +55,7 @@ const postSchema = new Schema(
 );
 
 postSchema.statics.getPostList = async function() {
-	const postList = await this.find()
+	const postList = await this.find({ status_code: 1 })
 		.populate({ path: 'region_name', select: 'region_name' })
 		.populate({ path: 'tag_list', select: 'tag_name' })
 		.populate({ path: 'create_id', select: 'user_name' })
