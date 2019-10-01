@@ -54,6 +54,16 @@ const postSchema = new Schema(
 	{ timestamps: { createdAt: 'create_date', updatedAt: 'update_date' } }
 );
 
+postSchema.statics.getPostList = async function() {
+	const postList = await this.find()
+		.populate({ path: 'region_name', select: 'region_name' })
+		.populate({ path: 'tag_list', select: 'tag_name' })
+		.populate({ path: 'create_id', select: 'user_name' })
+		.sort({ create_date: -1 });
+
+	return postList;
+};
+
 postSchema.statics.getPostDetail = async function(_id) {
 	const postDetail = await this.find({ _id })
 		.populate({ path: 'region_name', select: 'region_name' })

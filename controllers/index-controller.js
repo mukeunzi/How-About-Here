@@ -1,6 +1,10 @@
+const Post = require('../models/post');
+
 class IndexController {
-	getIndexPage(req, res, next) {
-		res.render('index', { title: 'Express', user: req.user });
+	async getIndexPage(req, res, next) {
+		const postList = await Post.getPostList();
+
+		res.render('index', { title: 'Main', user: req.user, postList });
 	}
 }
 
