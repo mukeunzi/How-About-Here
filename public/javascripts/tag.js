@@ -60,13 +60,7 @@ const deleteTags = async () => {
 	}
 
 	try {
-		let params = '';
-
-		checkedTags.forEach(tag => {
-			params += `_id[]=${tag.value}&`;
-		});
-
-		const response = await fetch(`/admin/tag?${params}`, {
+		const response = await fetch(`/admin/tag?${checkedTags}`, {
 			method: 'DELETE'
 		});
 
@@ -86,18 +80,19 @@ const deleteTags = async () => {
 };
 
 const isNotCheckedTag = () => {
-	const tags = document.querySelectorAll('._id');
+	const tags = document.querySelectorAll('._id:checked');
 
-	const checkedTags = Array.prototype.filter.call(tags, tag => {
-		return tag.checked;
-	});
-
-	if (!checkedTags.length) {
+	if (!tags.length) {
 		alert('삭제할 태그를 선택하세요!');
 		return false;
 	}
 
-	return checkedTags;
+	const checkedTagList = Array.prototype.map.call(tags, tag => {
+		return `_id[]=${tag.value}&`;
+	});
+	const checkedTag = checkedTagList.join('');
+
+	return checkedTag;
 };
 
 load();

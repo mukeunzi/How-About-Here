@@ -49,13 +49,7 @@ const deleteRegions = async () => {
 	}
 
 	try {
-		let params = '';
-
-		checkedRegions.forEach(region => {
-			params += `_id[]=${region.value}&`;
-		});
-
-		const response = await fetch(`/admin/region?${params}`, {
+		const response = await fetch(`/admin/region?${checkedRegions}`, {
 			method: 'DELETE'
 		});
 
@@ -75,18 +69,19 @@ const deleteRegions = async () => {
 };
 
 const isNotCheckedRegion = () => {
-	const regions = document.querySelectorAll('._id');
+	const regions = document.querySelectorAll('._id:checked');
 
-	const checkedRegions = Array.prototype.filter.call(regions, region => {
-		return region.checked;
-	});
-
-	if (!checkedRegions.length) {
+	if (!regions.length) {
 		alert('삭제할 지역을 선택하세요!');
 		return false;
 	}
 
-	return checkedRegions;
+	const checkedRegionList = Array.prototype.map.call(regions, region => {
+		return `_id[]=${region.value}&`;
+	});
+	const checkedRegion = checkedRegionList.join('');
+
+	return checkedRegion;
 };
 
 const isNotEmptyRegion = () => {
