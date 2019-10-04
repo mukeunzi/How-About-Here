@@ -1,5 +1,5 @@
 const app = require('../app');
-const debug = require('debug')('vote-your-choice:server');
+const debug = require('debug')('how-about-here:server');
 const http = require('http');
 
 const port = normalizePort(process.env.PORT || '8000');
