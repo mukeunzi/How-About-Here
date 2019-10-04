@@ -1,4 +1,4 @@
-const load = () => {
+const loadIndex = () => {
 	window.addEventListener('load', () => {
 		const logInButton = document.querySelector('#logInButton');
 		const signUpButton = document.querySelector('#signUpButton');
@@ -37,4 +37,4 @@ const logOut = async () => {
 	location.href = '/';
 };
 
-load();
+loadIndex();

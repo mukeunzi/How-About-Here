@@ -64,6 +64,17 @@ postSchema.statics.getPostList = async function() {
 	return postList;
 };
 
+postSchema.statics.getSearchResult = async function(searchCondition) {
+	const postList = await this.find({ status_code: 1 })
+		.and(searchCondition)
+		.populate({ path: 'region_name', select: 'region_name' })
+		.populate({ path: 'tag_list', select: 'tag_name' })
+		.populate({ path: 'create_id', select: 'user_name' })
+		.sort({ create_date: -1 });
+
+	return postList;
+};
+
 postSchema.statics.getPostDetail = async function(_id) {
 	const postDetail = await this.find({ _id })
 		.populate({ path: 'region_name', select: 'region_name' })

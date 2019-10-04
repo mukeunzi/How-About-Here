@@ -2,8 +2,9 @@ extends layout
 
 block style
   link(rel='stylesheet', href='/stylesheets/index.css')
+
 block content
-  h1 Vote Your Choice!
+  h1 여기어땠!
   if user
     div= user.user_id
     div
@@ -15,21 +16,33 @@ block content
     button(type='button', id='logInButton') 로그인
     button(type='button', id='signUpButton') 회원가입
 
-  if postList.length
-    each post in postList
-      div(style='background-color:#e9e9e9; width:500px; height:100px; margin-bottom:10px;')
-        div 
-          a(href=`/post/${post._id}`) #{post.business_name}
-        div 지역 : #{post.region_name.region_name}
-        if post.tag_list.length
-          span 태그 : 
-          each tag in post.tag_list
-            span #{tag.tag_name} 
-        div 작성자 : #{post.create_id.user_name}
-        div 작성일 : #{post.create_date}
-  else
-    div 등록된 게시물이 없습니다.
+  div 검색!
+  div
+    select(name='region_name', id='region_name')
+      option(value='') 선택
+      each region in regionList
+        option(value=region._id)= region.region_name
+  div
+    each tag in tagList
+      input(type='checkbox', name='tag_list', class='tag_list', value=tag._id)
+      | #{tag.tag_name}
 
+  div(id='postList')
+    if postList.length
+      each post in postList
+        div(style='background-color:#e9e9e9; width:500px; height:100px; margin-bottom:10px;')
+          div 
+            a(href=`/post/${post._id}`) #{post.business_name}
+          div 지역 : #{post.region_name.region_name}
+          if post.tag_list.length
+            span 태그 : 
+            each tag in post.tag_list
+              span #{tag.tag_name} 
+          div 작성자 : #{post.create_id.user_name}
+          div 작성일 : #{post.create_date}
+    else
+      div 등록된 게시물이 없습니다.
 
 block script
   script(type='text/javascript', src='/javascripts/index.js')
+  script(type='text/javascript', src='/javascripts/post.js')
