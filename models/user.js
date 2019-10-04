@@ -46,7 +46,7 @@ userSchema.statics.signUp = async function(signUpForm) {
 };
 
 userSchema.statics.checkDuplicatedId = async function(user_id, auth_provider) {
-	const user = await this.findOne({ user_id, auth_provider });
+	const user = await this.findOne({ user_id, auth_provider, status_code: 1 });
 
 	if (user) {
 		return true;
@@ -55,7 +55,7 @@ userSchema.statics.checkDuplicatedId = async function(user_id, auth_provider) {
 };
 
 userSchema.statics.checkDuplicatedName = async function(user_name) {
-	const user = await this.findOne({ user_name });
+	const user = await this.findOne({ user_name, status_code: 1 });
 
 	if (user) {
 		return true;
@@ -64,7 +64,7 @@ userSchema.statics.checkDuplicatedName = async function(user_name) {
 };
 
 userSchema.statics.getUserInfo = async function(user_id) {
-	const user = await this.findOne({ user_id });
+	const user = await this.findOne({ user_id, status_code: 1 });
 	return user;
 };
 

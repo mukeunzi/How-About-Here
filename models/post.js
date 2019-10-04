@@ -76,12 +76,12 @@ postSchema.statics.getSearchResult = async function(searchCondition) {
 };
 
 postSchema.statics.getPostDetail = async function(_id) {
-	const postDetail = await this.find({ _id })
+	const postDetail = await this.findOne({ _id, status_code: 1 })
 		.populate({ path: 'region_name', select: 'region_name' })
 		.populate({ path: 'tag_list', select: 'tag_name' })
 		.populate({ path: 'create_id', select: 'user_name' });
 
-	return postDetail[0];
+	return postDetail;
 };
 
 postSchema.statics.createPost = async function(authorObjectId, postForm) {
