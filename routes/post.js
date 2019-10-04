@@ -6,7 +6,7 @@ const router = express.Router();
 
 //게시물 관련 페이지
 router.get('/', isLoggedIn, postController.getPostFormPage);
-router.get('/:_id', isLoggedIn, postController.getPostDetailPage);
+router.get('/:_id', postController.getPostDetailPage);
 router.post('/', isLoggedIn, postController.createPost);
 
 module.exports = router;
