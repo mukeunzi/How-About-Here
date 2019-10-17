@@ -1,0 +1,28 @@
+#content {
+	margin-top: 100px;
+	width: 81%;
+	max-width: 935px;
+	padding: 0 13%;
+}
+
+#content ul {
+	overflow: hidden;
+}
+
+#content ul li {
+	display: inline-block;
+	float: left;
+	margin-right: 15px;
+	margin-bottom: 15px;
+}
+
+#content ul li img {
+	min-width: 200px;
+	max-width: 293px;
+	min-height: 200px;
+	max-height: 293px;
+}
+
+.ml3 {
+	margin-left: 3px;
+}

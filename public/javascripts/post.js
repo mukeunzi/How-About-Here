@@ -37,7 +37,7 @@ const searchRegionAndTag = async (regionName, tagList) => {
 		const searchResultJSON = await response.json();
 		const searchResultElement = makeSearchResult(searchResultJSON);
 
-		const postList = document.querySelector('#postList');
+		const postList = document.querySelector('.postList');
 		postList.innerHTML = searchResultElement;
 	} catch (error) {
 		console.log(error);
@@ -45,12 +45,12 @@ const searchRegionAndTag = async (regionName, tagList) => {
 };
 
 const makeSearchResult = searchResultJSON => {
-	let searchResultElement = '';
+	let searchResultElement = '<ul>';
 
 	searchResultJSON.forEach(json => {
-		searchResultElement += `<div style='background-color:#e9e9e9; width:500px; height:100px; margin-bottom:10px;'>
-															<div><a href=/post/${json._id}>${json.business_name}</a></div>
-														<div>지역 : ${json.region_name.region_name}</div>`;
+		searchResultElement += `<li>
+															<a href=/post/${json._id}><img src=/images/example.jpg></a>
+															<div>지역 : ${json.region_name.region_name}</div>`;
 
 		if (json.tag_list.length) {
 			searchResultElement += `<span>태그 : </span>`;
@@ -59,8 +59,7 @@ const makeSearchResult = searchResultJSON => {
 				searchResultElement += `<span>${tag.tag_name}</span>`;
 			});
 		}
-		searchResultElement += `<div>작성자 : ${json.create_id.user_name}</div>
-														<div>작성일 : ${json.create_date}</div>`;
+		searchResultElement += `</li>`;
 	});
 
 	return searchResultElement;

@@ -1,0 +1,37 @@
+body {
+	background-color: #f3f3f3;
+}
+
+#header {
+	position: fixed;
+	background-color: #ffffff;
+	width: 74%;
+	padding: 0 13%;
+	min-width: 360px;
+	height: 70px;
+	line-height: 70px;
+}
+
+#logo {
+	display: inline-block;
+}
+
+#btn_area {
+	display: inline-block;
+	float: right;
+}
+
+button {
+	background-color: #ffffff;
+	border: 0;
+	color: #777777;
+}
+
+button a:active {
+	border: 0;
+}
+
+button a:hover {
+	cursor: pointer;
+	color: #333333;
+}
