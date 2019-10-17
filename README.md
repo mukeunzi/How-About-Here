@@ -1,4 +1,4 @@
-# :eyes: 여기어땠!
+# :eyes: 여기어땠! [데모링크](https://how-about-here.herokuapp.com)
 
 > Node.js 의 Express 프레임워크, pug, mongoDB/mongoose 를 이용해 구현하는 여기어땠(다)!
 
