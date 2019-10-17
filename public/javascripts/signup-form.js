@@ -1,13 +1,11 @@
-const load = () => {
-	window.addEventListener('load', function() {
-		const userForm = document.querySelector('form');
+window.addEventListener('load', function() {
+	const userForm = document.querySelector('form');
 
-		userForm.addEventListener('submit', function(event) {
-			event.preventDefault();
-			isValidFormData();
-		});
+	userForm.addEventListener('submit', function(event) {
+		event.preventDefault();
+		isValidFormData();
 	});
-};
+});
 
 const isValidFormData = () => {
 	const user_name = document.querySelector('#user_name').value;
@@ -52,5 +50,3 @@ const isEmptyPassword = user_password => {
 	}
 	return false;
 };
-
-load();

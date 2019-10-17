@@ -1,13 +1,11 @@
-const load = () => {
-	window.addEventListener('load', function() {
-		const postForm = document.querySelector('form');
+window.addEventListener('load', function() {
+	const postForm = document.querySelector('form');
 
-		postForm.addEventListener('submit', function(event) {
-			event.preventDefault();
-			isValidFormData();
-		});
+	postForm.addEventListener('submit', function(event) {
+		event.preventDefault();
+		isValidFormData();
 	});
-};
+});
 
 const isValidFormData = () => {
 	const region_name = document.querySelector('#region_name').value;
@@ -65,5 +63,3 @@ const isEmptyRegion = region_name => {
 	}
 	return false;
 };
-
-load();

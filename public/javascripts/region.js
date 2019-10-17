@@ -1,17 +1,15 @@
-const load = () => {
-	window.addEventListener('load', function() {
-		const addRegionButton = document.querySelector('#addRegionButton');
-		const deleteRegionButton = document.querySelector('#deleteRegionButton');
+window.addEventListener('load', function() {
+	const addRegionButton = document.querySelector('#addRegionButton');
+	const deleteRegionButton = document.querySelector('#deleteRegionButton');
 
-		addRegionButton.addEventListener('click', function(event) {
-			addRegion();
-		});
-
-		deleteRegionButton.addEventListener('click', function(event) {
-			deleteRegions();
-		});
+	addRegionButton.addEventListener('click', function(event) {
+		addRegion();
 	});
-};
+
+	deleteRegionButton.addEventListener('click', function(event) {
+		deleteRegions();
+	});
+});
 
 const addRegion = async () => {
 	const region_name = isNotEmptyRegion();
@@ -94,5 +92,3 @@ const isNotEmptyRegion = () => {
 
 	return region_name;
 };
-
-load();

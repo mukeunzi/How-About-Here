@@ -1,19 +1,17 @@
-const loadPost = () => {
-	window.addEventListener('load', function() {
-		const regionName = document.querySelector('#region_name');
-		const tagList = document.querySelectorAll('.tag_list');
+window.addEventListener('load', function() {
+	const regionName = document.querySelector('#region_name');
+	const tagList = document.querySelectorAll('.tag_list');
 
-		regionName.addEventListener('change', () => {
+	regionName.addEventListener('change', () => {
+		detectSearchEvent();
+	});
+
+	tagList.forEach(tag => {
+		tag.addEventListener('click', () => {
 			detectSearchEvent();
 		});
-
-		tagList.forEach(tag => {
-			tag.addEventListener('click', () => {
-				detectSearchEvent();
-			});
-		});
 	});
-};
+});
 
 const detectSearchEvent = () => {
 	const regionName = document.querySelector('#region_name').value;
@@ -68,5 +66,3 @@ const makeSearchResult = searchResultJSON => {
 const redirectIndexPage = () => {
 	return (location.href = '/');
 };
-
-loadPost();

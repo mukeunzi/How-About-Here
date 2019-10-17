@@ -1,17 +1,15 @@
-const load = () => {
-	window.addEventListener('load', function() {
-		const addTagButton = document.querySelector('#addTagButton');
-		const deleteTagButton = document.querySelector('#deleteTagButton');
+window.addEventListener('load', function() {
+	const addTagButton = document.querySelector('#addTagButton');
+	const deleteTagButton = document.querySelector('#deleteTagButton');
 
-		addTagButton.addEventListener('click', function(event) {
-			addTag();
-		});
-
-		deleteTagButton.addEventListener('click', function(event) {
-			deleteTags();
-		});
+	addTagButton.addEventListener('click', function(event) {
+		addTag();
 	});
-};
+
+	deleteTagButton.addEventListener('click', function(event) {
+		deleteTags();
+	});
+});
 
 const addTag = async () => {
 	const tag_name = isNotEmptyTag();
@@ -94,5 +92,3 @@ const isNotCheckedTag = () => {
 
 	return checkedTag;
 };
-
-load();

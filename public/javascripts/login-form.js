@@ -1,18 +1,16 @@
-const load = () => {
-	window.addEventListener('load', function() {
-		const googleLogInButton = document.querySelector('#googleLogInButton');
-		const userForm = document.querySelector('form');
+window.addEventListener('load', function() {
+	const googleLogInButton = document.querySelector('#googleLogInButton');
+	const userForm = document.querySelector('form');
 
-		googleLogInButton.addEventListener('click', function(event) {
-			location.href = '/auth/google-login';
-		});
-
-		userForm.addEventListener('submit', function(event) {
-			event.preventDefault();
-			isValidFormData();
-		});
+	googleLogInButton.addEventListener('click', function(event) {
+		location.href = '/auth/google-login';
 	});
-};
+
+	userForm.addEventListener('submit', function(event) {
+		event.preventDefault();
+		isValidFormData();
+	});
+});
 
 const isValidFormData = () => {
 	const user_id = document.querySelector('#user_id').value;
@@ -44,5 +42,3 @@ const isEmptyPassword = user_password => {
 	}
 	return false;
 };
-
-load();
