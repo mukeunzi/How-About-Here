@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
-const mongoURI = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
+const mongoURI =
+	process.env.MONGODB_URI || `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
 module.exports = async () => {
 	try {
