@@ -1,9 +1,24 @@
 extends layout
 
+block style
+  link(rel='stylesheet', href='/stylesheets/kakao-map.css')
+
 block contents
   header
     h1= title
   section
+    .map_wrap
+      #map(style='width:100%;height:100%;position:relative;overflow:hidden;')
+      #menu_wrap.bg_white
+        .option
+          div
+            form(onsubmit='searchPlaces(); return false;')
+              | 키워드 : 
+              input#keyword(type='text', value='강릉', size='15')
+              button(type='submit') 검색하기
+        hr
+        ul#placesList
+        #pagination
     form(id='postForm', action='/post', method='post')
       div
         input(type='text', name='place_name', id='place_name', placeholder='장소')
@@ -25,3 +40,5 @@ block contents
         input(type='submit', id='postButton', value='게시')
 block script
   script(type='text/javascript', src='/javascripts/post-form.js')
+  script(type='text/javascript', src='//dapi.kakao.com/v2/maps/sdk.js?appkey=fa0f4ce25fd2414a706ea4a8e45af254&libraries=services')
+  script(type='text/javascript', src='/javascripts/kakao-map.js')

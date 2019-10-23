@@ -33,7 +33,7 @@ const isValidFormData = () => {
 		return document.querySelector('#star_rating').focus();
 	}
 
-	return document.querySelector('form').submit();
+	return document.querySelector('#postForm').submit();
 };
 
 const isEmptyTitle = place_name => {
