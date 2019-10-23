@@ -7,7 +7,7 @@ const {
 
 const postSchema = new Schema(
 	{
-		business_name: {
+		place_name: {
 			type: String,
 			required: true
 		},
@@ -85,10 +85,10 @@ postSchema.statics.getPostDetail = async function(_id) {
 };
 
 postSchema.statics.createPost = async function(authorObjectId, postForm) {
-	const { business_name, region_name, detail_address, tag_list, post_contents, star_rating } = postForm;
+	const { place_name, region_name, detail_address, tag_list, post_contents, star_rating } = postForm;
 
 	const newPost = await this.create({
-		business_name,
+		place_name,
 		region_name,
 		detail_address,
 		post_contents,

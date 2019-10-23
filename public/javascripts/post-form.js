@@ -1,5 +1,5 @@
 window.addEventListener('load', function() {
-	const postForm = document.querySelector('form');
+	const postForm = document.querySelector('#postForm');
 
 	postForm.addEventListener('submit', function(event) {
 		event.preventDefault();
@@ -9,13 +9,13 @@ window.addEventListener('load', function() {
 
 const isValidFormData = () => {
 	const region_name = document.querySelector('#region_name').value;
-	const business_name = document.querySelector('#business_name').value;
+	const place_name = document.querySelector('#place_name').value;
 	const post_contents = document.querySelector('#post_contents').value;
 	const star_rating = document.querySelector('#star_rating').value;
 
-	if (isEmptyTitle(business_name)) {
-		alert('상호명을 입력하세요!');
-		return document.querySelector('#business_name').focus();
+	if (isEmptyTitle(place_name)) {
+		alert('장소를 입력하세요!');
+		return document.querySelector('#place_name').focus();
 	}
 
 	if (isEmptyRegion(region_name)) {
@@ -36,8 +36,8 @@ const isValidFormData = () => {
 	return document.querySelector('form').submit();
 };
 
-const isEmptyTitle = business_name => {
-	if (!business_name) {
+const isEmptyTitle = place_name => {
+	if (!place_name) {
 		return true;
 	}
 	return false;
