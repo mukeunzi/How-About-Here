@@ -8,7 +8,6 @@ window.addEventListener('load', function() {
 });
 
 const isValidFormData = () => {
-	const region_name = document.querySelector('#region_name').value;
 	const place_name = document.querySelector('#place_name').value;
 	const post_contents = document.querySelector('#post_contents').value;
 	const star_rating = document.querySelector('#star_rating').value;
@@ -16,11 +15,6 @@ const isValidFormData = () => {
 	if (isEmptyTitle(place_name)) {
 		alert('장소를 입력하세요!');
 		return document.querySelector('#place_name').focus();
-	}
-
-	if (isEmptyRegion(region_name)) {
-		alert('지역을 선택하세요!');
-		return document.querySelector('#region_name').focus();
 	}
 
 	if (isEmptyContents(post_contents)) {
@@ -52,13 +46,6 @@ const isEmptyContents = post_contents => {
 
 const isEmptyScore = star_rating => {
 	if (!star_rating) {
-		return true;
-	}
-	return false;
-};
-
-const isEmptyRegion = region_name => {
-	if (!region_name) {
 		return true;
 	}
 	return false;

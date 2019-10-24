@@ -119,7 +119,25 @@ const getListItem = (index, places) => {
 	el.innerHTML = itemStr;
 	el.className = 'item';
 
+	el.addEventListener('click', function(event) {
+		const detail_address = places.road_address_name || places.address_name;
+		const region_name = detail_address.split(' ')[0];
+		const placeInfo = { place_name: places.place_name, region_name, detail_address };
+
+		setAddress(placeInfo);
+	});
+
 	return el;
+};
+
+const setAddress = placeInfo => {
+	const place_name = document.querySelector('#place_name');
+	const region_name = document.querySelector('#region_name');
+	const detail_address = document.querySelector('#detail_address');
+
+	place_name.value = placeInfo.place_name;
+	region_name.value = placeInfo.region_name;
+	detail_address.value = placeInfo.detail_address;
 };
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다

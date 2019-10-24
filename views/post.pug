@@ -21,13 +21,10 @@ block contents
         #pagination
     form(id='postForm', action='/post', method='post')
       div
-        input(type='text', name='place_name', id='place_name', placeholder='장소')
+        input(type='text', name='place_name', id='place_name', placeholder='장소', readonly)
       div
-        select(name='region_name', id='region_name')
-          option(value='') 선택
-          each region in regionList
-            option(value=region._id)= region.region_name
-        input(type='text', name='detail_address', id='detail_address', placeholder='상세주소')
+        input(type='text', name='region_name', id='region_name', placeholder='지역' readonly)
+        input(type='text', name='detail_address', id='detail_address', placeholder='상세주소' readonly)
       div
         each tag in tagList
           input(type='checkbox', name='tag_list', class='tag_list', value=tag._id)

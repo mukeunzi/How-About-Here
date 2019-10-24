@@ -19,9 +19,19 @@ class PostController {
 
 	async createPost(req, res, next) {
 		const authorObjectId = req.user._id;
+		const { region_name } = req.body;
+
+		const isDuplicated = await Region.checkDuplicatedRegion(region_name);
+		if (!isDuplicated) {
+			await Region.createRegion(authorObjectId, region_name);
+		}
+
+		const region_id = await Region.getRegionInfo(region_name);
+		req.body.region_name = region_id;
+
 		const post_id = await Post.createPost(authorObjectId, req.body);
 
-		res.redirect(`post/${post_id}`);
+		res.redirect(`/post/${post_id}`);
 	}
 }
 

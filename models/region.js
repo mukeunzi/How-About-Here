@@ -44,6 +44,21 @@ regionSchema.statics.getRegionListAll = async function() {
 	return regionListAll;
 };
 
+regionSchema.statics.checkDuplicatedRegion = async function(regionName) {
+	const region = await this.findOne({ region_name: regionName, status_code: 1 });
+
+	if (region) {
+		return true;
+	}
+	return false;
+};
+
+regionSchema.statics.getRegionInfo = async function(regionName) {
+	const region = await this.findOne({ region_name: regionName, status_code: 1 });
+
+	return region._id;
+};
+
 regionSchema.statics.createRegion = async function(authorObjectId, regionName) {
 	const newRegion = await this.create({
 		region_name: regionName,
@@ -51,7 +66,7 @@ regionSchema.statics.createRegion = async function(authorObjectId, regionName) {
 		update_id: authorObjectId
 	});
 
-	return newRegion;
+	return newRegion._id;
 };
 
 regionSchema.statics.updateRegion = async function(authorObjectId, regionForm) {
