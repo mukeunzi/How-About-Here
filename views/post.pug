@@ -19,7 +19,7 @@ block contents
         hr
         ul#placesList
         #pagination
-    form(id='postForm', action='/post', method='post')
+    form(id='postForm', action='/post', method='post', enctype='multipart/form-data')
       div
         input(type='text', name='place_name', id='place_name', placeholder='장소', readonly)
       div
@@ -29,6 +29,8 @@ block contents
         each tag in tagList
           input(type='checkbox', name='tag_list', class='tag_list', value=tag._id)
           | #{tag.tag_name}
+      div
+        input(type='file', name='photo_link', id='photo_link')
       div
         textarea(name='post_contents', id='post_contents', cols='30', rows='10')
       div

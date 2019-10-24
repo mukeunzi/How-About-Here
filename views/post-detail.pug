@@ -10,7 +10,9 @@ block contents
     #map(style='width:100%;height:350px;')
     div
       each tag in postDetail.tag_list
-        span= tag.tag_name 
+        span= tag.tag_name
+    div 
+      img(src=`${postDetail.photo_link}`)
     div= postDetail.post_contents
     div= postDetail.star_rating
     div= postDetail.create_id.user_name

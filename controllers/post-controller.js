@@ -29,6 +29,8 @@ class PostController {
 		const region_id = await Region.getRegionInfo(region_name);
 		req.body.region_name = region_id;
 
+		req.body.photo_link = req.file.location;
+
 		const post_id = await Post.createPost(authorObjectId, req.body);
 
 		res.redirect(`/post/${post_id}`);

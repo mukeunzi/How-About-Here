@@ -6,6 +6,7 @@
 		"start": "node ./bin/www"
 	},
 	"dependencies": {
+		"aws-sdk": "^2.555.0",
 		"bcrypt": "^3.0.6",
 		"chai": "^4.2.0",
 		"connect-flash": "^0.1.1",
@@ -21,9 +22,11 @@
 		"mocha": "^6.2.0",
 		"mongoose": "^5.6.5",
 		"morgan": "~1.9.1",
+		"multer": "^1.4.2",
+		"multer-s3": "^2.9.0",
 		"passport": "^0.4.0",
 		"passport-local": "^1.0.0",
-		"pug": "2.0.0-beta11",
+		"pug": "^2.0.4",
 		"sinon": "^7.3.2",
 		"supertest": "^4.0.2"
 	}

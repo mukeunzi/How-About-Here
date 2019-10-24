@@ -1,12 +1,13 @@
 const express = require('express');
 const postController = require('../controllers/post-controller');
 const { isLoggedIn } = require('../middlewares/login-auth');
+const { awsS3ImageUpload } = require('../utils/aws-s3');
 
 const router = express.Router();
 
-//게시물 관련 페이지
+// 게시물 관련
 router.get('/', isLoggedIn, postController.getPostFormPage);
 router.get('/:_id', postController.getPostDetailPage);
-router.post('/', isLoggedIn, postController.createPost);
+router.post('/', isLoggedIn, awsS3ImageUpload.single('photo_link'), postController.createPost);
 
 module.exports = router;
