@@ -1,20 +1,22 @@
 window.addEventListener('load', function() {
-	const regionName = document.querySelector('#region_name');
+	const regionName = document.querySelectorAll('.region_name');
 	const tagList = document.querySelectorAll('.tag_list');
 
-	regionName.addEventListener('change', () => {
-		detectSearchEvent();
+	regionName.forEach(region => {
+		region.addEventListener('change', function() {
+			detectSearchEvent();
+		});
 	});
 
 	tagList.forEach(tag => {
-		tag.addEventListener('click', () => {
+		tag.addEventListener('click', function() {
 			detectSearchEvent();
 		});
 	});
 });
 
 const detectSearchEvent = () => {
-	const regionName = document.querySelector('#region_name').value;
+	const regionName = document.querySelectorAll('.region_name:checked')[0].value;
 	const tagList = document.querySelectorAll('.tag_list:checked');
 
 	if (regionName.length || tagList.length) {
@@ -35,29 +37,40 @@ const searchRegionAndTag = async (regionName, tagList) => {
 		const searchResultJSON = await response.json();
 		const searchResultElement = makeSearchResult(searchResultJSON);
 
-		const postList = document.querySelector('.postList');
-		postList.innerHTML = searchResultElement;
+		const cards = document.querySelector('.ui.cards');
+		cards.innerHTML = searchResultElement;
 	} catch (error) {
 		console.log(error);
 	}
 };
 
 const makeSearchResult = searchResultJSON => {
-	let searchResultElement = '<ul>';
+	let searchResultElement = '';
 
 	searchResultJSON.forEach(json => {
-		searchResultElement += `<li>
-															<a href=/post/${json._id}><img src=/images/example.jpg></a>
-															<div>지역 : ${json.region_name.region_name}</div>`;
+		searchResultElement += `<div class='card'>
+															<a href='/post/${json._id}'>
+																<div class='image'>
+																	<img src='${json.photo_link}' width='300'>
+																</div>
+  														</a>
+															<div class='content'>
+																<a class='header' href='/post/${json._id}'>${json.place_name}</a>
+																<div class='description'>`;
 
-		if (json.tag_list.length) {
-			searchResultElement += `<span>태그 : </span>`;
+		json.tag_list.forEach(tag => {
+			searchResultElement += `		<a href='/post/${json._id}'>#${tag.tag_name}</a>`;
+		});
 
-			json.tag_list.forEach(tag => {
-				searchResultElement += `<span>${tag.tag_name}</span>`;
-			});
-		}
-		searchResultElement += `</li>`;
+		searchResultElement += `		</div>
+															</div>
+															<div class='extra content'>
+																<span class='right floated'>
+																	<i class='heart outline like icon'></i>      17 likes
+																</span>
+																<i class='comment icon'></i>    3 comments
+															</div>
+														</div>`;
 	});
 
 	return searchResultElement;
