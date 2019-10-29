@@ -2,8 +2,38 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/header.css')
+    link(rel='stylesheet', type='text/css', href='/semantic/semantic.min.css')
     block style
   body
+    .ui.attached.stackable.menu
+      .ui.container
+        a.item(href='/')
+          img(src='/images/logo.png')
+        .item.ui.simple.dropdown.right
+          if user
+            i.user.circle.outline.icon
+            .menu
+              if user.user_auth == 'admin'
+                a.item(href='/admin')
+                  i.user.secret.icon
+                  | 관리자
+              a.item(href='/auth')
+                i.user.icon
+                |  #{user.user_name}
+              a#logOutButton.item(href='/auth')
+                i.power.off.icon
+                |  로그아웃
+          else
+            i.user.circle.outline.icon
+            .menu
+              a.item(href='/auth')
+                i.sign-in.icon
+                |  로그인
+              a.item(href='users')
+                i.user.plus.icon
+                |  회원가입
     block contents
+
+  script(src='https://code.jquery.com/jquery-3.1.1.min.js', integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=', crossorigin='anonymous')
+  script(src='/semantic/semantic.min.js')
   block script
