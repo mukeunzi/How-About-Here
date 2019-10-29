@@ -1,4 +1,9 @@
 window.addEventListener('load', function() {
+	$('.ui.rating').rating({
+		initialRating: 3,
+		maxRating: 5
+	});
+
 	const postForm = document.querySelector('#postForm');
 
 	postForm.addEventListener('submit', function(event) {
@@ -9,13 +14,18 @@ window.addEventListener('load', function() {
 
 const isValidFormData = () => {
 	const place_name = document.querySelector('#place_name').value;
+	const tag_list = document.querySelectorAll('.tag_list:checked').length;
 	const post_contents = document.querySelector('#post_contents').value;
 	const photo_link = document.querySelector('#photo_link').value;
-	const star_rating = document.querySelector('#star_rating').value;
 
 	if (isEmptyTitle(place_name)) {
 		alert('장소를 입력하세요!');
-		return document.querySelector('#place_name').focus();
+		return document.querySelector('#keyword').focus();
+	}
+
+	if (notCheckedTag(tag_list)) {
+		alert('해시태그를 선택해주세요!');
+		return document.querySelector('.tag_list').focus();
 	}
 
 	if (isEmptyPhoto(photo_link)) {
@@ -28,12 +38,17 @@ const isValidFormData = () => {
 		return document.querySelector('#post_contents').focus();
 	}
 
-	if (isEmptyScore(star_rating)) {
-		alert('별점을 매겨주세요!');
-		return document.querySelector('#star_rating').focus();
-	}
+	const starRating = $('.ui.star.rating').rating('get rating');
+	document.querySelector('#star_rating').value = starRating;
 
 	return document.querySelector('#postForm').submit();
+};
+
+const notCheckedTag = tag_list => {
+	if (!tag_list) {
+		return true;
+	}
+	return false;
 };
 
 const isEmptyTitle = place_name => {
@@ -52,13 +67,6 @@ const isEmptyPhoto = photo_link => {
 
 const isEmptyContents = post_contents => {
 	if (!post_contents) {
-		return true;
-	}
-	return false;
-};
-
-const isEmptyScore = star_rating => {
-	if (!star_rating) {
 		return true;
 	}
 	return false;
