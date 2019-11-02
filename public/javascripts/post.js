@@ -56,6 +56,11 @@ const makeSearchResult = searchResultJSON => {
   														</a>
 															<div class='content'>
 																<a class='header' href='/post/${json._id}'>${json.place_name}</a>
+																<div class='meta'>
+																	<a href='/post/${json._id}'>
+																		<i class='map outline icon'></i> ${json.region_name.region_name}
+																	</a>
+																</div>
 																<div class='description'>`;
 
 		json.tag_list.forEach(tag => {
