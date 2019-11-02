@@ -25,6 +25,10 @@ block contents
               img(src=`${post.photo_link}`, width='300')
           .content
             a(href=`/post/${post._id}`).header #{post.place_name}
+            .meta
+              a(href=`/post/${post._id}`) 
+                i.map.outline.icon
+                |  #{post.region_name.region_name}
             .description
               each tag in post.tag_list
                 a(href=`/post/${post._id}`) ##{tag.tag_name}
