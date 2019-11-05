@@ -1,22 +1,27 @@
 extends layout
 
 block contents
-  header
-    h1= title
-  section
-    #place_name= postDetail.place_name
-    #region_name= postDetail.region_name.region_name
-    #detail_address= postDetail.detail_address
-    #map(style='width:100%;height:350px;')
-    div
+  .ui.raised.very.padded.container.segment(style='width:80%; margin:5% 0 5% 0;')
+    h1.place_name(style='margin-bottom:3%;')= postDetail.place_name
+    img.ui.avatar.image(src='/images/profile.png')
+    h3.ui.header(style='display:inline-block; margin:0 2% 0 0;')= postDetail.create_id.user_name
+    | #{postDetail.create_date}
+    .ui.dividing.header(style='margin:2% 0 2% 0;')
+    h4.item
+      i.map.marker.alternate.icon(style='display:inline;')
+      span(style='cursor:pointer;')#modal 
+        span#detail_address #{postDetail.detail_address}, #{postDetail.region_name.region_name}
+      .ui.star.rating(data-rating=postDetail.star_rating, data-max-rating='5', style='margin-left:1%;')
+    .ui.basic.modal
+      .content
+        .kakao-map(style='width:800px;height:400px;margin:auto;')
+    img.ui.fluid.image(src=`${postDetail.photo_link}`, style='margin-bottom:5%;')
+    p=postDetail.post_contents
+    .field
       each tag in postDetail.tag_list
-        span= tag.tag_name
-    div 
-      img(src=`${postDetail.photo_link}`)
-    div= postDetail.post_contents
-    div= postDetail.star_rating
-    div= postDetail.create_id.user_name
-    div= postDetail.create_date
+        .ui.column.center.aligned.stackable.divided.grid.segment.checkbox(style='margin-right:5px;')
+          | ##{tag.tag_name}
 block script
   script(type='text/javascript', src='//dapi.kakao.com/v2/maps/sdk.js?appkey=fa0f4ce25fd2414a706ea4a8e45af254&libraries=services')
   script(type='text/javascript', src='/javascripts/kakao-map-detail.js')
+  script(type='text/javascript', src='/javascripts/post-detail.js')

@@ -11,8 +11,8 @@ class PostController {
 	}
 
 	async getPostDetailPage(req, res, next) {
-		const _id = req.params._id;
-		const postDetail = await Post.getPostDetail(_id);
+		const post_id = req.params.post_id;
+		const postDetail = await Post.getPostDetail(post_id);
 
 		res.render('post-detail', { title: '상세 페이지', postDetail });
 	}

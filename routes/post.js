@@ -7,7 +7,7 @@ const router = express.Router();
 
 // 게시물 관련
 router.get('/', isLoggedIn, postController.getPostFormPage);
-router.get('/:_id', postController.getPostDetailPage);
+router.get('/:post_id', postController.getPostDetailPage);
 router.post('/', isLoggedIn, awsS3ImageUpload.single('photo_link'), postController.createPost);
 
 module.exports = router;
