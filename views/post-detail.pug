@@ -1,7 +1,7 @@
 extends layout
 
 block contents
-  .ui.raised.very.padded.container.segment(style='width:80%; margin:5% 0 5% 0;')
+  .ui.raised.very.padded.container.segment(style='width:80%; margin:5% 0 5% 0; padding-bottom:10%;')
     h1.place_name(style='margin-bottom:3%;')= postDetail.place_name
     img.ui.avatar.image(src='/images/profile.png')
     h3.ui.header(style='display:inline-block; margin:0 2% 0 0;')= postDetail.create_id.user_name
@@ -21,6 +21,22 @@ block contents
       each tag in postDetail.tag_list
         .ui.column.center.aligned.stackable.divided.grid.segment.checkbox(style='margin-right:5px;')
           | ##{tag.tag_name}
+    .ui.dividing.header(style='margin:2% 0 2% 0;')
+    .ui.comments
+      each comment in commentsList
+        .comment
+          a.avatar
+            img(src='/images/profile.png')
+          .content
+            a.author= comment.create_id.user_name
+            .metadata
+              span.date= comment.create_date
+            .text= comment.comment_body
+    .ui.reply.form.field
+      textarea(name='comment_body', id='comment_body', style="resize: none; margin:2% 0 2% 0;")
+    button(type='button').right.floated.ui.inverted.red.labeled.submit.icon.button#commentButton
+      i.icon.edit
+      |  등록하기
 block script
   script(type='text/javascript', src='//dapi.kakao.com/v2/maps/sdk.js?appkey=fa0f4ce25fd2414a706ea4a8e45af254&libraries=services')
   script(type='text/javascript', src='/javascripts/kakao-map-detail.js')

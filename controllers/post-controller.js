@@ -1,6 +1,7 @@
 const Post = require('../models/post');
 const Region = require('../models/region');
 const Tag = require('../models/tag');
+const Comment = require('../models/comment');
 
 class PostController {
 	async getPostFormPage(req, res, next) {
@@ -13,8 +14,9 @@ class PostController {
 	async getPostDetailPage(req, res, next) {
 		const post_id = req.params.post_id;
 		const postDetail = await Post.getPostDetail(post_id);
+		const commentsList = await Comment.getCommentsList(post_id);
 
-		res.render('post-detail', { title: '상세 페이지', postDetail });
+		res.render('post-detail', { title: '상세 페이지', postDetail, commentsList });
 	}
 
 	async createPost(req, res, next) {
