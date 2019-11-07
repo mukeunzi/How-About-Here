@@ -1,4 +1,5 @@
 const Region = require('../models/region');
+const moment = require('moment');
 
 class RegionController {
 	async getRegionPage(req, res, next) {
@@ -18,9 +19,9 @@ class RegionController {
         <td>${newRegion.region_name}</td>
         <td class='status_code'>${newRegion.status_code}</td>
         <td>${req.user.user_name}</td>
-        <td>${newRegion.create_date}</td>
+        <td>${moment(newRegion.create_date).fromNow()}</td>
         <td>${req.user.user_name}</td>
-        <td>${newRegion.update_date}</td>
+        <td>${moment(newRegion.update_date).fromNow()}</td>
       </tr>`;
 
 			return res.send(newRegionElement);

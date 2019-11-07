@@ -5,7 +5,7 @@ block contents
     h1.place_name(style='margin-bottom:3%;')= postDetail.place_name
     img.ui.avatar.image(src='/images/profile.png')
     h3.ui.header(style='display:inline-block; margin:0 2% 0 0;')= postDetail.create_id.user_name
-    | #{postDetail.create_date}
+    span= moment(postDetail.create_date).fromNow()
     .ui.dividing.header(style='margin:2% 0 2% 0;')
     h4.item
       i.map.marker.alternate.icon(style='display:inline;')
@@ -30,7 +30,7 @@ block contents
           .content
             a.author= comment.create_id.user_name
             .metadata
-              span.date= comment.create_date
+              span.date= moment(comment.create_date).fromNow()
             .text= comment.comment_body
     .ui.reply.form.field
       textarea(name='comment_body', id='comment_body', style="resize: none; margin:2% 0 2% 0;")

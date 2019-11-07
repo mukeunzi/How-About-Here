@@ -1,4 +1,5 @@
 const Tag = require('../models/tag');
+const moment = require('moment');
 
 class TagController {
 	async getTagPage(req, res, next) {
@@ -18,9 +19,9 @@ class TagController {
         <td>${newTag.tag_name}</td>
         <td class='status_code'>${newTag.status_code}</td>
         <td>${req.user.user_name}</td>
-        <td>${newTag.create_date}</td>
+        <td>${moment(newTag.create_date).fromNow()}</td>
         <td>${req.user.user_name}</td>
-        <td>${newTag.update_date}</td>
+        <td>${moment(newTag.update_date).fromNow()}</td>
       </tr>`;
 
 			return res.send(newTagElement);

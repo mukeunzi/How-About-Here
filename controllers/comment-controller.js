@@ -1,4 +1,5 @@
 const Comment = require('../models/comment');
+const moment = require('moment');
 
 class CommentController {
 	async createComment(req, res, next) {
@@ -13,7 +14,7 @@ class CommentController {
 			<div class="content">
 				<a class="author">${req.user.user_name}</a>
 				<div class="metadata">
-					<span class="date">${newComment.create_date}</span>
+					<span class="date">${moment(newComment.create_date).fromNow()}</span>
 				</div>
 				<div class="text">${newComment.comment_body}</div>
 			</div>

@@ -5,6 +5,6 @@ mixin makeRegionElement(region)
     td= region.region_name
     td(class='status_code')= region.status_code
     td= region.create_id.user_name
-    td= region.create_date
+    td= moment(region.create_date).format('YYYY-MM-DD hh:mm:ss')
     td= region.update_id.user_name
-    td= region.update_date
+    td= moment(region.update_date).format('YYYY-MM-DD hh:mm:ss')

@@ -9,6 +9,7 @@ const passport = require('passport');
 const passportConfig = require('./config/index');
 require('dotenv').config();
 const mongodb = require('./models/index');
+const moment = require('moment');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -55,6 +56,8 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
+	app.locals.moment = moment;
+
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
