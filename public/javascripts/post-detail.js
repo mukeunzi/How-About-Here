@@ -38,10 +38,14 @@ const addComment = async () => {
 		});
 
 		if (response.ok) {
-			const newCommentElement = await response.text();
+			const result = await response.text();
+
+			if (result === 'notLoggedIn') {
+				return alert('로그인이 필요합니다!');
+			}
 
 			const commentsList = document.querySelector('.ui.comments');
-			commentsList.insertAdjacentHTML('beforeend', newCommentElement);
+			commentsList.insertAdjacentHTML('beforeend', result);
 
 			document.querySelector('#comment_body').value = '';
 		}
