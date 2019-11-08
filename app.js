@@ -27,6 +27,8 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.locals.moment = moment;
+
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -56,8 +58,6 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-	app.locals.moment = moment;
-
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
