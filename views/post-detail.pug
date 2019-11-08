@@ -32,7 +32,7 @@ block contents
             a.author= comment.create_id.user_name
             .metadata
               span.date= moment(comment.create_date).fromNow()
-              if postDetail.create_id._id.equals(comment.create_id._id)
+              if user._id.equals(comment.create_id._id)
                 span(style='cursor:pointer;').deleteComment 삭제
             .text= comment.comment_body
     .ui.reply.form.field
