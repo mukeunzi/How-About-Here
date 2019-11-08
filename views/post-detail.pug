@@ -28,13 +28,16 @@ block contents
           a.avatar
             img(src='/images/profile.png')
           .content
+            input(type='hidden', value=comment._id).comment_id
             a.author= comment.create_id.user_name
             .metadata
               span.date= moment(comment.create_date).fromNow()
+              if postDetail.create_id._id.equals(comment.create_id._id)
+                span(style='cursor:pointer;').deleteComment 삭제
             .text= comment.comment_body
     .ui.reply.form.field
       textarea(name='comment_body', id='comment_body', style="resize: none; margin:2% 0 2% 0;")
-    button(type='button').right.floated.ui.inverted.red.labeled.submit.icon.button#commentButton
+    button(type='button').right.floated.ui.inverted.red.labeled.submit.icon.button#addComment
       i.icon.edit
       |  등록하기
 block script

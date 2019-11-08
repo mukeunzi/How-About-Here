@@ -22,6 +22,15 @@ class CommentController {
 
 		return res.send(newCommentElement);
 	}
+
+	async deleteComment(req, res, next) {
+		const authorObjectId = req.user._id;
+		const comment_id = req.params.comment_id;
+
+		await Comment.deleteComment(authorObjectId, comment_id);
+
+		return res.end();
+	}
 }
 
 module.exports = new CommentController();

@@ -48,6 +48,10 @@ commentSchema.statics.createComment = async function(authorObjectId, commentForm
 	return newComment;
 };
 
+commentSchema.statics.deleteComment = async function(authorObjectId, _id) {
+	await this.updateOne({ _id }, { $set: { update_id: authorObjectId, status_code: 0 } });
+};
+
 commentSchema.statics.getCommentsList = async function(post_id) {
 	const commentsList = await this.find({ post_id, status_code: 1 }).populate({
 		path: 'create_id',
