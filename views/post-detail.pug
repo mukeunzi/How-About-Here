@@ -32,8 +32,9 @@ block contents
             a.author= comment.create_id.user_name
             .metadata
               span.date= moment(comment.create_date).fromNow()
-              if comment.create_id._id.equals(user._id)
-                span(style='cursor:pointer;').deleteComment 삭제
+              if user
+                if user._id === comment.create_id._id.toString()
+                  span(style='cursor:pointer;').deleteComment 삭제
             .text= comment.comment_body
     .ui.reply.form.field
       textarea(name='comment_body', id='comment_body', style="resize: none; margin:2% 0 2% 0;")
