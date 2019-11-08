@@ -39,7 +39,7 @@ class UserController {
 			message = flashMessage.message[0];
 		}
 
-		res.render('sign-up', { title: 'Sign Up', message });
+		res.render('sign-up', { title: 'Sign Up', user: req.user, message });
 	}
 }
 

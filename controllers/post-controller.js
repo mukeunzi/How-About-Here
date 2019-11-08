@@ -8,7 +8,7 @@ class PostController {
 		const regionList = await Region.getRegionList();
 		const tagList = await Tag.getTagList();
 
-		res.render('post', { title: 'Posting', regionList, tagList });
+		res.render('post', { title: 'Posting', user: req.user, regionList, tagList });
 	}
 
 	async getPostDetailPage(req, res, next) {
@@ -16,7 +16,7 @@ class PostController {
 		const postDetail = await Post.getPostDetail(post_id);
 		const commentsList = await Comment.getCommentsList(post_id);
 
-		res.render('post-detail', { title: '상세 페이지', postDetail, commentsList });
+		res.render('post-detail', { title: '상세 페이지', user: req.user, postDetail, commentsList });
 	}
 
 	async createPost(req, res, next) {

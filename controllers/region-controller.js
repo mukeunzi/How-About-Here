@@ -5,7 +5,7 @@ class RegionController {
 	async getRegionPage(req, res, next) {
 		const regionList = await Region.getRegionListAll();
 
-		res.render('region', { title: '지역관리', regionList });
+		res.render('region', { title: '지역관리', user: req.user, regionList });
 	}
 
 	async createRegion(req, res, next) {

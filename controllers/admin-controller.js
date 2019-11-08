@@ -1,6 +1,6 @@
 class AdminController {
 	getIndexPage(req, res, next) {
-		res.render('admin', { title: '관리자 페이지' });
+		res.render('admin', { title: '관리자 페이지', user: req.user });
 	}
 }
 

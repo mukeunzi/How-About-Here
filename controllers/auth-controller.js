@@ -50,7 +50,7 @@ class AuthController {
 		if (flashMessage.error) {
 			message = flashMessage.error[0];
 		}
-		res.render('login', { title: 'LOGIN', message });
+		res.render('login', { title: 'LOGIN', user: req.user, message });
 	}
 }
 

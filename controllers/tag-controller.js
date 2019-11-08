@@ -5,7 +5,7 @@ class TagController {
 	async getTagPage(req, res, next) {
 		const tagList = await Tag.getTagListAll();
 
-		res.render('tag', { title: '태그관리', tagList });
+		res.render('tag', { title: '태그관리', user: req.user, tagList });
 	}
 
 	async createTag(req, res, next) {
