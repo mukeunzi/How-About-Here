@@ -37,6 +37,15 @@ class PostController {
 
 		res.redirect(`/post/${post_id}`);
 	}
+
+	async deletePost(req, res, next) {
+		const authorObjectId = req.user._id;
+		const post_id = req.params.post_id;
+
+		await Post.deletePost(authorObjectId, post_id);
+
+		return res.send('successDeletePost');
+	}
 }
 
 module.exports = new PostController();

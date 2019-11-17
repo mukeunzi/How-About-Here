@@ -1,9 +1,11 @@
 window.addEventListener('load', function() {
+	$('.ui.dropdown').dropdown();
 	$('.ui.rating').rating('disable');
 
 	const modal = document.querySelector('#modal');
 	const addCommentButton = document.querySelector('#addComment');
 	const deleteCommentButtons = document.querySelectorAll('.deleteComment');
+	const deletePostButton = document.querySelector('#deletePost');
 
 	modal.addEventListener('click', function() {
 		$('.ui.basic.modal').modal('show');
@@ -17,6 +19,10 @@ window.addEventListener('load', function() {
 		button.addEventListener('click', function(event) {
 			deleteCommentEvent(button);
 		});
+	});
+
+	deletePostButton.addEventListener('click', function() {
+		deletePostEvent();
 	});
 });
 
@@ -81,6 +87,35 @@ const deleteCommentEvent = async button => {
 			}
 
 			commentContent.parentNode.remove();
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const deletePostEvent = async () => {
+	const isDelete = confirm('삭제하시겠습니까?');
+
+	if (!isDelete) {
+		return false;
+	}
+
+	const post_id = window.location.pathname.substring(6);
+	try {
+		const response = await fetch(`/post/${post_id}`, { method: 'DELETE' });
+
+		if (response.ok) {
+			const result = await response.text();
+
+			if (result === 'notLoggedIn') {
+				return alert('로그인이 필요합니다!');
+			}
+
+			if (result === 'successDeletePost') {
+				location.href = '/';
+			} else {
+				return alert('알 수 없는 오류입니다.');
+			}
 		}
 	} catch (error) {
 		console.log(error);

@@ -9,5 +9,6 @@ const router = express.Router();
 router.get('/', isLoggedIn, postController.getPostFormPage);
 router.get('/:post_id', postController.getPostDetailPage);
 router.post('/', isLoggedIn, awsS3ImageUpload.single('photo_link'), postController.createPost);
+router.delete('/:post_id', isLoggedIn, postController.deletePost);
 
 module.exports = router;
