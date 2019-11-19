@@ -110,4 +110,10 @@ postSchema.statics.deletePost = async function(authorObjectId, postId) {
 	await this.updateOne({ _id: postId }, { $set: { update_id: authorObjectId, status_code: 0 } });
 };
 
+postSchema.statics.updatePost = async function(authorObjectId, postForm) {
+	const { _id, tag_list, star_rating, post_contents } = postForm;
+
+	await this.updateOne({ _id }, { $set: { update_id: authorObjectId, tag_list, star_rating, post_contents } });
+};
+
 module.exports = mongoose.model('Post', postSchema);

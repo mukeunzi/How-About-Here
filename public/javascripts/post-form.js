@@ -1,20 +1,29 @@
-window.addEventListener('load', function() {
-	$('.ui.rating').rating({
-		initialRating: 3,
-		maxRating: 5
-	});
+import {
+	notCheckedTag,
+	isEmptyTitle,
+	notCheckedStarRating,
+	isEmptyPhoto,
+	isEmptyContents
+} from './post-form-validation.js';
 
+window.addEventListener('load', function() {
 	const postForm = document.querySelector('#postForm');
 
 	postForm.addEventListener('submit', function(event) {
 		event.preventDefault();
 		isValidFormData();
 	});
+
+	$('.ui.rating').rating({
+		initialRating: 0,
+		maxRating: 5
+	});
 });
 
 const isValidFormData = () => {
 	const place_name = document.querySelector('#place_name').value;
 	const tag_list = document.querySelectorAll('.tag_list:checked').length;
+	const star_rating = $('.ui.star.rating').rating('get rating');
 	const post_contents = document.querySelector('#post_contents').value;
 	const photo_link = document.querySelector('#photo_link').value;
 
@@ -26,6 +35,11 @@ const isValidFormData = () => {
 	if (notCheckedTag(tag_list)) {
 		alert('해시태그를 선택해주세요!');
 		return document.querySelector('.tag_list').focus();
+	}
+
+	if (notCheckedStarRating(star_rating)) {
+		alert('별점을 선택해주세요!');
+		return document.querySelector('#star_rating').focus();
 	}
 
 	if (isEmptyPhoto(photo_link)) {
@@ -42,32 +56,4 @@ const isValidFormData = () => {
 	document.querySelector('#star_rating').value = starRating;
 
 	return document.querySelector('#postForm').submit();
-};
-
-const notCheckedTag = tag_list => {
-	if (!tag_list) {
-		return true;
-	}
-	return false;
-};
-
-const isEmptyTitle = place_name => {
-	if (!place_name) {
-		return true;
-	}
-	return false;
-};
-
-const isEmptyPhoto = photo_link => {
-	if (!photo_link) {
-		return true;
-	}
-	return false;
-};
-
-const isEmptyContents = post_contents => {
-	if (!post_contents) {
-		return true;
-	}
-	return false;
 };

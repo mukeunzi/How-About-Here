@@ -5,6 +5,7 @@ window.addEventListener('load', function() {
 	const modal = document.querySelector('#modal');
 	const addCommentButton = document.querySelector('#addComment');
 	const deleteCommentButtons = document.querySelectorAll('.deleteComment');
+	const updatePostButton = document.querySelector('#updatePost');
 	const deletePostButton = document.querySelector('#deletePost');
 
 	modal.addEventListener('click', function() {
@@ -21,9 +22,16 @@ window.addEventListener('load', function() {
 		});
 	});
 
-	deletePostButton.addEventListener('click', function() {
-		deletePostEvent();
-	});
+	if (updatePostButton && deletePostButton) {
+		updatePostButton.addEventListener('click', function() {
+			const post_id = window.location.pathname.substring(6);
+			location.href = `/post/edit/${post_id}`;
+		});
+
+		deletePostButton.addEventListener('click', function() {
+			deletePostEvent();
+		});
+	}
 });
 
 const isValidFormData = comment_body => {

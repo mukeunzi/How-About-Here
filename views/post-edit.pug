@@ -1,0 +1,38 @@
+extends layout
+
+block style
+  link(rel='stylesheet', href='/stylesheets/kakao-map.css')
+
+block contents
+  .ui.raised.very.padded.text.container.segment(style='margin-top:5%;')
+    h1.ui.dividing.header= title
+    h5.item
+      i.map.marker.alternate.icon(style='display:inline;')
+      span#detail_address #{postDetail.detail_address}, #{postDetail.region_name.region_name}
+    .kakao-map(style='width:600px;height:400px;margin:auto;')
+    br
+
+    form.ui.form(id='postEditForm')
+      .field
+        label 해시태그(1개 이상)
+        each tag in tagList
+          .ui.column.center.aligned.stackable.divided.grid.segment.checkbox(style='margin:5px;')
+            - const isChecked = postDetail.tag_list.some(checkedTag => checkedTag._id.toString() === tag._id.toString());
+            input(type='checkbox', name='tag_list', class='tag_list', value=tag._id, checked=isChecked ? true : false)
+            label ##{tag.tag_name}
+      .field
+        label 별점
+        .ui.star.rating
+        input#star_rating(type='hidden', name='star_rating', value=`${postDetail.star_rating}`)
+      .field
+        label 업로드 사진
+        img.ui.fluid.image(src=`${postDetail.photo_link}`, style='margin-bottom:5%;')
+      .field
+        label 후기 작성
+        textarea(name='post_contents', id='post_contents', style="resize: none;")
+          | #{postDetail.post_contents}
+      input(type='submit', id='postEditButton', value='수정').ui.right.floated.inverted.blue.button
+block script
+  script(type='module', src='/javascripts/post-edit-form.js')
+  script(type='text/javascript', src='//dapi.kakao.com/v2/maps/sdk.js?appkey=fa0f4ce25fd2414a706ea4a8e45af254&libraries=services')
+  script(type='text/javascript', src='/javascripts/kakao-map-detail.js')

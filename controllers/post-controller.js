@@ -19,6 +19,16 @@ class PostController {
 		res.render('post-detail', { title: '상세 페이지', user: req.user, postDetail, commentsList });
 	}
 
+	async getPostEditFormPage(req, res, next) {
+		const post_id = req.params.post_id;
+		const postDetail = await Post.getPostDetail(post_id);
+
+		const regionList = await Region.getRegionList();
+		const tagList = await Tag.getTagList();
+
+		res.render('post-edit', { title: 'Edit Posting', user: req.user, regionList, tagList, postDetail });
+	}
+
 	async createPost(req, res, next) {
 		const authorObjectId = req.user._id;
 		const { region_name } = req.body;
@@ -45,6 +55,16 @@ class PostController {
 		await Post.deletePost(authorObjectId, post_id);
 
 		return res.send('successDeletePost');
+	}
+
+	async updatePost(req, res, next) {
+		const authorObjectId = req.user._id;
+		const post_id = req.params.post_id;
+		req.body._id = post_id;
+
+		await Post.updatePost(authorObjectId, req.body);
+
+		return res.send(`successUpdatePost`);
 	}
 }
 
