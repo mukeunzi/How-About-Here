@@ -1,3 +1,5 @@
+import { map, centerCoordinate } from './kakao-map-detail.js';
+
 window.addEventListener('load', function() {
 	$('.ui.dropdown').dropdown();
 	$('.ui.rating').rating('disable');
@@ -10,6 +12,8 @@ window.addEventListener('load', function() {
 
 	modal.addEventListener('click', function() {
 		$('.ui.basic.modal').modal('show');
+		map.relayout();
+		map.setCenter(centerCoordinate);
 	});
 
 	addCommentButton.addEventListener('click', function(event) {
