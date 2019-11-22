@@ -8,8 +8,9 @@ class CommentController {
 		const { comment_body } = req.body;
 		const commentForm = { comment_body, post_id };
 
-		const newComment = await Comment.createComment(authorObjectId, commentForm);
-		let newCommentElement = `<div class='comment'>
+		try {
+			const newComment = await Comment.createComment(authorObjectId, commentForm);
+			let newCommentElement = `<div class='comment'>
 				<a class='avatar'>
 					<img src='/images/profile.png'>
 				</a>
@@ -19,25 +20,32 @@ class CommentController {
 					<div class='metadata'>
 						<span class='date'>${moment(newComment.create_date).fromNow()}</span>`;
 
-		if (authorObjectId === newComment.create_id._id.toString()) {
-			newCommentElement += `<span class='deleteComment' style='cursor:pointer;'>삭제</span>`;
-		}
+			if (authorObjectId === newComment.create_id._id.toString()) {
+				newCommentElement += `<span class='deleteComment' style='cursor:pointer;'>삭제</span>`;
+			}
 
-		newCommentElement += `</div>
+			newCommentElement += `</div>
 					<div class='text'>${newComment.comment_body}</div>
 				</div>
 			</div>`;
 
-		return res.send(newCommentElement);
+			return res.send(newCommentElement);
+		} catch (error) {
+			next(error);
+		}
 	}
 
 	async deleteComment(req, res, next) {
 		const authorObjectId = req.user._id;
 		const comment_id = req.params.comment_id;
 
-		await Comment.deleteComment(authorObjectId, comment_id);
+		try {
+			await Comment.deleteComment(authorObjectId, comment_id);
 
-		return res.end();
+			return res.end();
+		} catch (error) {
+			next(error);
+		}
 	}
 }
 

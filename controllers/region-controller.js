@@ -3,16 +3,20 @@ const moment = require('moment');
 
 class RegionController {
 	async getRegionPage(req, res, next) {
-		const regionList = await Region.getRegionListAll();
+		try {
+			const regionList = await Region.getRegionListAll();
 
-		res.render('region', { title: '지역관리', user: req.user, regionList });
+			res.render('region', { title: '지역관리', user: req.user, regionList });
+		} catch (error) {
+			next(error);
+		}
 	}
 
 	async createRegion(req, res, next) {
-		try {
-			const authorObjectId = req.user._id;
-			const region_name = req.body.region_name;
+		const authorObjectId = req.user._id;
+		const region_name = req.body.region_name;
 
+		try {
 			const newRegion = await Region.createRegion(authorObjectId, region_name);
 			const newRegionElement = `<tr>
         <td><input type='checkbox' class='_id' id=${newRegion._id} value=${newRegion._id}></td>
@@ -31,10 +35,10 @@ class RegionController {
 	}
 
 	async deleteRegion(req, res, next) {
-		try {
-			const authorObjectId = req.user._id;
-			const checkedRegions = req.query._id;
+		const authorObjectId = req.user._id;
+		const checkedRegions = req.query._id;
 
+		try {
 			await checkedRegions.map(async region => {
 				await Region.deleteRegion(authorObjectId, region);
 			});

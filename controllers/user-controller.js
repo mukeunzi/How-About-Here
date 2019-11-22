@@ -3,9 +3,9 @@ const AuthController = require('./auth-controller');
 
 class UserController {
 	async localSignUp(req, res, next) {
-		try {
-			const { user_name, user_id, user_password } = req.body;
+		const { user_name, user_id, user_password } = req.body;
 
+		try {
 			const duplicatedId = await User.checkDuplicatedId(user_id, 'local');
 			const duplicatedName = await User.checkDuplicatedName(user_name);
 
