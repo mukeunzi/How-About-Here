@@ -39,6 +39,11 @@ const postSchema = new Schema(
 				default: undefined
 			}
 		],
+		likes_count: {
+			type: Number,
+			required: true,
+			default: 0
+		},
 		create_id: {
 			type: ObjectId,
 			required: true,
@@ -114,6 +119,12 @@ postSchema.statics.updatePost = async function(authorObjectId, postForm) {
 	const { _id, tag_list, star_rating, post_contents } = postForm;
 
 	await this.updateOne({ _id }, { $set: { update_id: authorObjectId, tag_list, star_rating, post_contents } });
+};
+
+postSchema.statics.updateLike = async function(postId, count) {
+	const updatedPost = await this.findOneAndUpdate({ _id: postId }, { $inc: { likes_count: count } }, { new: true });
+
+	return updatedPost.likes_count;
 };
 
 module.exports = mongoose.model('Post', postSchema);

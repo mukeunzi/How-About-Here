@@ -28,11 +28,20 @@ block contents
       .content
         .kakao-map(style='width:800px;height:400px;margin:auto;')
     img.ui.fluid.image(src=`${postDetail.photo_link}`, style='margin-bottom:5%;')
-    p=postDetail.post_contents
+    p= postDetail.post_contents
     .field
       each tag in postDetail.tag_list
         .ui.column.center.aligned.stackable.divided.grid.segment.checkbox(style='margin-right:5px;')
           | ##{tag.tag_name}
+    .ui.dividing.header(style='margin:2% 0 2% 0;')
+    span.item(style='margin-right:3%;')
+      - const userlikedPost = user && user.likes.includes(postDetail._id.toString()) ? 'heart red icon' : 'heart outline red icon';
+      i(style='cursor:pointer;', class=`${userlikedPost}`)
+      | 좋아요 
+      span#likes_count= postDetail.likes_count
+    span.item
+      i.comment.alternate.outline.icon 
+      | 댓글 #{postDetail.likes_count}
     .ui.dividing.header(style='margin:2% 0 2% 0;')
     .ui.comments
       each comment in commentsList

@@ -2,6 +2,7 @@ const Post = require('../models/post');
 const Region = require('../models/region');
 const Tag = require('../models/tag');
 const Comment = require('../models/comment');
+const User = require('../models/user');
 
 class PostController {
 	async getPostFormPage(req, res, next) {
@@ -16,11 +17,16 @@ class PostController {
 	}
 
 	async getPostDetailPage(req, res, next) {
+		const authorObjectId = req.user;
 		const post_id = req.params.post_id;
 
 		try {
 			const postDetail = await Post.getPostDetail(post_id);
 			const commentsList = await Comment.getCommentsList(post_id);
+			if (authorObjectId) {
+				const userFavoritePosts = await User.getFavoritePosts(authorObjectId);
+				req.user.likes = userFavoritePosts;
+			}
 
 			res.render('post-detail', { title: '상세 페이지', user: req.user, postDetail, commentsList });
 		} catch (error) {
@@ -87,6 +93,34 @@ class PostController {
 			await Post.updatePost(authorObjectId, req.body);
 
 			return res.send(`successUpdatePost`);
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	async addLike(req, res, next) {
+		const authorObjectId = req.user._id;
+		const post_id = req.params.post_id;
+
+		try {
+			await User.addFavoritePosts(authorObjectId, post_id);
+			const likes = await Post.updateLike(post_id, 1);
+
+			return res.send(likes.toString());
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	async removeLike(req, res, next) {
+		const authorObjectId = req.user._id;
+		const post_id = req.params.post_id;
+
+		try {
+			await User.removeFavoritePosts(authorObjectId, post_id);
+			const likes = await Post.updateLike(post_id, -1);
+
+			return res.send(likes.toString());
 		} catch (error) {
 			next(error);
 		}

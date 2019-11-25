@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const { Schema } = mongoose;
+const {
+	Types: { ObjectId }
+} = Schema;
 
 const userSchema = new Schema({
 	user_name: {
@@ -25,6 +28,12 @@ const userSchema = new Schema({
 		type: String,
 		required: true
 	},
+	favorite_post: [
+		{
+			type: ObjectId,
+			ref: 'Post'
+		}
+	],
 	status_code: {
 		type: Number,
 		required: true,
@@ -71,6 +80,20 @@ userSchema.statics.getUserInfo = async function(user_id) {
 userSchema.methods.isValidPassword = async function(requestPassword, encryptedPassword) {
 	const isValid = await bcrypt.compare(requestPassword, encryptedPassword);
 	return isValid;
+};
+
+userSchema.statics.getFavoritePosts = async function(authorObjectId) {
+	const postList = await this.findOne({ _id: authorObjectId }).select('favorite_post');
+
+	return postList.favorite_post;
+};
+
+userSchema.statics.addFavoritePosts = async function(authorObjectId, postId) {
+	await this.findOneAndUpdate({ _id: authorObjectId }, { $push: { favorite_post: postId } });
+};
+
+userSchema.statics.removeFavoritePosts = async function(authorObjectId, postId) {
+	await this.findOneAndUpdate({ _id: authorObjectId }, { $pull: { favorite_post: postId } });
 };
 
 module.exports = mongoose.model('User', userSchema);
