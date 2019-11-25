@@ -10,6 +10,8 @@ class CommentController {
 
 		try {
 			const newComment = await Comment.createComment(authorObjectId, commentForm);
+			newComment.comment_body = newComment.comment_body.replace(/(\n|\r\n)/g, '<br />');
+
 			let newCommentElement = `<div class='comment'>
 				<a class='avatar'>
 					<img src='/images/profile.png'>
@@ -25,7 +27,7 @@ class CommentController {
 			}
 
 			newCommentElement += `</div>
-					<div class='text'>${newComment.comment_body}</div>
+					<div class='text comment_body'>${newComment.comment_body}</div>
 				</div>
 			</div>`;
 

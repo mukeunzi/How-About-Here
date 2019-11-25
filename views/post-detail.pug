@@ -28,7 +28,7 @@ block contents
       .content
         .kakao-map(style='width:800px;height:400px;margin:auto;')
     img.ui.fluid.image(src=`${postDetail.photo_link}`, style='margin-bottom:5%;')
-    p= postDetail.post_contents
+    #post_contents= postDetail.post_contents
     .field
       each tag in postDetail.tag_list
         .ui.column.center.aligned.stackable.divided.grid.segment.checkbox(style='margin-right:5px;')
@@ -55,7 +55,7 @@ block contents
               span.date= moment(comment.create_date).fromNow()
               if user && user._id.toString() === comment.create_id._id.toString()
                 span(style='cursor:pointer;').deleteComment 삭제
-            .text= comment.comment_body
+            .text.comment_body= comment.comment_body
     .ui.reply.form.field
       textarea(name='comment_body', id='comment_body', style="resize: none; margin:2% 0 2% 0;")
     button(type='button').right.floated.ui.inverted.red.labeled.submit.icon.button#addComment

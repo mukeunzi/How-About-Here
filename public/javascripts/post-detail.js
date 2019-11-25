@@ -1,6 +1,7 @@
 import { map, centerCoordinate } from './kakao-map-detail.js';
 
 window.addEventListener('load', function() {
+	replaceLineBreak();
 	$('.ui.dropdown').dropdown();
 	$('.ui.rating').rating('disable');
 
@@ -192,4 +193,17 @@ const unLikePost = async likeButton => {
 	} catch (error) {
 		console.log(error);
 	}
+};
+
+const replaceLineBreak = () => {
+	const postContents = document.querySelector('#post_contents');
+	const commentsList = document.querySelectorAll('.comment_body');
+
+	const replaceContents = postContents.textContent.replace(/(\n|\r\n)/g, '<br />');
+	postContents.innerHTML = replaceContents;
+
+	commentsList.forEach(comments => {
+		const replaceComments = comments.textContent.replace(/(\n|\r\n)/g, '<br />');
+		comments.innerHTML = replaceComments;
+	});
 };
