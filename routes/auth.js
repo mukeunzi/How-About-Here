@@ -13,6 +13,6 @@ router.post(
 );
 router.post('/logout', isLoggedIn, authController.logOut);
 router.get('/google-login', isNotLoggedIn, authController.redirectGoogleLogIn);
-router.get('/google-oauth2', authController.googleLogIn);
+router.get('/google-oauth2', isNotLoggedIn, authController.googleLogIn);
 
 module.exports = router;
