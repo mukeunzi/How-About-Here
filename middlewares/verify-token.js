@@ -19,8 +19,7 @@ const verifyToken = async (req, res, next) => {
 			return next();
 		}
 
-		decodedToken._id = user._id;
-		req.user = decodedToken;
+		req.user = user;
 		return next();
 	} catch (error) {
 		next(error);

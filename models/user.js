@@ -16,8 +16,7 @@ const userSchema = new Schema({
 		required: true
 	},
 	user_password: {
-		type: String,
-		required: true
+		type: String
 	},
 	user_auth: {
 		type: String,
@@ -42,8 +41,7 @@ const userSchema = new Schema({
 });
 
 userSchema.statics.signUp = async function(signUpForm) {
-	const { user_name, user_id, user_password, auth_provider } = signUpForm;
-	const hashPassword = await bcrypt.hash(user_password, 12);
+	const { user_name, user_id, hashPassword, auth_provider } = signUpForm;
 
 	await this.create({
 		user_name,

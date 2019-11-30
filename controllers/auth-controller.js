@@ -4,7 +4,25 @@ const jwtUtil = require('../utils/jwt-token');
 
 class AuthController {
 	async localLogIn(req, res, next) {
+		const { user_id, user_password } = req.body;
+
 		try {
+			const user = await User.getUserInfo(user_id);
+
+			if (!user) {
+				req.flash('message', '아이디나 비밀번호가 올바르지 않습니다.');
+				return res.redirect('/auth');
+			}
+
+			const isValidUser = await user.isValidPassword(user_password, user.user_password);
+
+			if (!isValidUser) {
+				req.flash('message', '비밀번호가 올바르지 않습니다.');
+				return res.redirect('/auth');
+			}
+
+			req.user = user;
+
 			const token = await jwtUtil.makeToken(req.user);
 			res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
 
@@ -22,10 +40,13 @@ class AuthController {
 			const duplicatedId = await User.checkDuplicatedId(user_id, auth_provider);
 
 			if (!duplicatedId) {
-				await User.signUp(googleUserData);
+				return res.render('sign-up-google', { googleUserData });
 			}
 
-			const token = await jwtUtil.makeToken(googleUserData);
+			const user = await User.getUserInfo(user_id);
+			req.user = user;
+
+			const token = await jwtUtil.makeToken(req.user);
 			res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
 
 			return res.redirect('/');
@@ -48,8 +69,8 @@ class AuthController {
 		const flashMessage = req.flash();
 		let message = '';
 
-		if (flashMessage.error) {
-			message = flashMessage.error[0];
+		if (flashMessage.message) {
+			message = flashMessage.message[0];
 		}
 		res.render('login', { title: 'LOGIN', user: req.user, message });
 	}

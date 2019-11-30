@@ -20,21 +20,22 @@ html
                 a.item(href='/post')
                   i.pencil.alternate.icon
                   |  포스팅
-                a.item(href='/auth')
+                a.item
                   i.user.icon
                   |  #{user.user_name}
-                a#logOutButton.item(href='/auth')
+                a#logOutButton.item
                   i.power.off.icon
                   |  로그아웃
             else
                 a.item(href='/auth')
                   i.sign-in.icon
                   |  로그인
-                a.item(href='users')
+                a.item(href='/users')
                   i.user.plus.icon
                   |  회원가입
     block contents
 
   script(src='https://code.jquery.com/jquery-3.1.1.min.js', integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=', crossorigin='anonymous')
   script(src='/semantic/semantic.min.js')
+  script(type='text/javascript', src='/javascripts/index.js')
   block script

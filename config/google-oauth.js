@@ -35,9 +35,7 @@ const googleLogIn = async code => {
 	const response = await plus.people.get({ userId: 'me' });
 
 	const googleUserData = {
-		user_name: response.data.displayName,
 		user_id: response.data.emails[0].value,
-		user_password: response.data.emails[0].value,
 		auth_provider: 'google'
 	};
 

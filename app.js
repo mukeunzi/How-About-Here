@@ -5,8 +5,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
-const passport = require('passport');
-const passportConfig = require('./config/index');
 require('dotenv').config();
 const mongodb = require('./models/index');
 const moment = require('moment');
@@ -20,7 +18,6 @@ const commentRouter = require('./routes/comment');
 const { verifyToken } = require('./middlewares/verify-token');
 
 mongodb();
-passportConfig(passport);
 
 const app = express();
 
@@ -42,8 +39,6 @@ app.use(
 	})
 );
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(verifyToken);
 app.use('/', indexRouter);
