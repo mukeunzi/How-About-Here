@@ -4,6 +4,7 @@ window.addEventListener('load', function() {
 	replaceLineBreak();
 	$('.ui.dropdown').dropdown();
 	$('.ui.rating').rating('disable');
+	moment.locale('ko');
 
 	const modal = document.querySelector('#modal');
 	const addCommentButton = document.querySelector('#addComment');
@@ -24,7 +25,7 @@ window.addEventListener('load', function() {
 
 	deleteCommentButtons.forEach(button => {
 		button.addEventListener('click', function(event) {
-			deleteCommentEvent(button);
+			deleteCommentEvent(event);
 		});
 	});
 
@@ -51,6 +52,25 @@ const isValidFormData = comment_body => {
 	return true;
 };
 
+const makeNewCommentElement = jsonResult => {
+	const newCommentElement = `<div class="comment">
+		<a class="avatar">
+			<img src="/images/profile.png">
+		</a>
+		<div class="content">
+			<input class="comment_id" type="hidden" value=${jsonResult.newComment._id}>
+			<a class="author">${jsonResult.userName}</a>
+			<div class="metadata">
+				<span class="date">${moment(jsonResult.newComment.create_date).fromNow()}</span>
+				<span class="deleteComment" style="cursor:pointer;">삭제</span>
+			</div>
+			<div class="text comment_body">${jsonResult.newComment.comment_body}</div>
+		</div>
+	</div>`;
+
+	return newCommentElement;
+};
+
 const addCommentEvent = async () => {
 	const comment_body = document.querySelector('#comment_body').value;
 
@@ -68,14 +88,18 @@ const addCommentEvent = async () => {
 		});
 
 		if (response.ok) {
-			const result = await response.text();
+			const result = await response.json();
 
 			if (result === 'notLoggedIn') {
 				return alert('로그인이 필요합니다!');
 			}
 
+			const newCommentElement = makeNewCommentElement(result);
 			const commentsList = document.querySelector('.ui.comments');
-			commentsList.insertAdjacentHTML('beforeend', result);
+			commentsList.insertAdjacentHTML('beforeend', newCommentElement);
+			commentsList.lastChild.addEventListener('click', function(event) {
+				deleteCommentEvent(event);
+			});
 
 			document.querySelector('#comment_body').value = '';
 		}
@@ -84,14 +108,14 @@ const addCommentEvent = async () => {
 	}
 };
 
-const deleteCommentEvent = async button => {
+const deleteCommentEvent = async event => {
 	const isDelete = confirm('삭제하시겠습니까?');
 
 	if (!isDelete) {
 		return false;
 	}
 
-	const commentContent = button.parentNode.parentNode;
+	const commentContent = event.target.parentNode.parentNode;
 	const comment_id = commentContent.querySelector('.comment_id').value;
 
 	try {

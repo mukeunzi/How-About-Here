@@ -24,6 +24,7 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+moment.locale('ko');
 app.locals.moment = moment;
 
 app.use(logger('dev'));
