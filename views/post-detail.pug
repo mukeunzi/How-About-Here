@@ -53,7 +53,7 @@ block contents
             a.author= comment.create_id.user_name
             .metadata
               span.date= moment(comment.create_date).fromNow()
-              if user && user._id.toString() === comment.create_id._id.toString()
+              if user && (user._id.toString() === comment.create_id._id.toString() || user._id.toString() === postDetail.create_id._id.toString())
                 span(style='cursor:pointer;').deleteComment 삭제
             .text.comment_body= comment.comment_body
     .ui.reply.form.field
