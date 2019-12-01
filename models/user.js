@@ -86,6 +86,15 @@ userSchema.statics.getFavoritePosts = async function(authorObjectId) {
 	return postList.favorite_post;
 };
 
+userSchema.statics.isLikedPost = async function(authorObjectId, postId) {
+	const post = await this.findOne({ _id: authorObjectId, favorite_post: postId });
+
+	if (post) {
+		return true;
+	}
+	return false;
+};
+
 userSchema.statics.addFavoritePosts = async function(authorObjectId, postId) {
 	await this.findOneAndUpdate({ _id: authorObjectId }, { $push: { favorite_post: postId } });
 };

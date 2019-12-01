@@ -14,7 +14,6 @@ router.patch('/:post_id', isLoggedIn, postController.updatePost);
 router.delete('/:post_id', isLoggedIn, postController.deletePost);
 
 // 좋아요
-router.post('/like/:post_id', isLoggedInForAjax, postController.addLike);
-router.delete('/like/:post_id', isLoggedInForAjax, postController.removeLike);
+router.patch('/like/:post_id', isLoggedInForAjax, postController.likeEvent);
 
 module.exports = router;

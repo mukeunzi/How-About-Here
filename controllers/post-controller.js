@@ -98,29 +98,24 @@ class PostController {
 		}
 	}
 
-	async addLike(req, res, next) {
+	async likeEvent(req, res, next) {
 		const authorObjectId = req.user._id;
 		const post_id = req.params.post_id;
 
 		try {
+			const isLiked = await User.isLikedPost(authorObjectId, post_id);
+
+			if (isLiked) {
+				await User.removeFavoritePosts(authorObjectId, post_id);
+				const likes = await Post.updateLike(post_id, -1);
+
+				return res.json({ action: 'unLike', likes });
+			}
+
 			await User.addFavoritePosts(authorObjectId, post_id);
 			const likes = await Post.updateLike(post_id, 1);
 
-			return res.send(likes.toString());
-		} catch (error) {
-			next(error);
-		}
-	}
-
-	async removeLike(req, res, next) {
-		const authorObjectId = req.user._id;
-		const post_id = req.params.post_id;
-
-		try {
-			await User.removeFavoritePosts(authorObjectId, post_id);
-			const likes = await Post.updateLike(post_id, -1);
-
-			return res.send(likes.toString());
+			return res.json({ action: 'like', likes });
 		} catch (error) {
 			next(error);
 		}
