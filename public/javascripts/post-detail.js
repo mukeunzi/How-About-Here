@@ -40,8 +40,8 @@ window.addEventListener('load', function() {
 		});
 	}
 
-	likeButton.addEventListener('click', function() {
-		likeButtonEvent(likeButton);
+	likeButton.addEventListener('click', function(event) {
+		likeButtonEvent(event);
 	});
 });
 
@@ -164,55 +164,23 @@ const deletePostEvent = async () => {
 	}
 };
 
-const likeButtonEvent = likeButton => {
-	const likeClassName = likeButton.className.split(' ');
-
-	if (likeClassName.includes('outline')) {
-		return likePost(likeButton);
-	}
-	return unLikePost(likeButton);
-};
-
-const likePost = async likeButton => {
+const likeButtonEvent = async event => {
 	const post_id = window.location.pathname.substring(6);
 
 	try {
-		const response = await fetch(`/post/like/${post_id}`, { method: 'POST' });
+		const response = await fetch(`/post/like/${post_id}`, { method: 'PATCH' });
 
 		if (response.ok) {
-			const result = await response.text();
+			const result = await response.json();
 
 			if (result === 'notLoggedIn') {
 				return alert('로그인이 필요합니다!');
 			}
 
-			likeButton.classList.remove('outline');
+			event.target.className = result.action === 'like' ? 'heart red icon' : 'heart outline red icon';
 
 			const likesCount = document.querySelector('#likes_count');
-			likesCount.innerHTML = result;
-		}
-	} catch (error) {
-		console.log(error);
-	}
-};
-
-const unLikePost = async likeButton => {
-	const post_id = window.location.pathname.substring(6);
-
-	try {
-		const response = await fetch(`/post/like/${post_id}`, { method: 'DELETE' });
-
-		if (response.ok) {
-			const result = await response.text();
-
-			if (result === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			likeButton.classList.add('outline');
-
-			const likesCount = document.querySelector('#likes_count');
-			likesCount.innerHTML = result;
+			likesCount.innerHTML = result.likes;
 		}
 	} catch (error) {
 		console.log(error);
