@@ -5,7 +5,12 @@ const mongoURI =
 
 module.exports = async () => {
 	try {
-		await mongoose.connect(mongoURI, { useNewUrlParser: true, useCreateIndex: true, useFindAndModify: false });
+		await mongoose.connect(mongoURI, {
+			useNewUrlParser: true,
+			useCreateIndex: true,
+			useFindAndModify: false,
+			useUnifiedTopology: true
+		});
 		console.log('Connected to mongodb...');
 	} catch (error) {
 		console.error('Could not connect to mongodb!!! : ', error);
