@@ -1,4 +1,7 @@
 import { map, centerCoordinate } from './kakao-map-detail.js';
+import { errorMessage } from './utils/error-message.js';
+
+const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
 
 window.addEventListener('load', function() {
 	replaceLineBreak();
@@ -90,11 +93,12 @@ const addCommentEvent = async () => {
 		if (response.ok) {
 			const result = await response.json();
 
-			if (result === 'notLoggedIn') {
+			if (result.message === 'notLoggedIn') {
 				return alert('로그인이 필요합니다!');
 			}
 
 			const newCommentElement = makeNewCommentElement(result);
+
 			const commentsList = document.querySelector('.ui.comments');
 			commentsList.insertAdjacentHTML('beforeend', newCommentElement);
 			commentsList.lastChild.addEventListener('click', function(event) {
@@ -102,9 +106,12 @@ const addCommentEvent = async () => {
 			});
 
 			document.querySelector('#comment_body').value = '';
+			return;
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 
@@ -122,16 +129,18 @@ const deleteCommentEvent = async event => {
 		const response = await fetch(`/comment/${comment_id}`, { method: 'DELETE' });
 
 		if (response.ok) {
-			const result = await response.text();
+			const result = await response.json();
 
-			if (result === 'notLoggedIn') {
+			if (result.message === 'notLoggedIn') {
 				return alert('로그인이 필요합니다!');
 			}
 
-			commentContent.parentNode.remove();
+			return commentContent.parentNode.remove();
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 
@@ -147,20 +156,19 @@ const deletePostEvent = async () => {
 		const response = await fetch(`/post/${post_id}`, { method: 'DELETE' });
 
 		if (response.ok) {
-			const result = await response.text();
+			const result = await response.json();
 
-			if (result === 'notLoggedIn') {
+			if (result.message === 'notLoggedIn') {
 				return alert('로그인이 필요합니다!');
 			}
 
-			if (result === 'successDeletePost') {
-				location.href = '/';
-			} else {
-				return alert('알 수 없는 오류입니다.');
-			}
+			location.href = '/';
+			return;
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 
@@ -173,7 +181,7 @@ const likeButtonEvent = async event => {
 		if (response.ok) {
 			const result = await response.json();
 
-			if (result === 'notLoggedIn') {
+			if (result.message === 'notLoggedIn') {
 				return alert('로그인이 필요합니다!');
 			}
 
@@ -181,9 +189,12 @@ const likeButtonEvent = async event => {
 
 			const likesCount = document.querySelector('#likes_count');
 			likesCount.innerHTML = result.likes;
+			return;
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 

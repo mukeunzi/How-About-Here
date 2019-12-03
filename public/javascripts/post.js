@@ -1,3 +1,7 @@
+import { errorMessage } from './utils/error-message.js';
+
+const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+
 window.addEventListener('load', function() {
 	const regionName = document.querySelectorAll('.region_name');
 	const tagList = document.querySelectorAll('.tag_list');
@@ -34,13 +38,24 @@ const searchRegionAndTag = async (regionName, tagList) => {
 
 	try {
 		const response = await fetch(`/search?region_name=${regionName}${searchTagCondition}`);
-		const searchResultJSON = await response.json();
-		const searchResultElement = makeSearchResult(searchResultJSON);
 
-		const cards = document.querySelector('.ui.cards');
-		cards.innerHTML = searchResultElement;
+		if (response.ok) {
+			const result = await response.json();
+
+			if (result.message === 'notLoggedIn') {
+				return alert('로그인이 필요합니다!');
+			}
+
+			const searchResultElement = makeSearchResult(result);
+
+			const cards = document.querySelector('.ui.cards');
+			cards.innerHTML = searchResultElement;
+			return;
+		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 

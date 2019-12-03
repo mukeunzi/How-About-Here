@@ -1,3 +1,7 @@
+import { errorMessage } from './utils/error-message.js';
+
+const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+
 window.addEventListener('load', function() {
 	const addRegionButton = document.querySelector('#addRegionButton');
 	const deleteRegionButton = document.querySelector('#deleteRegionButton');
@@ -27,15 +31,22 @@ const addRegion = async () => {
 		});
 
 		if (response.ok) {
-			const newRegionElement = await response.text();
+			const result = await response.json();
+
+			if (result.message === 'notLoggedIn') {
+				return alert('로그인이 필요합니다!');
+			}
 
 			const regionList = document.querySelector('#regionList');
-			regionList.insertAdjacentHTML('beforeend', newRegionElement);
+			regionList.insertAdjacentHTML('beforeend', result.newRegionElement);
 
 			document.querySelector('#region_name').value = '';
+			return;
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 
@@ -52,17 +63,24 @@ const deleteRegions = async () => {
 		});
 
 		if (response.ok) {
-			const deletedRegions = JSON.parse(await response.text());
+			const result = await response.json();
 
-			deletedRegions.map(region => {
+			if (result.message === 'notLoggedIn') {
+				return alert('로그인이 필요합니다!');
+			}
+
+			result.checkedRegions.map(region => {
 				const regionRow = document.querySelector(`[id='${region}']`).parentNode.parentNode;
 
 				regionRow.querySelector('.status_code').innerHTML = '0';
 				document.querySelector(`[id='${region}']`).checked = false;
 			});
+			return;
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 

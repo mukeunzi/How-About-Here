@@ -1,4 +1,7 @@
 import { notCheckedTag, notCheckedStarRating, isEmptyContents } from './post-form-validation.js';
+import { errorMessage } from './utils/error-message.js';
+
+const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
 
 window.addEventListener('load', function() {
 	const starRating = document.querySelector('#star_rating').value;
@@ -58,18 +61,19 @@ const updatePostEvent = async () => {
 		});
 
 		if (response.ok) {
-			const result = await response.text();
+			const result = await response.json();
 
-			if (result === 'notLoggedIn') {
+			if (result.message === 'notLoggedIn') {
 				return alert('로그인이 필요합니다!');
 			}
 
-			if (result === 'successUpdatePost') {
-				return (location.href = `/post/${post_id}`);
-			}
+			location.href = `/post/${post_id}`;
+			return;
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 

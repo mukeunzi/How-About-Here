@@ -1,3 +1,7 @@
+import { errorMessage } from './utils/error-message.js';
+
+const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+
 window.addEventListener('load', function() {
 	const addTagButton = document.querySelector('#addTagButton');
 	const deleteTagButton = document.querySelector('#deleteTagButton');
@@ -27,15 +31,22 @@ const addTag = async () => {
 		});
 
 		if (response.ok) {
-			const newTagElement = await response.text();
+			const result = await response.json();
+
+			if (result.message === 'notLoggedIn') {
+				return alert('로그인이 필요합니다!');
+			}
 
 			const tagList = document.querySelector('#tagList');
-			tagList.insertAdjacentHTML('beforeend', newTagElement);
+			tagList.insertAdjacentHTML('beforeend', result.newTagElement);
 
 			document.querySelector('#tag_name').value = '';
+			return;
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 
@@ -63,17 +74,24 @@ const deleteTags = async () => {
 		});
 
 		if (response.ok) {
-			const deletedTags = JSON.parse(await response.text());
+			const result = await response.json();
 
-			deletedTags.map(tag => {
+			if (result.message === 'notLoggedIn') {
+				return alert('로그인이 필요합니다!');
+			}
+
+			result.checkedTags.map(tag => {
 				const tagRow = document.querySelector(`[id='${tag}']`).parentNode.parentNode;
 
 				tagRow.querySelector('.status_code').innerHTML = '0';
 				document.querySelector(`[id='${tag}']`).checked = false;
 			});
+			return;
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 

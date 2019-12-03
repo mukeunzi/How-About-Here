@@ -1,3 +1,7 @@
+import { errorMessage } from './utils/error-message.js';
+
+const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+
 window.addEventListener('load', () => {
 	const logOutButton = document.querySelector('#logOutButton');
 
@@ -9,6 +13,16 @@ window.addEventListener('load', () => {
 });
 
 const logOut = async () => {
-	await fetch('/auth/logout', { method: 'POST' });
-	location.href = '/';
+	try {
+		const response = await fetch('/auth/logout', { method: 'POST' });
+
+		if (response.ok) {
+			location.href = '/';
+			return;
+		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
+	} catch (error) {
+		return alert(errorMessage[error.message]);
+	}
 };

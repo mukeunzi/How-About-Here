@@ -1,4 +1,7 @@
 import { isEmptyName } from './signup-form-validation.js';
+import { errorMessage } from './utils/error-message.js';
+
+const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
 
 window.addEventListener('load', function() {
 	const userName = document.querySelector('#user_name');
@@ -19,20 +22,23 @@ const checkDuplicatedName = async userName => {
 		const response = await fetch(`/users/${userName}`, { method: 'GET' });
 
 		if (response.ok) {
-			const result = await response.text();
+			const result = await response.json();
 
 			const message = document.querySelector('#message');
 
-			if (result === 'unavailable') {
+			if (result.message === 'unavailable') {
 				message.innerHTML = '이미 사용중인 이름입니다.';
 				message.className = 'unavailable';
-			} else if (result === 'available') {
+			} else if (result.message === 'available') {
 				message.innerHTML = '사용해도 좋은 이름입니다.';
 				message.className = 'available';
 			}
+			return;
 		}
+
+		throw new Error(INTERNAL_SERVER_ERROR);
 	} catch (error) {
-		console.log(error);
+		return alert(errorMessage[error.message]);
 	}
 };
 
