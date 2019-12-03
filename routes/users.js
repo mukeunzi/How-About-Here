@@ -1,8 +1,9 @@
 const express = require('express');
+const asyncify = require('express-asyncify');
 const { isNotLoggedIn } = require('../middlewares/login-auth');
 const userController = require('../controllers/user-controller');
 
-const router = express.Router();
+const router = asyncify(express.Router());
 
 router.get('/', isNotLoggedIn, userController.getSignUpPage);
 router.post('/', isNotLoggedIn, userController.createUser);

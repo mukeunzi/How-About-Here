@@ -4,15 +4,11 @@ const Post = require('../models/post');
 
 class IndexController {
 	async getIndexPage(req, res, next) {
-		try {
-			const regionList = await Region.getRegionList();
-			const tagList = await Tag.getTagList();
-			const postList = await Post.getPostList();
+		const regionList = await Region.getRegionList();
+		const tagList = await Tag.getTagList();
+		const postList = await Post.gedstPostList();
 
-			res.render('index', { title: 'Main', user: req.user, regionList, tagList, postList });
-		} catch (error) {
-			next(error);
-		}
+		res.render('index', { title: 'Main', user: req.user, regionList, tagList, postList });
 	}
 
 	async searchRegionAndTag(req, res, next) {
@@ -32,14 +28,9 @@ class IndexController {
 		}
 
 		const searchCondition = regionCondition.concat(tagCondition);
+		const searchResult = await Post.getSearchResult(searchCondition);
 
-		try {
-			const searchResult = await Post.getSearchResult(searchCondition);
-
-			return res.json(searchResult);
-		} catch (error) {
-			next(error);
-		}
+		return res.json(searchResult);
 	}
 }
 

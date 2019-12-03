@@ -6,53 +6,45 @@ class AuthController {
 	async localLogIn(req, res, next) {
 		const { user_id, user_password } = req.body;
 
-		try {
-			const user = await User.getUserInfo(user_id);
+		const user = await User.getUserInfo(user_id);
 
-			if (!user) {
-				req.flash('message', '아이디나 비밀번호가 올바르지 않습니다.');
-				return res.redirect('/auth');
-			}
-
-			const isValidUser = await user.isValidPassword(user_password, user.user_password);
-
-			if (!isValidUser) {
-				req.flash('message', '비밀번호가 올바르지 않습니다.');
-				return res.redirect('/auth');
-			}
-
-			req.user = user;
-
-			const token = await jwtUtil.makeToken(req.user);
-			res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
-
-			return res.redirect('/');
-		} catch (error) {
-			next(error);
+		if (!user) {
+			req.flash('message', '아이디나 비밀번호가 올바르지 않습니다.');
+			return res.redirect('/auth');
 		}
+
+		const isValidUser = await user.isValidPassword(user_password, user.user_password);
+
+		if (!isValidUser) {
+			req.flash('message', '비밀번호가 올바르지 않습니다.');
+			return res.redirect('/auth');
+		}
+
+		req.user = user;
+
+		const token = await jwtUtil.makeToken(req.user);
+		res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
+
+		return res.redirect('/');
 	}
 
 	async googleLogIn(req, res, next) {
-		try {
-			const googleUserData = await googleLogIn(req.query.code);
-			const { user_id, auth_provider } = googleUserData;
+		const googleUserData = await googleLogIn(req.query.code);
+		const { user_id, auth_provider } = googleUserData;
 
-			const duplicatedId = await User.checkDuplicatedId(user_id, auth_provider);
+		const duplicatedId = await User.checkDuplicatedId(user_id, auth_provider);
 
-			if (!duplicatedId) {
-				return res.render('sign-up-google', { googleUserData });
-			}
-
-			const user = await User.getUserInfo(user_id);
-			req.user = user;
-
-			const token = await jwtUtil.makeToken(req.user);
-			res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
-
-			return res.redirect('/');
-		} catch (error) {
-			next(error);
+		if (!duplicatedId) {
+			return res.render('sign-up-google', { googleUserData });
 		}
+
+		const user = await User.getUserInfo(user_id);
+		req.user = user;
+
+		const token = await jwtUtil.makeToken(req.user);
+		res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
+
+		return res.redirect('/');
 	}
 
 	redirectGoogleLogIn(req, res) {

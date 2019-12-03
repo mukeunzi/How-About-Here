@@ -1,9 +1,10 @@
 const express = require('express');
+const asyncify = require('express-asyncify');
 const postController = require('../controllers/post-controller');
 const { isLoggedIn, isLoggedInForAjax } = require('../middlewares/login-auth');
 const { awsS3ImageUpload } = require('../utils/aws-s3');
 
-const router = express.Router();
+const router = asyncify(express.Router());
 
 // 게시물 관련
 router.get('/', isLoggedIn, postController.getPostFormPage);

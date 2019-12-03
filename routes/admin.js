@@ -1,10 +1,11 @@
 const express = require('express');
+const asyncify = require('express-asyncify');
 const adminController = require('../controllers/admin-controller');
 const regionController = require('../controllers/region-controller');
 const tagController = require('../controllers/tag-controller');
 const { isLoggedIn, isLoggedInForAjax } = require('../middlewares/login-auth');
 
-const router = express.Router();
+const router = asyncify(express.Router());
 
 //관리자 - 메인 페이지
 router.get('/', isLoggedIn, adminController.getIndexPage);

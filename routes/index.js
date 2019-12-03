@@ -1,6 +1,8 @@
 const express = require('express');
-const router = express.Router();
+const asyncify = require('express-asyncify');
 const IndexController = require('../controllers/index-controller');
+
+const router = asyncify(express.Router());
 
 // 메인페이지
 router.get('/', IndexController.getIndexPage);

@@ -1,7 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const asyncify = require('express-asyncify');
 const { isLoggedIn, isNotLoggedIn } = require('../middlewares/login-auth');
 const authController = require('../controllers/auth-controller');
+
+const router = asyncify(express.Router());
 
 router.get('/', isNotLoggedIn, authController.getLogInPage);
 router.post('/', isNotLoggedIn, authController.localLogIn);
