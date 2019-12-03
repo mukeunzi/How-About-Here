@@ -28,7 +28,7 @@ class RegionController {
         <td>${moment(newRegion.update_date).fromNow()}</td>
       </tr>`;
 
-			return res.send(newRegionElement);
+			return res.json({ newRegionElement });
 		} catch (error) {
 			next(error);
 		}
@@ -43,7 +43,7 @@ class RegionController {
 				await Region.deleteRegion(authorObjectId, region);
 			});
 
-			return res.send(JSON.stringify(checkedRegions));
+			return res.json({ checkedRegions });
 		} catch (error) {
 			next(error);
 		}

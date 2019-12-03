@@ -24,7 +24,7 @@ class CommentController {
 		try {
 			await Comment.deleteComment(authorObjectId, comment_id);
 
-			return res.end();
+			return res.json({});
 		} catch (error) {
 			next(error);
 		}

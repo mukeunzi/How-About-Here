@@ -9,7 +9,7 @@ const isLoggedInForAjax = (req, res, next) => {
 	if (req.user) {
 		return next();
 	}
-	res.send('notLoggedIn');
+	res.json({ message: 'notLoggedIn' });
 };
 
 const isNotLoggedIn = (req, res, next) => {

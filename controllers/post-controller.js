@@ -78,7 +78,7 @@ class PostController {
 		try {
 			await Post.deletePost(authorObjectId, post_id);
 
-			return res.send('successDeletePost');
+			return res.json({});
 		} catch (error) {
 			next(error);
 		}
@@ -92,7 +92,7 @@ class PostController {
 		try {
 			await Post.updatePost(authorObjectId, req.body);
 
-			return res.send(`successUpdatePost`);
+			return res.json({});
 		} catch (error) {
 			next(error);
 		}

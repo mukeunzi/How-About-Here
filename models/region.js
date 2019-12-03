@@ -66,7 +66,7 @@ regionSchema.statics.createRegion = async function(authorObjectId, regionName) {
 		update_id: authorObjectId
 	});
 
-	return newRegion._id;
+	return newRegion;
 };
 
 regionSchema.statics.updateRegion = async function(authorObjectId, regionForm) {

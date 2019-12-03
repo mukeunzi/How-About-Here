@@ -60,9 +60,9 @@ class UserController {
 			const duplicatedName = await User.checkDuplicatedName(user_name);
 
 			if (duplicatedName) {
-				return res.send('unavailable');
+				return res.json({ message: 'unavailable' });
 			}
-			return res.send('available');
+			return res.json({ message: 'available' });
 		} catch (error) {
 			next(error);
 		}

@@ -28,7 +28,7 @@ class TagController {
         <td>${moment(newTag.update_date).fromNow()}</td>
       </tr>`;
 
-			return res.send(newTagElement);
+			return res.json({ newTagElement });
 		} catch (error) {
 			next(error);
 		}
@@ -43,7 +43,7 @@ class TagController {
 				await Tag.deleteTag(authorObjectId, tag);
 			});
 
-			return res.send(JSON.stringify(checkedTags));
+			return res.json({ checkedTags });
 		} catch (error) {
 			next(error);
 		}
