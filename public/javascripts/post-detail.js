@@ -1,5 +1,6 @@
 import { map, centerCoordinate } from './kakao-map-detail.js';
 import { errorMessage } from './utils/error-message.js';
+import { isDoubleSubmit } from './utils/double-submit.js';
 
 const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
 
@@ -80,6 +81,10 @@ const addCommentEvent = async () => {
 	if (!isValidFormData(comment_body)) {
 		alert('댓글을 입력하세요!');
 		return document.querySelector('#comment_body').focus();
+	}
+
+	if (isDoubleSubmit()) {
+		return;
 	}
 
 	const post_id = window.location.pathname.substring(6);
