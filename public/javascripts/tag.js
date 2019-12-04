@@ -15,6 +15,20 @@ window.addEventListener('load', function() {
 	});
 });
 
+const makeNewTagElement = json => {
+	const newTagElement = `<tr>
+		<td><input type='checkbox' class='_id' id=${json.newTag._id} value=${json.newTag._id}></td>
+		<td>${json.newTag.tag_name}</td>
+		<td class='status_code'>${json.newTag.status_code}</td>
+		<td>${json.userName}</td>
+		<td>${moment(json.newTag.create_date).format('YYYY-MM-DD hh:mm:ss')}</td>
+		<td>${json.userName}</td>
+		<td>${moment(json.newTag.update_date).format('YYYY-MM-DD hh:mm:ss')}</td>
+	</tr>`;
+
+	return newTagElement;
+};
+
 const addTag = async () => {
 	const tag_name = isNotEmptyTag();
 
@@ -38,7 +52,8 @@ const addTag = async () => {
 			}
 
 			const tagList = document.querySelector('#tagList');
-			tagList.insertAdjacentHTML('beforeend', result.newTagElement);
+			const newTagElement = makeNewTagElement(result);
+			tagList.insertAdjacentHTML('beforeend', newTagElement);
 
 			document.querySelector('#tag_name').value = '';
 			return;

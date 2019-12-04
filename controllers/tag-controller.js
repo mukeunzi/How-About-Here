@@ -13,17 +13,9 @@ class TagController {
 		const tag_name = req.body.tag_name;
 
 		const newTag = await Tag.createTag(authorObjectId, tag_name);
-		const newTagElement = `<tr>
-			<td><input type='checkbox' class='_id' id=${newTag._id} value=${newTag._id}></td>
-			<td>${newTag.tag_name}</td>
-			<td class='status_code'>${newTag.status_code}</td>
-			<td>${req.user.user_name}</td>
-			<td>${moment(newTag.create_date).fromNow()}</td>
-			<td>${req.user.user_name}</td>
-			<td>${moment(newTag.update_date).fromNow()}</td>
-		</tr>`;
+		const newTagInfo = { newTag, userName: req.user.user_name };
 
-		return res.json({ newTagElement });
+		return res.json(newTagInfo);
 	}
 
 	async deleteTag(req, res, next) {

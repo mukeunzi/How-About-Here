@@ -15,6 +15,20 @@ window.addEventListener('load', function() {
 	});
 });
 
+const makeNewRegionElement = json => {
+	const newRegionElement = `<tr>
+		<td><input type='checkbox' class='_id' id=${json.newRegion._id} value=${json.newRegion._id}></td>
+		<td>${json.newRegion.region_name}</td>
+		<td class='status_code'>${json.newRegion.status_code}</td>
+		<td>${json.userName}</td>
+		<td>${moment(json.newRegion.create_date).format('YYYY-MM-DD hh:mm:ss')}</td>
+		<td>${json.userName}</td>
+		<td>${moment(json.newRegion.update_date).format('YYYY-MM-DD hh:mm:ss')}</td>
+		</tr>`;
+
+	return newRegionElement;
+};
+
 const addRegion = async () => {
 	const region_name = isNotEmptyRegion();
 
@@ -38,7 +52,8 @@ const addRegion = async () => {
 			}
 
 			const regionList = document.querySelector('#regionList');
-			regionList.insertAdjacentHTML('beforeend', result.newRegionElement);
+			const newRegionElement = makeNewRegionElement(result);
+			regionList.insertAdjacentHTML('beforeend', newRegionElement);
 
 			document.querySelector('#region_name').value = '';
 			return;

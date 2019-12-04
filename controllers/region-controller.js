@@ -13,17 +13,9 @@ class RegionController {
 		const region_name = req.body.region_name;
 
 		const newRegion = await Region.createRegion(authorObjectId, region_name);
-		const newRegionElement = `<tr>
-			<td><input type='checkbox' class='_id' id=${newRegion._id} value=${newRegion._id}></td>
-			<td>${newRegion.region_name}</td>
-			<td class='status_code'>${newRegion.status_code}</td>
-			<td>${req.user.user_name}</td>
-			<td>${moment(newRegion.create_date).fromNow()}</td>
-			<td>${req.user.user_name}</td>
-			<td>${moment(newRegion.update_date).fromNow()}</td>
-		</tr>`;
+		const newRegionInfo = { newRegion, userName: req.user.user_name };
 
-		return res.json({ newRegionElement });
+		return res.json(newRegionInfo);
 	}
 
 	async deleteRegion(req, res, next) {
