@@ -108,7 +108,9 @@ const addCommentEvent = async () => {
 
 			const commentsList = document.querySelector('.ui.comments');
 			commentsList.insertAdjacentHTML('beforeend', newCommentElement);
-			commentsList.lastChild.addEventListener('click', function(event) {
+
+			const deleteCommentButton = commentsList.lastChild.querySelector('.deleteComment');
+			deleteCommentButton.addEventListener('click', function(event) {
 				deleteCommentEvent(event);
 			});
 
