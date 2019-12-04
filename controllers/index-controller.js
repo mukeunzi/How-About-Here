@@ -6,7 +6,7 @@ class IndexController {
 	async getIndexPage(req, res, next) {
 		const regionList = await Region.getRegionList();
 		const tagList = await Tag.getTagList();
-		const postList = await Post.gedstPostList();
+		const postList = await Post.getPostList();
 
 		res.render('index', { title: 'Main', user: req.user, regionList, tagList, postList });
 	}
