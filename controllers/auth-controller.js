@@ -20,9 +20,7 @@ class AuthController {
 			return res.redirect('/auth');
 		}
 
-		req.user = user;
-
-		const token = await jwtUtil.makeToken(req.user);
+		const token = await jwtUtil.makeToken(user);
 		res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
 
 		return res.redirect('/');
@@ -39,9 +37,8 @@ class AuthController {
 		}
 
 		const user = await User.getUserInfo(user_id);
-		req.user = user;
 
-		const token = await jwtUtil.makeToken(req.user);
+		const token = await jwtUtil.makeToken(user);
 		res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
 
 		return res.redirect('/');
