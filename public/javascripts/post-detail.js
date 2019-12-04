@@ -57,6 +57,8 @@ const isValidFormData = comment_body => {
 };
 
 const makeNewCommentElement = jsonResult => {
+	const commentBody = jsonResult.newComment.comment_body.replace(/(\n|\r\n)/g, '<br />');
+
 	const newCommentElement = `<div class="comment">
 		<a class="avatar">
 			<img src="/images/profile.png">
@@ -68,7 +70,7 @@ const makeNewCommentElement = jsonResult => {
 				<span class="date">${moment(jsonResult.newComment.create_date).fromNow()}</span>
 				<span class="deleteComment" style="cursor:pointer;">삭제</span>
 			</div>
-			<div class="text comment_body">${jsonResult.newComment.comment_body}</div>
+			<div class="text comment_body">${commentBody}</div>
 		</div>
 	</div>`;
 
