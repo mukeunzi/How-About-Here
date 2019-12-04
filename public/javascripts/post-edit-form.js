@@ -46,6 +46,11 @@ const isValidFormData = () => {
 
 const updatePostEvent = async () => {
 	const updatePostForm = isValidFormData();
+
+	if (!updatePostForm) {
+		return;
+	}
+
 	const { tag_list } = updatePostForm;
 
 	const tagList = convertTagListToArray(tag_list);
