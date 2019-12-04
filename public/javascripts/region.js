@@ -44,7 +44,7 @@ const addRegion = async () => {
 			headers: { 'Content-Type': 'application/json' }
 		});
 
-		if (response.ok) {
+		if (response.status === 200) {
 			const result = await response.json();
 
 			if (result.message === 'notLoggedIn') {
@@ -77,7 +77,7 @@ const deleteRegions = async () => {
 			method: 'DELETE'
 		});
 
-		if (response.ok) {
+		if (response.status === 200) {
 			const result = await response.json();
 
 			if (result.message === 'notLoggedIn') {

@@ -39,7 +39,7 @@ const searchRegionAndTag = async (regionName, tagList) => {
 	try {
 		const response = await fetch(`/search?region_name=${regionName}${searchTagCondition}`);
 
-		if (response.ok) {
+		if (response.status === 200) {
 			const result = await response.json();
 
 			if (result.message === 'notLoggedIn') {

@@ -97,7 +97,7 @@ const addCommentEvent = async () => {
 			headers: { 'Content-Type': 'application/json' }
 		});
 
-		if (response.ok) {
+		if (response.status === 200) {
 			const result = await response.json();
 
 			if (result.message === 'notLoggedIn') {
@@ -137,7 +137,7 @@ const deleteCommentEvent = async event => {
 	try {
 		const response = await fetch(`/comment/${comment_id}`, { method: 'DELETE' });
 
-		if (response.ok) {
+		if (response.status === 200) {
 			const result = await response.json();
 
 			if (result.message === 'notLoggedIn') {
@@ -164,7 +164,7 @@ const deletePostEvent = async () => {
 	try {
 		const response = await fetch(`/post/${post_id}`, { method: 'DELETE' });
 
-		if (response.ok) {
+		if (response.status === 200) {
 			const result = await response.json();
 
 			if (result.message === 'notLoggedIn') {
@@ -187,7 +187,7 @@ const likeButtonEvent = async event => {
 	try {
 		const response = await fetch(`/post/like/${post_id}`, { method: 'PATCH' });
 
-		if (response.ok) {
+		if (response.status === 200) {
 			const result = await response.json();
 
 			if (result.message === 'notLoggedIn') {

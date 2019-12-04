@@ -16,7 +16,7 @@ const logOut = async () => {
 	try {
 		const response = await fetch('/auth/logout', { method: 'POST' });
 
-		if (response.ok) {
+		if (response.status === 200) {
 			location.href = '/';
 			return;
 		}

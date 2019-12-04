@@ -21,7 +21,7 @@ const checkDuplicatedName = async userName => {
 	try {
 		const response = await fetch(`/users/${userName}`, { method: 'GET' });
 
-		if (response.ok) {
+		if (response.status === 200) {
 			const result = await response.json();
 
 			const message = document.querySelector('#message');
