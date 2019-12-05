@@ -17,6 +17,10 @@ window.addEventListener('load', function() {
 });
 
 const checkDuplicatedName = async userName => {
+	if (isEmptyName(userName)) {
+		return;
+	}
+
 	try {
 		const result = await sendRequest(`/users/${userName}`, 'GET');
 
