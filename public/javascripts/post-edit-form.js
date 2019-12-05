@@ -1,7 +1,6 @@
 import { notCheckedTag, notCheckedStarRating, isEmptyContents } from './post-form-validation.js';
 import { errorMessage } from './utils/error-message.js';
-
-const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+import { isLoggedInUser, sendData } from './utils/fetch-api.js';
 
 window.addEventListener('load', function() {
 	const starRating = document.querySelector('#star_rating').value;
@@ -59,24 +58,13 @@ const updatePostEvent = async () => {
 	const post_id = window.location.pathname.substring(11);
 
 	try {
-		const response = await fetch(`/post/${post_id}`, {
-			method: 'PATCH',
-			body: JSON.stringify(updatePostForm),
-			headers: { 'Content-Type': 'application/json' }
-		});
+		const result = await sendData(`/post/${post_id}`, 'PATCH', updatePostForm);
 
-		if (response.status === 200) {
-			const result = await response.json();
-
-			if (result.message === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			location.href = `/post/${post_id}`;
-			return;
+		if (!isLoggedInUser(result.message)) {
+			return alert('로그인이 필요합니다!');
 		}
 
-		throw new Error(INTERNAL_SERVER_ERROR);
+		location.href = `/post/${post_id}`;
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}

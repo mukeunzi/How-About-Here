@@ -1,6 +1,5 @@
 import { errorMessage } from './utils/error-message.js';
-
-const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+import { sendRequest } from './utils/fetch-api.js';
 
 window.addEventListener('load', () => {
 	const logOutButton = document.querySelector('#logOutButton');
@@ -14,14 +13,9 @@ window.addEventListener('load', () => {
 
 const logOut = async () => {
 	try {
-		const response = await fetch('/auth/logout', { method: 'DELETE' });
+		await sendRequest('/auth/logout', 'DELETE');
 
-		if (response.status === 200) {
-			location.href = '/';
-			return;
-		}
-
-		throw new Error(INTERNAL_SERVER_ERROR);
+		location.href = '/';
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}

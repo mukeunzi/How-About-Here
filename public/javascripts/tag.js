@@ -1,6 +1,5 @@
 import { errorMessage } from './utils/error-message.js';
-
-const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+import { isLoggedInUser, sendRequest, sendData } from './utils/fetch-api.js';
 
 window.addEventListener('load', function() {
 	const addTagButton = document.querySelector('#addTagButton');
@@ -38,28 +37,17 @@ const addTag = async () => {
 	}
 
 	try {
-		const response = await fetch(`/admin/tag`, {
-			method: 'POST',
-			body: JSON.stringify({ tag_name }),
-			headers: { 'Content-Type': 'application/json' }
-		});
+		const result = await sendData(`/admin/tag`, 'POST', { tag_name });
 
-		if (response.status === 200) {
-			const result = await response.json();
-
-			if (result.message === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			const tagList = document.querySelector('#tagList');
-			const newTagElement = makeNewTagElement(result);
-			tagList.insertAdjacentHTML('beforeend', newTagElement);
-
-			document.querySelector('#tag_name').value = '';
-			return;
+		if (!isLoggedInUser(result.message)) {
+			return alert('로그인이 필요합니다!');
 		}
 
-		throw new Error(INTERNAL_SERVER_ERROR);
+		const newTagElement = makeNewTagElement(result);
+		const tagList = document.querySelector('#tagList');
+		tagList.insertAdjacentHTML('beforeend', newTagElement);
+
+		document.querySelector('#tag_name').value = '';
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}
@@ -84,27 +72,18 @@ const deleteTags = async () => {
 	}
 
 	try {
-		const response = await fetch(`/admin/tag?${checkedTags}`, {
-			method: 'DELETE'
-		});
+		const result = await sendRequest(`/admin/tag?${checkedTags}`, 'DELETE');
 
-		if (response.status === 200) {
-			const result = await response.json();
-
-			if (result.message === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			result.checkedTags.map(tag => {
-				const tagRow = document.querySelector(`[id='${tag}']`).parentNode.parentNode;
-
-				tagRow.querySelector('.status_code').innerHTML = '0';
-				document.querySelector(`[id='${tag}']`).checked = false;
-			});
-			return;
+		if (!isLoggedInUser(result.message)) {
+			return alert('로그인이 필요합니다!');
 		}
 
-		throw new Error(INTERNAL_SERVER_ERROR);
+		result.checkedTags.map(tag => {
+			const tagRow = document.querySelector(`[id='${tag}']`).parentNode.parentNode;
+
+			tagRow.querySelector('.status_code').innerHTML = '0';
+			document.querySelector(`[id='${tag}']`).checked = false;
+		});
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}

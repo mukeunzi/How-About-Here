@@ -1,6 +1,5 @@
 import { errorMessage } from './utils/error-message.js';
-
-const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+import { isLoggedInUser, sendRequest, sendData } from './utils/fetch-api.js';
 
 window.addEventListener('load', function() {
 	const addRegionButton = document.querySelector('#addRegionButton');
@@ -38,28 +37,17 @@ const addRegion = async () => {
 	}
 
 	try {
-		const response = await fetch(`/admin/region`, {
-			method: 'POST',
-			body: JSON.stringify({ region_name }),
-			headers: { 'Content-Type': 'application/json' }
-		});
+		const result = await sendData(`/admin/region`, 'POST', { region_name });
 
-		if (response.status === 200) {
-			const result = await response.json();
-
-			if (result.message === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			const regionList = document.querySelector('#regionList');
-			const newRegionElement = makeNewRegionElement(result);
-			regionList.insertAdjacentHTML('beforeend', newRegionElement);
-
-			document.querySelector('#region_name').value = '';
-			return;
+		if (!isLoggedInUser(result.message)) {
+			return alert('로그인이 필요합니다!');
 		}
 
-		throw new Error(INTERNAL_SERVER_ERROR);
+		const newRegionElement = makeNewRegionElement(result);
+		const regionList = document.querySelector('#regionList');
+		regionList.insertAdjacentHTML('beforeend', newRegionElement);
+
+		document.querySelector('#region_name').value = '';
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}
@@ -73,27 +61,18 @@ const deleteRegions = async () => {
 	}
 
 	try {
-		const response = await fetch(`/admin/region?${checkedRegions}`, {
-			method: 'DELETE'
-		});
+		const result = await sendRequest(`/admin/region?${checkedRegions}`, 'DELETE');
 
-		if (response.status === 200) {
-			const result = await response.json();
-
-			if (result.message === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			result.checkedRegions.map(region => {
-				const regionRow = document.querySelector(`[id='${region}']`).parentNode.parentNode;
-
-				regionRow.querySelector('.status_code').innerHTML = '0';
-				document.querySelector(`[id='${region}']`).checked = false;
-			});
-			return;
+		if (!isLoggedInUser(result.message)) {
+			return alert('로그인이 필요합니다!');
 		}
 
-		throw new Error(INTERNAL_SERVER_ERROR);
+		result.checkedRegions.map(region => {
+			const regionRow = document.querySelector(`[id='${region}']`).parentNode.parentNode;
+
+			regionRow.querySelector('.status_code').innerHTML = '0';
+			document.querySelector(`[id='${region}']`).checked = false;
+		});
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}

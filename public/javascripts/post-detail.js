@@ -1,8 +1,7 @@
 import { map, centerCoordinate } from './kakao-map-detail.js';
 import { errorMessage } from './utils/error-message.js';
 import { isDoubleSubmit } from './utils/double-submit.js';
-
-const INTERNAL_SERVER_ERROR = 'INTERNAL_SERVER_ERROR';
+import { isLoggedInUser, sendRequest, sendData } from './utils/fetch-api.js';
 
 window.addEventListener('load', function() {
 	replaceLineBreak();
@@ -91,34 +90,22 @@ const addCommentEvent = async () => {
 
 	const post_id = window.location.pathname.substring(6);
 	try {
-		const response = await fetch(`/comment/${post_id}`, {
-			method: 'POST',
-			body: JSON.stringify({ comment_body }),
-			headers: { 'Content-Type': 'application/json' }
-		});
+		const result = await sendData(`/comment/${post_id}`, 'POST', { comment_body });
 
-		if (response.status === 200) {
-			const result = await response.json();
-
-			if (result.message === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			const newCommentElement = makeNewCommentElement(result);
-
-			const commentsList = document.querySelector('.ui.comments');
-			commentsList.insertAdjacentHTML('beforeend', newCommentElement);
-
-			const deleteCommentButton = commentsList.lastChild.querySelector('.deleteComment');
-			deleteCommentButton.addEventListener('click', function(event) {
-				deleteCommentEvent(event);
-			});
-
-			document.querySelector('#comment_body').value = '';
-			return;
+		if (!isLoggedInUser(result.message)) {
+			return alert('로그인이 필요합니다!');
 		}
 
-		throw new Error(INTERNAL_SERVER_ERROR);
+		const newCommentElement = makeNewCommentElement(result);
+		const commentsList = document.querySelector('.ui.comments');
+		commentsList.insertAdjacentHTML('beforeend', newCommentElement);
+
+		const deleteCommentButton = commentsList.lastChild.querySelector('.deleteComment');
+		deleteCommentButton.addEventListener('click', function(event) {
+			deleteCommentEvent(event);
+		});
+
+		document.querySelector('#comment_body').value = '';
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}
@@ -135,19 +122,13 @@ const deleteCommentEvent = async event => {
 	const comment_id = commentContent.querySelector('.comment_id').value;
 
 	try {
-		const response = await fetch(`/comment/${comment_id}`, { method: 'DELETE' });
+		const result = await sendRequest(`/comment/${comment_id}`, 'DELETE');
 
-		if (response.status === 200) {
-			const result = await response.json();
-
-			if (result.message === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			return commentContent.parentNode.remove();
+		if (!isLoggedInUser(result.message)) {
+			return alert('로그인이 필요합니다!');
 		}
 
-		throw new Error(INTERNAL_SERVER_ERROR);
+		commentContent.parentNode.remove();
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}
@@ -162,20 +143,13 @@ const deletePostEvent = async () => {
 
 	const post_id = window.location.pathname.substring(6);
 	try {
-		const response = await fetch(`/post/${post_id}`, { method: 'DELETE' });
+		const result = await sendRequest(`/post/${post_id}`, 'DELETE');
 
-		if (response.status === 200) {
-			const result = await response.json();
-
-			if (result.message === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			location.href = '/';
-			return;
+		if (!isLoggedInUser(result.message)) {
+			return alert('로그인이 필요합니다!');
 		}
 
-		throw new Error(INTERNAL_SERVER_ERROR);
+		location.href = '/';
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}
@@ -185,23 +159,16 @@ const likeButtonEvent = async event => {
 	const post_id = window.location.pathname.substring(6);
 
 	try {
-		const response = await fetch(`/post/like/${post_id}`, { method: 'PATCH' });
+		const result = await sendData(`/post/like/${post_id}`, 'PATCH');
 
-		if (response.status === 200) {
-			const result = await response.json();
-
-			if (result.message === 'notLoggedIn') {
-				return alert('로그인이 필요합니다!');
-			}
-
-			event.target.className = result.action === 'like' ? 'heart red icon' : 'heart outline red icon';
-
-			const likesCount = document.querySelector('#likes_count');
-			likesCount.innerHTML = result.likes;
-			return;
+		if (!isLoggedInUser(result.message)) {
+			return alert('로그인이 필요합니다!');
 		}
 
-		throw new Error(INTERNAL_SERVER_ERROR);
+		event.target.className = result.action === 'like' ? 'heart red icon' : 'heart outline red icon';
+
+		const likesCount = document.querySelector('#likes_count');
+		likesCount.innerHTML = result.likes;
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}
