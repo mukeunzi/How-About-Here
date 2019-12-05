@@ -51,7 +51,7 @@ class AuthController {
 	logOut(req, res) {
 		res.clearCookie('token', { path: '/', httpOnly: true });
 
-		return res.redirect('/');
+		return res.end();
 	}
 
 	getLogInPage(req, res) {

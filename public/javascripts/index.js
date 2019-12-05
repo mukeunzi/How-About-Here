@@ -14,7 +14,7 @@ window.addEventListener('load', () => {
 
 const logOut = async () => {
 	try {
-		const response = await fetch('/auth/logout', { method: 'POST' });
+		const response = await fetch('/auth/logout', { method: 'DELETE' });
 
 		if (response.status === 200) {
 			location.href = '/';

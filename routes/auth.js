@@ -7,7 +7,7 @@ const router = asyncify(express.Router());
 
 router.get('/', isNotLoggedIn, authController.getLogInPage);
 router.post('/', isNotLoggedIn, authController.localLogIn);
-router.post('/logout', isLoggedIn, authController.logOut);
+router.delete('/logout', isLoggedIn, authController.logOut);
 router.get('/google-login', isNotLoggedIn, authController.redirectGoogleLogIn);
 router.get('/google-login/callback', isNotLoggedIn, authController.googleLogIn);
 
