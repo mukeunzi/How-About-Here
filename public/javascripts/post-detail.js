@@ -1,6 +1,5 @@
 import { map, centerCoordinate } from './kakao-map-detail.js';
 import { errorMessage } from './utils/error-message.js';
-import { isDoubleSubmit } from './utils/double-submit.js';
 import { isLoggedInUser, sendRequest, sendData } from './utils/fetch-api.js';
 
 window.addEventListener('load', function() {
@@ -82,10 +81,6 @@ const addCommentEvent = async () => {
 	if (!isValidFormData(comment_body)) {
 		alert('댓글을 입력하세요!');
 		return document.querySelector('#comment_body').focus();
-	}
-
-	if (isDoubleSubmit()) {
-		return;
 	}
 
 	const post_id = window.location.pathname.substring(6);
