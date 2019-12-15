@@ -1,7 +1,12 @@
 # :eyes: 여기어땠!
 
 > [데모링크](https://how-about-here.herokuapp.com)
-> Node.js 의 Express 프레임워크, pug, mongoDB/mongoose 를 이용해 구현하는 여기어땠(다)!
+
+> [master branch](https://github.com/mukeunzi/How-About-Here) - Node.js 의 Express 프레임워크, pug, MySQL/sequelize 를 이용해 구현하는 여기어땠!
+
+> [mongodb branch](https://github.com/mukeunzi/How-About-Here/tree/mongodb) - Node.js 의 Express 프레임워크, pug, MongoDB/mongoose 를 이용해 구현하는 여기어땠!
+
+> MongoDB에서 MySQL로 migration 진행 중.
 
 ## :memo: Description
 
@@ -91,6 +96,10 @@
 - 좋아요 삭제 : `DELETE /post/like/:post_id`
 
 ## :desktop_computer: DataBase Structure
+
+**ERD**
+
+![ERD](./docs/images/erd.PNG)
 
 **User Collection**
 
