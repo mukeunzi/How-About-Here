@@ -10,7 +10,7 @@ const isLoggedInUser = message => {
 const sendRequest = async (url = '', method = 'GET') => {
 	const response = await fetch(url, { method });
 
-	if (response.status !== 200) {
+	if (!response.ok) {
 		throw new Error(INTERNAL_SERVER_ERROR);
 	}
 
@@ -26,7 +26,7 @@ const sendData = async (url = '', method, data = {}) => {
 		headers: { 'Content-Type': 'application/json' }
 	});
 
-	if (response.status !== 200) {
+	if (!response.ok) {
 		throw new Error(INTERNAL_SERVER_ERROR);
 	}
 
