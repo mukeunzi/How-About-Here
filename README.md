@@ -99,34 +99,46 @@
 
 **ERD**
 
-![ERD](./docs/images/erd.PNG)
+![ERD](./docs/images/ERD.PNG)
 
-**User Collection**
+**USER Table**
 
-| 고유값 | 아이디  |   이름    |   비밀번호    |   권한    |   가입경로    | 좋아하는 게시물 |  상태코드   |
-| :----: | :-----: | :-------: | :-----------: | :-------: | :-----------: | :-------------: | :---------: |
-|  \_id  | user_id | user_name | user_password | user_auth | auth_provider |  favorite_post  | status_code |
+| 고유값(PK) | 아이디  |   비밀번호    |   이름    |   권한    |   가입경로    |   작성일    |   수정일    | 상태코드    |
+| :--------: | :-----: | :-----------: | :-------: | :-------: | :-----------: | :---------: | :---------: | ----------- |
+|     ID     | USER_ID | USER_PASSWORD | USER_NAME | USER_AUTH | AUTH_PROVIDER | CREATE_DATE | UPDATE_DATE | STATUS_CODE |
 
-**Tag Collection**
+**POST Table**
 
-| 고유값 |  태그명  |  상태코드   |  작성자   |   작성일    |  수정자   |   수정일    |
-| :----: | :------: | :---------: | :-------: | :---------: | :-------: | :---------: |
-|  \_id  | tag_name | status_code | create_id | create_date | update_id | update_date |
+| 고유값(PK) | 제목(장소) | 지역(FK)  |    상세주소    |  첨부파일  |     내용      |    별점     | 작성자(FK) |   작성일    |  수정자   |   수정일    |  상태코드   |
+| :--------: | :--------: | :-------: | :------------: | :--------: | :-----------: | :---------: | :--------: | :---------: | :-------: | :---------: | :---------: |
+|     ID     | PLACE_NAME | REGION_ID | DETAIL_ADDRESS | PHOTO_LINK | POST_CONTENTS | STAR_RATING | CREATE_ID  | CREATE_DATE | UPDATE_ID | UPDATE_DATE | STATUS_CODE |
 
-**Region Collection**
+**LIKE Table**
 
-| 고유값 |   지역명    |  상태코드   |  작성자   |   작성일    |  수정자   |   수정일    |
-| :----: | :---------: | :---------: | :-------: | :---------: | :-------: | :---------: |
-|  \_id  | region_name | status_code | create_id | create_date | update_id | update_date |
+| 고유값(PK) | 게시물(FK) | 작성자(FK) |   작성일    |  수정자   |   수정일    |  상태코드   |
+| :--------: | :--------: | :--------: | :---------: | :-------: | :---------: | :---------: |
+|     ID     |  POST_ID   | CREATE_ID  | CREATE_DATE | UPDATE_ID | UPDATE_DATE | STATUS_CODE |
 
-**Post Collection**
+**COMMENT Table**
 
-| 고유값 | 제목(장소) |    지역     |    상세주소    |  첨부파일  |     내용      |    별점     |   태그   |   좋아요    |  상태코드   |  작성자   |   작성일    |  수정자   |   수정일    |
-| :----: | :--------: | :---------: | :------------: | :--------: | :-----------: | :---------: | :------: | :---------: | :---------: | :-------: | :---------: | :-------: | :---------: |
-|  \_id  | place_name | region_name | detail_address | photo_link | post_contents | star_rating | tag_list | likes_count | status_code | create_id | create_date | update_id | update_date |
+| 고유값(PK) | 게시물(FK) |     내용     | 작성자(FK) |   작성일    |  수정자   |   수정일    |  상태코드   |
+| :--------: | :--------: | :----------: | :--------: | :---------: | :-------: | :---------: | :---------: |
+|     ID     |  POST_ID   | COMMENT_BODY | CREATE_ID  | CREATE_DATE | UPDATE_ID | UPDATE_DATE | STATUS_CODE |
 
-**Comment Collection**
+**REGION Table**
 
-| 고유값 |     내용     | 게시물  |  상태코드   |  작성자   |   작성일    |  수정자   |   수정일    |
-| :----: | :----------: | :-----: | :---------: | :-------: | :---------: | :-------: | :---------: |
-|  \_id  | comment_body | post_id | status_code | create_id | create_date | update_id | update_date |
+| 고유값(PK) |   지역명    | 작성자(FK) |   작성일    |  수정자   |   수정일    |  상태코드   |
+| :--------: | :---------: | :--------: | :---------: | :-------: | :---------: | :---------: |
+|     ID     | REGION_NAME | CREATE_ID  | CREATE_DATE | UPDATE_ID | UPDATE_DATE | STATUS_CODE |
+
+**TAG Table**
+
+| 고유값(PK) |  태그명  | 작성자(FK) |   작성일    |  수정자   |   수정일    |  상태코드   |
+| :--------: | :------: | :--------: | :---------: | :-------: | :---------: | :---------: |
+|     ID     | TAG_NAME | CREATE_ID  | CREATE_DATE | UPDATE_ID | UPDATE_DATE | STATUS_CODE |
+
+**TAGGED Table**
+
+| 고유값(PK) | 게시물(FK) | 태그(FK) |  작성자   |   작성일    |  수정자   |   수정일    | 상태코드    |
+| :--------: | :--------: | :------: | :-------: | :---------: | :-------: | :---------: | ----------- |
+|     ID     |  POST_ID   |  TAG_ID  | CREATE_ID | CREATE_DATE | UPDATE_ID | UPDATE_DATE | STATUS_CODE |
