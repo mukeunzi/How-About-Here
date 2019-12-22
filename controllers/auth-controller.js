@@ -1,4 +1,4 @@
-const { url, googleLogIn } = require('../config/google-oauth');
+const { url, googleLogIn } = require('../utils/google-oauth');
 const User = require('../models/user');
 const jwtUtil = require('../utils/jwt-token');
 
