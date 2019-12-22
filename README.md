@@ -99,7 +99,7 @@
 
 **ERD**
 
-![ERD](./docs/images/mysql_erd.PNG)
+![ERD](./docs/images/ERD.PNG)
 
 **USER Table**
 
