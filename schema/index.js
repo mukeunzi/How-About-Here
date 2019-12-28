@@ -49,6 +49,12 @@ db.Post.belongsToMany(db.Hashtag, {
 	otherKey: { name: 'hashtagId', allowNull: false }
 });
 
+db.User.belongsToMany(db.Post, {
+	through: 'Likes',
+	foreignKey: { name: 'userId', allowNull: false },
+	otherKey: { name: 'postId', allowNull: false }
+});
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
