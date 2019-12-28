@@ -36,7 +36,12 @@ db.User.hasMany(db.Tag, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Tag, { foreignKey: { name: 'modifier', allowNull: false } });
 db.User.hasMany(db.Post, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Post, { foreignKey: { name: 'modifier', allowNull: false } });
+db.User.hasMany(db.Comment, { foreignKey: { name: 'creator', allowNull: false } });
+db.User.hasMany(db.Comment, { foreignKey: { name: 'modifier', allowNull: false } });
+
 db.Region.hasMany(db.Post, { foreignKey: { name: 'regionId', allowNull: false } });
+
+db.Post.hasMany(db.Comment, { foreignKey: { name: 'postId', allowNull: false } });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
