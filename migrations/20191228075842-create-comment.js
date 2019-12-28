@@ -12,11 +12,6 @@ module.exports = {
 				allowNull: false,
 				type: Sequelize.TEXT
 			},
-			statusCode: {
-				allowNull: false,
-				type: Sequelize.INTEGER(1),
-				defaultValue: '1'
-			},
 			createdAt: {
 				allowNull: false,
 				type: Sequelize.DATE
