@@ -43,6 +43,12 @@ db.Region.hasMany(db.Post, { foreignKey: { name: 'regionId', allowNull: false } 
 
 db.Post.hasMany(db.Comment, { foreignKey: { name: 'postId', allowNull: false } });
 
+db.Post.belongsToMany(db.Hashtag, {
+	through: 'Tags',
+	foreignKey: { name: 'postId', allowNull: false },
+	otherKey: { name: 'hashtagId', allowNull: false }
+});
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
