@@ -30,6 +30,9 @@ Object.keys(db).forEach(modelName => {
 	}
 });
 
+db.User.hasMany(db.Region, { foreignKey: 'creator' });
+db.User.hasMany(db.Region, { foreignKey: 'modifier' });
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
