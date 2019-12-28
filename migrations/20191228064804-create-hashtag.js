@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
 	up: (queryInterface, Sequelize) => {
-		return queryInterface.createTable('Tag', {
+		return queryInterface.createTable('Hashtag', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
@@ -28,6 +28,6 @@ module.exports = {
 		});
 	},
 	down: (queryInterface, Sequelize) => {
-		return queryInterface.dropTable('Tag');
+		return queryInterface.dropTable('Hashtag');
 	}
 };

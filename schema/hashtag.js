@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-	const Tag = sequelize.define(
-		'Tag',
+	const Hashtag = sequelize.define(
+		'Hashtag',
 		{
 			id: {
 				allowNull: false,
@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.DATE
 			}
 		},
-		{ paranoid: true, tableName: 'tag' }
+		{ paranoid: true, tableName: 'hashtag' }
 	);
 
-	return Tag;
+	return Hashtag;
 };
