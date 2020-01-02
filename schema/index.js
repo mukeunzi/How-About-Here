@@ -24,12 +24,6 @@ fs.readdirSync(__dirname)
 		db[model.name] = model;
 	});
 
-Object.keys(db).forEach(modelName => {
-	if (db[modelName].associate) {
-		db[modelName].associate(db);
-	}
-});
-
 db.User.hasMany(db.Region, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Region, { foreignKey: { name: 'modifier', allowNull: false } });
 db.User.hasMany(db.Hashtag, { foreignKey: { name: 'creator', allowNull: false } });
