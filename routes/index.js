@@ -1,13 +1,19 @@
 const express = require('express');
-const asyncify = require('express-asyncify');
-const IndexController = require('../controllers/index-controller');
 
-const router = asyncify(express.Router());
+const router = express.Router();
 
-// 메인페이지
-router.get('/', IndexController.getIndexPage);
+const mainRouter = require('./main');
+const usersRouter = require('./users');
+const authRouter = require('./auth');
+const adminRouter = require('./admin');
+const postRouter = require('./post');
+const commentRouter = require('./comment');
 
-// 검색
-router.get('/search', IndexController.searchRegionAndTag);
+router.use('/', mainRouter);
+router.use('/users', usersRouter);
+router.use('/auth', authRouter);
+router.use('/admin', adminRouter);
+router.use('/post', postRouter);
+router.use('/comment', commentRouter);
 
 module.exports = router;

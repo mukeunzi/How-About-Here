@@ -10,13 +10,8 @@ const mongodb = require('./models');
 const models = require('./schema');
 const moment = require('moment');
 
-const indexRouter = require('./routes');
-const usersRouter = require('./routes/users');
-const authRouter = require('./routes/auth');
-const adminRouter = require('./routes/admin');
-const postRouter = require('./routes/post');
-const commentRouter = require('./routes/comment');
 const { verifyToken } = require('./middlewares/verify-token');
+const routers = require('./routes');
 
 mongodb();
 
@@ -43,12 +38,7 @@ app.use(
 app.use(flash());
 
 app.use(verifyToken);
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/auth', authRouter);
-app.use('/admin', adminRouter);
-app.use('/post', postRouter);
-app.use('/comment', commentRouter);
+app.use('/', routers);
 
 app.use(function(req, res, next) {
 	next(createError(404));
