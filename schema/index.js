@@ -52,14 +52,16 @@ db.User.belongsToMany(db.Post, {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-const connect = async () => {
+const driver = async () => {
 	try {
 		await db.sequelize.sync();
-		console.log('Connected to mysql...');
+		console.log('Initialization complete...');
 	} catch (error) {
-		console.error('Could not connect to mysql!!! : ', error);
+		console.error('Fail initialization!!! : ', error);
 		return process.exit(1);
 	}
 };
 
-module.exports = connect;
+driver();
+
+module.exports = db;

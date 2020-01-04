@@ -7,7 +7,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 require('dotenv').config();
 const mongodb = require('./models');
-const mysql = require('./schema');
+const models = require('./schema');
 const moment = require('moment');
 
 const indexRouter = require('./routes');
@@ -19,7 +19,6 @@ const commentRouter = require('./routes/comment');
 const { verifyToken } = require('./middlewares/verify-token');
 
 mongodb();
-mysql();
 
 const app = express();
 
