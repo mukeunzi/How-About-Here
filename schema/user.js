@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.DATE
 			}
 		},
-		{ paranoid: true, tableName: 'user' }
+		{ paranoid: true }
 	);
 
 	return User;

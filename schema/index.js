@@ -26,27 +26,50 @@ fs.readdirSync(__dirname)
 
 db.User.hasMany(db.Region, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Region, { foreignKey: { name: 'modifier', allowNull: false } });
+db.Region.belongsTo(db.User, { foreignKey: 'creator' });
+db.Region.belongsTo(db.User, { foreignKey: 'modifier' });
+
 db.User.hasMany(db.Hashtag, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Hashtag, { foreignKey: { name: 'modifier', allowNull: false } });
+db.Hashtag.belongsTo(db.User, { foreignKey: 'creator' });
+db.Hashtag.belongsTo(db.User, { foreignKey: 'modifier' });
+
 db.User.hasMany(db.Post, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Post, { foreignKey: { name: 'modifier', allowNull: false } });
+db.Post.belongsTo(db.User, { foreignKey: 'creator' });
+db.Post.belongsTo(db.User, { foreignKey: 'modifier' });
+
 db.User.hasMany(db.Comment, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Comment, { foreignKey: { name: 'modifier', allowNull: false } });
-
-db.Region.hasMany(db.Post, { foreignKey: { name: 'regionId', allowNull: false } });
+db.Comment.belongsTo(db.User, { foreignKey: 'creator' });
+db.Comment.belongsTo(db.User, { foreignKey: 'modifier' });
 
 db.Post.hasMany(db.Comment, { foreignKey: { name: 'postId', allowNull: false } });
+db.Comment.belongsTo(db.Post, { foreignKey: 'postId' });
 
-db.Post.belongsToMany(db.Hashtag, {
-	through: 'Tags',
-	foreignKey: { name: 'postId', allowNull: false },
-	otherKey: { name: 'hashtagId', allowNull: false }
-});
+db.Region.hasMany(db.Post, { foreignKey: { name: 'regionId', allowNull: false } });
+db.Post.belongsTo(db.Region, { foreignKey: 'regionId' });
 
 db.User.belongsToMany(db.Post, {
 	through: 'Likes',
 	foreignKey: { name: 'userId', allowNull: false },
-	otherKey: { name: 'postId', allowNull: false }
+	otherKey: { name: 'postId' }
+});
+db.Post.belongsToMany(db.User, {
+	through: 'Likes',
+	foreignKey: { name: 'postId', allowNull: false },
+	otherKey: { name: 'userId' }
+});
+
+db.Post.belongsToMany(db.Hashtag, {
+	through: 'Tags',
+	foreignKey: { name: 'postId', allowNull: false },
+	otherKey: { name: 'hashtagId' }
+});
+db.Hashtag.belongsToMany(db.Post, {
+	through: 'Tags',
+	foreignKey: { name: 'hashtagId', allowNull: false },
+	otherKey: { name: 'postId' }
 });
 
 db.sequelize = sequelize;
