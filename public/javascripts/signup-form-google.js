@@ -3,7 +3,7 @@ import { errorMessage } from './utils/error-message.js';
 import { sendRequest } from './utils/fetch-api.js';
 
 window.addEventListener('load', function() {
-	const userName = document.querySelector('#user_name');
+	const userName = document.querySelector('#userName');
 	const userForm = document.querySelector('form');
 
 	userName.addEventListener('keyup', function(event) {
@@ -39,20 +39,20 @@ const checkDuplicatedName = async userName => {
 };
 
 const isValidFormData = () => {
-	const user_name = document.querySelector('#user_name').value;
+	const userName = document.querySelector('#userName').value;
 	const message = document.querySelector('#message').className;
 
-	if (isEmptyName(user_name)) {
+	if (isEmptyName(userName)) {
 		alert('이름을 입력하세요!');
-		return document.querySelector('#user_name').focus();
+		return document.querySelector('#userName').focus();
 	}
 
 	if (message === 'unavailable') {
 		alert('사용할 수 없는 이름입니다.');
-		return document.querySelector('#user_name').focus();
+		return document.querySelector('#userName').focus();
 	}
 
-	if (message === 'available' && !isEmptyName(user_name)) {
+	if (message === 'available' && !isEmptyName(userName)) {
 		return document.querySelector('form').submit();
 	}
 };

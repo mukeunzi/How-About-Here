@@ -1,19 +1,19 @@
 const { url, googleLogIn } = require('../utils/google-oauth');
-const User = require('../models/user');
+const db = require('../schema');
 const jwtUtil = require('../utils/jwt-token');
 
 class AuthController {
 	async localLogIn(req, res, next) {
-		const { user_id, user_password } = req.body;
+		const { userId, userPassword } = req.body;
 
-		const user = await User.getUserInfo(user_id);
+		const user = await db.User.getUserInfo(userId);
 
 		if (!user) {
 			req.flash('message', '아이디나 비밀번호가 올바르지 않습니다.');
 			return res.redirect('/auth');
 		}
 
-		const isValidUser = await user.isValidPassword(user_password, user.user_password);
+		const isValidUser = await user.isValidPassword(userPassword);
 
 		if (!isValidUser) {
 			req.flash('message', '비밀번호가 올바르지 않습니다.');
@@ -28,15 +28,15 @@ class AuthController {
 
 	async googleLogIn(req, res, next) {
 		const googleUserData = await googleLogIn(req.query.code);
-		const { user_id, auth_provider } = googleUserData;
+		const { userId, authProvider } = googleUserData;
 
-		const duplicatedId = await User.checkDuplicatedId(user_id, auth_provider);
+		const duplicatedId = await db.User.checkDuplicatedId(userId, authProvider);
 
 		if (!duplicatedId) {
 			return res.render('sign-up-google', { googleUserData });
 		}
 
-		const user = await User.getUserInfo(user_id);
+		const user = await db.User.getUserInfo(userId);
 
 		const token = await jwtUtil.makeToken(user);
 		res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });

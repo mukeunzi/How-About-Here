@@ -1,14 +1,14 @@
 const bcrypt = require('bcrypt');
-const User = require('../models/user');
+const db = require('../schema');
 const AuthController = require('./auth-controller');
 const jwtUtil = require('../utils/jwt-token');
 
 class UserController {
 	async createUser(req, res, next) {
-		const { user_name, user_id, user_password, auth_provider } = req.body;
+		const { userName, userId, userPassword, authProvider } = req.body;
 
-		const duplicatedId = await User.checkDuplicatedId(user_id, auth_provider);
-		const duplicatedName = await User.checkDuplicatedName(user_name);
+		const duplicatedName = await db.User.checkDuplicatedName(userName);
+		const duplicatedId = await db.User.checkDuplicatedId(userId);
 
 		if (duplicatedName) {
 			req.flash('message', '이미 사용중인 이름입니다.');
@@ -20,16 +20,16 @@ class UserController {
 			return res.redirect('/users');
 		}
 
-		const hashPassword = user_password ? await bcrypt.hash(user_password, 12) : '';
+		const hashPassword = userPassword ? await bcrypt.hash(userPassword, 12) : '';
 
-		const signUpForm = { user_name, user_id, hashPassword, auth_provider };
-		await User.signUp(signUpForm);
+		const signUpForm = { userName, userId, userPassword: hashPassword, authProvider };
+		await db.User.signUp(signUpForm);
 
-		if (auth_provider === 'local') {
+		if (authProvider === 'local') {
 			return AuthController.localLogIn(req, res, next);
 		}
 
-		const user = await User.getUserInfo(user_id);
+		const user = await db.User.getUserInfo(userId);
 
 		const token = await jwtUtil.makeToken(user);
 		res.cookie('token', token, { path: '/', httpOnly: true, maxAge: 1000 * 60 * 60 });
@@ -49,9 +49,9 @@ class UserController {
 	}
 
 	async isValidUserName(req, res, next) {
-		const user_name = req.params.user_name;
+		const userName = req.params.userName;
 
-		const duplicatedName = await User.checkDuplicatedName(user_name);
+		const duplicatedName = await db.User.checkDuplicatedName(userName);
 
 		if (duplicatedName) {
 			return res.json({ message: 'unavailable' });

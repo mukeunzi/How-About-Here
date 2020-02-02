@@ -7,6 +7,6 @@ const router = asyncify(express.Router());
 
 router.get('/', isNotLoggedIn, userController.getSignUpPage);
 router.post('/', isNotLoggedIn, userController.createUser);
-router.get('/:user_name', isNotLoggedIn, userController.isValidUserName);
+router.get('/:userName', isNotLoggedIn, userController.isValidUserName);
 
 module.exports = router;

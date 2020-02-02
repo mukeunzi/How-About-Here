@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const db = require('../schema');
 
 const verifyToken = async (req, res, next) => {
 	if (!req.cookies.token) {
@@ -10,9 +10,9 @@ const verifyToken = async (req, res, next) => {
 	try {
 		const token = req.cookies.token;
 		const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
-		const { user_id } = decodedToken;
+		const { userId } = decodedToken;
 
-		const user = await User.getUserInfo(user_id);
+		const user = await db.User.getUserInfo(userId);
 
 		if (!user) {
 			req.user = null;

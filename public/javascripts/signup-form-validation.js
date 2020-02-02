@@ -1,19 +1,19 @@
-const isEmptyName = user_name => {
-	if (!user_name) {
+const isEmptyName = userName => {
+	if (!userName) {
 		return true;
 	}
 	return false;
 };
 
-const isEmptyId = user_id => {
-	if (!user_id) {
+const isEmptyId = userId => {
+	if (!userId) {
 		return true;
 	}
 	return false;
 };
 
-const isEmptyPassword = user_password => {
-	if (!user_password) {
+const isEmptyPassword = userPassword => {
+	if (!userPassword) {
 		return true;
 	}
 	return false;

@@ -7,12 +7,12 @@ block contents
     div= message
     form(id='signUpForm', action='/users', method='post')
       div
-        input(type='text', name='user_name', id='user_name', placeholder='NAME')
+        input(type='text', name='userName', id='userName', placeholder='NAME')
       div
-        input(type='text', name='user_id', id='user_id', placeholder='ID')
+        input(type='text', name='userId', id='userId', placeholder='ID')
       div
-        input(type='password', name='user_password', id='user_password', placeholder='PASSWORD')
-      input(type='hidden', name='auth_provider', value='local')
+        input(type='password', name='userPassword', id='userPassword', placeholder='PASSWORD')
+      input(type='hidden', name='authProvider', value='local')
       div
         input(type='submit', id='signUpButton', value='Create an account')
 block script

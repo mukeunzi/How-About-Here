@@ -7,11 +7,11 @@ block contents
     div= message
     form(id='signUpForm', action='/users', method='post')
       div
-        input(type='text', name='user_name', id='user_name', placeholder='NAME')
+        input(type='text', name='userName', id='userName', placeholder='NAME')
       #message
       div
-        input(type='text', name='user_id', id='user_id', value=`${googleUserData.user_id}`, readonly)
-      input(type='hidden', name='auth_provider', value='google')
+        input(type='text', name='userId', id='userId', value=`${googleUserData.userId}`, readonly)
+      input(type='hidden', name='authProvider', value='google')
       div
         input(type='submit', id='signUpButton', value='Create an account')
 block script
