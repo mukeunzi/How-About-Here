@@ -26,23 +26,23 @@ fs.readdirSync(__dirname)
 
 db.User.hasMany(db.Region, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Region, { foreignKey: { name: 'modifier', allowNull: false } });
-db.Region.belongsTo(db.User, { foreignKey: 'creator' });
-db.Region.belongsTo(db.User, { foreignKey: 'modifier' });
+db.Region.belongsTo(db.User, { as: 'Creator', foreignKey: 'creator' });
+db.Region.belongsTo(db.User, { as: 'Modifier', foreignKey: 'modifier' });
 
 db.User.hasMany(db.Hashtag, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Hashtag, { foreignKey: { name: 'modifier', allowNull: false } });
-db.Hashtag.belongsTo(db.User, { foreignKey: 'creator' });
-db.Hashtag.belongsTo(db.User, { foreignKey: 'modifier' });
+db.Hashtag.belongsTo(db.User, { as: 'Creator', foreignKey: 'creator' });
+db.Hashtag.belongsTo(db.User, { as: 'Modifier', foreignKey: 'modifier' });
 
 db.User.hasMany(db.Post, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Post, { foreignKey: { name: 'modifier', allowNull: false } });
-db.Post.belongsTo(db.User, { foreignKey: 'creator' });
-db.Post.belongsTo(db.User, { foreignKey: 'modifier' });
+db.Post.belongsTo(db.User, { as: 'Creator', foreignKey: 'creator' });
+db.Post.belongsTo(db.User, { as: 'Modifier', foreignKey: 'modifier' });
 
 db.User.hasMany(db.Comment, { foreignKey: { name: 'creator', allowNull: false } });
 db.User.hasMany(db.Comment, { foreignKey: { name: 'modifier', allowNull: false } });
-db.Comment.belongsTo(db.User, { foreignKey: 'creator' });
-db.Comment.belongsTo(db.User, { foreignKey: 'modifier' });
+db.Comment.belongsTo(db.User, { as: 'Creator', foreignKey: 'creator' });
+db.Comment.belongsTo(db.User, { as: 'Modifier', foreignKey: 'modifier' });
 
 db.Post.hasMany(db.Comment, { foreignKey: { name: 'postId', allowNull: false } });
 db.Comment.belongsTo(db.Post, { foreignKey: 'postId' });
