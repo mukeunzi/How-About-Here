@@ -1,32 +1,33 @@
-const Region = require('../models/region');
-const moment = require('moment');
+const db = require('../schema');
+const { Op } = db.Sequelize;
 
 class RegionController {
 	async getRegionPage(req, res, next) {
-		const regionList = await Region.getRegionListAll();
+		const regionList = await db.Region.getRegionListAll(db.User);
 
 		res.render('region', { title: '지역관리', user: req.user, regionList });
 	}
 
 	async createRegion(req, res, next) {
-		const authorObjectId = req.user._id;
-		const region_name = req.body.region_name;
+		const authorObjectId = req.user.id;
+		const regionName = req.body.regionName;
 
-		const newRegion = await Region.createRegion(authorObjectId, region_name);
-		const newRegionInfo = { newRegion, userName: req.user.user_name };
+		const newRegion = await db.Region.createRegion(authorObjectId, regionName);
+		const newRegionInfo = { newRegion, userName: req.user.userName };
 
 		return res.json(newRegionInfo);
 	}
 
 	async deleteRegion(req, res, next) {
-		const authorObjectId = req.user._id;
-		const checkedRegions = req.query._id;
+		const authorObjectId = req.user.id;
+		const checkedRegions = req.query.id;
 
 		await checkedRegions.map(async region => {
-			await Region.deleteRegion(authorObjectId, region);
+			await db.Region.deleteRegion(region);
+			await db.Region.updateModifier(Op, { authorObjectId, region });
 		});
 
-		return res.json({ checkedRegions });
+		return res.json({ checkedRegions, userName: req.user.userName });
 	}
 }
 

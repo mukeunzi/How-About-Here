@@ -16,28 +16,28 @@ window.addEventListener('load', function() {
 
 const makeNewRegionElement = json => {
 	const newRegionElement = `<tr>
-		<td><input type='checkbox' class='_id' id=${json.newRegion._id} value=${json.newRegion._id}></td>
-		<td>${json.newRegion.region_name}</td>
-		<td class='status_code'>${json.newRegion.status_code}</td>
+		<td><input type='checkbox' class='id' id=${json.newRegion.id} value=${json.newRegion.id}></td>
+		<td>${json.newRegion.regionName}</td>
+		<td class='isDeleted'>N</td>
 		<td>${json.userName}</td>
-		<td>${moment(json.newRegion.create_date).format('YYYY-MM-DD hh:mm:ss')}</td>
-		<td>${json.userName}</td>
-		<td>${moment(json.newRegion.update_date).format('YYYY-MM-DD hh:mm:ss')}</td>
+		<td>${moment(json.newRegion.createdAt).format('YYYY-MM-DD hh:mm:ss')}</td>
+		<td class='modifier'>${json.userName}</td>
+		<td>${moment(json.newRegion.updatedAt).format('YYYY-MM-DD hh:mm:ss')}</td>
 		</tr>`;
 
 	return newRegionElement;
 };
 
 const addRegion = async () => {
-	const region_name = isNotEmptyRegion();
+	const regionName = isNotEmptyRegion();
 
-	if (!region_name) {
-		document.querySelector('#region_name').focus();
+	if (!regionName) {
+		document.querySelector('#regionName').focus();
 		return false;
 	}
 
 	try {
-		const result = await sendData(`/admin/region`, 'POST', { region_name });
+		const result = await sendData(`/admin/region`, 'POST', { regionName });
 
 		if (!isLoggedInUser(result.message)) {
 			return alert('로그인이 필요합니다!');
@@ -47,7 +47,7 @@ const addRegion = async () => {
 		const regionList = document.querySelector('#regionList');
 		regionList.insertAdjacentHTML('beforeend', newRegionElement);
 
-		document.querySelector('#region_name').value = '';
+		document.querySelector('#regionName').value = '';
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}
@@ -70,7 +70,8 @@ const deleteRegions = async () => {
 		result.checkedRegions.map(region => {
 			const regionRow = document.querySelector(`[id='${region}']`).parentNode.parentNode;
 
-			regionRow.querySelector('.status_code').innerHTML = '0';
+			regionRow.querySelector('.isDeleted').innerHTML = 'Y';
+			regionRow.querySelector('.modifier').innerHTML = result.userName;
 			document.querySelector(`[id='${region}']`).checked = false;
 		});
 	} catch (error) {
@@ -79,7 +80,7 @@ const deleteRegions = async () => {
 };
 
 const isNotCheckedRegion = () => {
-	const regions = document.querySelectorAll('._id:checked');
+	const regions = document.querySelectorAll('.id:checked');
 
 	if (!regions.length) {
 		alert('삭제할 지역을 선택하세요!');
@@ -87,7 +88,7 @@ const isNotCheckedRegion = () => {
 	}
 
 	const checkedRegionList = Array.prototype.map.call(regions, region => {
-		return `_id[]=${region.value}&`;
+		return `id[]=${region.value}&`;
 	});
 	const checkedRegion = checkedRegionList.join('');
 
@@ -95,12 +96,12 @@ const isNotCheckedRegion = () => {
 };
 
 const isNotEmptyRegion = () => {
-	const region_name = document.querySelector('#region_name').value;
+	const regionName = document.querySelector('#regionName').value;
 
-	if (!region_name) {
+	if (!regionName) {
 		alert('지역명을 입력하세요!');
 		return false;
 	}
 
-	return region_name;
+	return regionName;
 };
