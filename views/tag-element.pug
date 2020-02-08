@@ -1,10 +1,10 @@
 mixin makeTagElement(tag)
   tr
     td
-      input(type='checkbox', class='_id', id=tag._id, value=tag._id)
-    td= tag.tag_name
-    td(class='status_code')= tag.status_code
-    td= tag.create_id.user_name
-    td= moment(tag.create_date).format('YYYY-MM-DD hh:mm:ss')
-    td= tag.update_id.user_name
-    td= moment(tag.update_date).format('YYYY-MM-DD hh:mm:ss')
+      input(type='checkbox', class='id', id=tag.id, value=tag.id)
+    td= tag.tagName
+    td.isDeleted #{tag.deletedAt ? 'Y' : 'N'}
+    td= tag.Creator.userName
+    td= moment(tag.createdAt).format('YYYY-MM-DD hh:mm:ss')
+    td.modifier= tag.Modifier.userName
+    td= moment(tag.updatedAt).format('YYYY-MM-DD hh:mm:ss')

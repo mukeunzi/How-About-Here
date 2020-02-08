@@ -1,32 +1,33 @@
-const Tag = require('../models/tag');
-const moment = require('moment');
+const db = require('../schema');
+const { Op } = db.Sequelize;
 
 class TagController {
 	async getTagPage(req, res, next) {
-		const tagList = await Tag.getTagListAll();
+		const tagList = await db.Hashtag.getTagListAll(db.User);
 
 		res.render('tag', { title: '태그관리', user: req.user, tagList });
 	}
 
 	async createTag(req, res, next) {
-		const authorObjectId = req.user._id;
-		const tag_name = req.body.tag_name;
+		const authorObjectId = req.user.id;
+		const tagName = req.body.tagName;
 
-		const newTag = await Tag.createTag(authorObjectId, tag_name);
-		const newTagInfo = { newTag, userName: req.user.user_name };
+		const newTag = await db.Hashtag.createTag(authorObjectId, tagName);
+		const newTagInfo = { newTag, userName: req.user.userName };
 
 		return res.json(newTagInfo);
 	}
 
 	async deleteTag(req, res, next) {
-		const authorObjectId = req.user._id;
-		const checkedTags = req.query._id;
+		const authorObjectId = req.user.id;
+		const checkedTags = req.query.id;
 
 		await checkedTags.map(async tag => {
-			await Tag.deleteTag(authorObjectId, tag);
+			await db.Hashtag.deleteTag(tag);
+			await db.Hashtag.updateModifier(Op, { authorObjectId, tag });
 		});
 
-		return res.json({ checkedTags });
+		return res.json({ checkedTags, userName: req.user.userName });
 	}
 }
 

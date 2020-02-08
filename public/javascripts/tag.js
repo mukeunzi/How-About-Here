@@ -16,28 +16,28 @@ window.addEventListener('load', function() {
 
 const makeNewTagElement = json => {
 	const newTagElement = `<tr>
-		<td><input type='checkbox' class='_id' id=${json.newTag._id} value=${json.newTag._id}></td>
-		<td>${json.newTag.tag_name}</td>
-		<td class='status_code'>${json.newTag.status_code}</td>
+		<td><input type='checkbox' class='id' id=${json.newTag.id} value=${json.newTag.id}></td>
+		<td>${json.newTag.tagName}</td>
+		<td class='isDeleted'>N</td>
 		<td>${json.userName}</td>
-		<td>${moment(json.newTag.create_date).format('YYYY-MM-DD hh:mm:ss')}</td>
+		<td>${moment(json.newTag.createdAt).format('YYYY-MM-DD hh:mm:ss')}</td>
 		<td>${json.userName}</td>
-		<td>${moment(json.newTag.update_date).format('YYYY-MM-DD hh:mm:ss')}</td>
+		<td>${moment(json.newTag.updatedAt).format('YYYY-MM-DD hh:mm:ss')}</td>
 	</tr>`;
 
 	return newTagElement;
 };
 
 const addTag = async () => {
-	const tag_name = isNotEmptyTag();
+	const tagName = isNotEmptyTag();
 
-	if (!tag_name) {
-		document.querySelector('#tag_name').focus();
+	if (!tagName) {
+		document.querySelector('#tagName').focus();
 		return false;
 	}
 
 	try {
-		const result = await sendData(`/admin/tag`, 'POST', { tag_name });
+		const result = await sendData(`/admin/tag`, 'POST', { tagName });
 
 		if (!isLoggedInUser(result.message)) {
 			return alert('로그인이 필요합니다!');
@@ -47,21 +47,21 @@ const addTag = async () => {
 		const tagList = document.querySelector('#tagList');
 		tagList.insertAdjacentHTML('beforeend', newTagElement);
 
-		document.querySelector('#tag_name').value = '';
+		document.querySelector('#tagName').value = '';
 	} catch (error) {
 		return alert(errorMessage[error.message]);
 	}
 };
 
 const isNotEmptyTag = () => {
-	const tag_name = document.querySelector('#tag_name').value;
+	const tagName = document.querySelector('#tagName').value;
 
-	if (!tag_name) {
+	if (!tagName) {
 		alert('태그명을 입력하세요!');
 		return false;
 	}
 
-	return tag_name;
+	return tagName;
 };
 
 const deleteTags = async () => {
@@ -81,7 +81,8 @@ const deleteTags = async () => {
 		result.checkedTags.map(tag => {
 			const tagRow = document.querySelector(`[id='${tag}']`).parentNode.parentNode;
 
-			tagRow.querySelector('.status_code').innerHTML = '0';
+			tagRow.querySelector('.isDeleted').innerHTML = 'Y';
+			tagRow.querySelector('.modifier').innerHTML = result.userName;
 			document.querySelector(`[id='${tag}']`).checked = false;
 		});
 	} catch (error) {
@@ -90,7 +91,7 @@ const deleteTags = async () => {
 };
 
 const isNotCheckedTag = () => {
-	const tags = document.querySelectorAll('._id:checked');
+	const tags = document.querySelectorAll('.id:checked');
 
 	if (!tags.length) {
 		alert('삭제할 태그를 선택하세요!');
@@ -98,7 +99,7 @@ const isNotCheckedTag = () => {
 	}
 
 	const checkedTagList = Array.prototype.map.call(tags, tag => {
-		return `_id[]=${tag.value}&`;
+		return `id[]=${tag.value}&`;
 	});
 	const checkedTag = checkedTagList.join('');
 
