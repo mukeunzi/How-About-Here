@@ -4,9 +4,7 @@
 
 > [master branch](https://github.com/mukeunzi/How-About-Here) - Node.js 의 Express 프레임워크, pug, MySQL/sequelize 를 이용해 구현하는 여기어땠!
 
-> [mongodb branch](https://github.com/mukeunzi/How-About-Here/tree/mongodb) - Node.js 의 Express 프레임워크, pug, MongoDB/mongoose 를 이용해 구현하는 여기어땠!
-
-> MongoDB에서 MySQL로 migration 진행 중.
+> [mongodb branch](https://github.com/mukeunzi/How-About-Here/tree/mongodb) - Node.js 의 Express 프레임워크, pug, MongoDB/mongoose 를 이용해 구현하는 여기어땠!(진행 중)
 
 ## :memo: Description
 
