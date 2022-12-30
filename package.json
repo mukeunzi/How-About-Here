@@ -20,7 +20,7 @@
 		"googleapis": "^42.0.0",
 		"http-errors": "~1.6.3",
 		"jsonwebtoken": "^8.5.1",
-		"mocha": "^6.2.0",
+		"mocha": "^10.2.0",
 		"moment": "^2.24.0",
 		"mongoose": "^5.7.5",
 		"morgan": "~1.9.1",
